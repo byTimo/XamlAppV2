@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using NAudio.Wave;
+using ZappChat_v3.Core;
 
 namespace ZappChat_v3
 {
@@ -23,6 +25,8 @@ namespace ZappChat_v3
         public MainWindow()
         {
             InitializeComponent();
+
+            var d = Settings.Current.InDeviceNumber;
         }
     }
 }
