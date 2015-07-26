@@ -69,7 +69,7 @@
     </Compile>
     <Compile Include="Core\ChatElements\ChatMember.cs" />
     <Compile Include="Core\Managers\FileManager.cs" />
-    <Compile Include="Core\Managers\CallManager.cs" />
+    <Compile Include="Core\Managers\PeripheryManager.cs" />
     <Compile Include="Core\Settings.cs" />
     <Compile Include="Core\Support.cs" />
     <Compile Include="MainWindow.xaml.cs">

@@ -48,91 +48,18 @@ namespace ZappChat_v3.Core.Managers
 
         public static void CheckExistsFiles(string path = null)
         {
-            if (!Directory.Exists(RootDirectory)) Directory.CreateDirectory(RootDirectory);
-            if (!Directory.Exists(UpdateFolderPath)) Directory.CreateDirectory(UpdateFolderPath);
-            if(path == null) return;
-            if (!File.Exists(path)) File.WriteAllText(path, "");
-        }
-
-        public static string FindFieldInfoLineInFile(string path, string field)
-        {
-            if (!File.Exists(path)) File.Create(path);
-            return GetAllLineInFile(path).FirstOrDefault(str => str.StartsWith(field));
-        }
-
-        public static bool SaveSettings(string field, string setting)
-        {
-            return SaveInformationToFile(FullPathToSettingFile, field, setting);
-        }
-
-        /// <summary>
-        /// Возвращает значение поля настроек в строковом формате или возращает null.
-        /// </summary>
-        /// <param name="field">Поле настроек.</param>
-        public static string GetSetting(string field)
-        {
-            return GetFieldInfoInFile(FullPathToSettingFile, field);
-        }
-
-        public static void DeleteSetting(string field)
-        {
-
             try
             {
-                var allSettings = GetAllLineInFile(FullPathToSettingFile);
-                var currentLine = FindFieldInfoLineInFile(FullPathToSettingFile, field);
-                if (currentLine != null && allSettings.Contains(currentLine))
-                {
-                    allSettings.Remove(currentLine);
-                    RewriteFile(FullPathToSettingFile, allSettings);
-                }
-                else
-                    throw new Exception();
-            }
-            catch
-            {
-                // ignored
-            }
-        }
-
-        private static string GetFieldInfoInFile(string path, string field)
-        {
-            var lineInfo = GetAllLineInFile(path)
-                .FirstOrDefault(str => str.StartsWith(field));
-            return lineInfo == null
-                ? null
-                : lineInfo.Split(':')[1];
-        }
-
-        private static bool SaveInformationToFile(string path, string field, string info)
-        {
-            try
-            {
-                var allLineFile = GetAllLineInFile(FullPathToSettingFile);
-                var currentLine = allLineFile.FirstOrDefault(str => str.StartsWith(field));
-                if (currentLine != null) allLineFile.Remove(currentLine);
-                allLineFile.Add(string.Concat(field, ":", info));
-                RewriteFile(path, allLineFile);
-                return true;
+                if (!Directory.Exists(RootDirectory)) Directory.CreateDirectory(RootDirectory);
+                if (!Directory.Exists(UpdateFolderPath)) Directory.CreateDirectory(UpdateFolderPath);
+                if(path == null) return;
+                if (!File.Exists(path)) File.WriteAllText(path, "");
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Ошибка при сохранении настроек!", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
+                Support.Logger.Fatal(e, "FileManager fail on CheckExitstFiles method");
+                throw;
             }
-        }
-
-        private static List<string> GetAllLineInFile(string path)
-        {
-            if (!File.Exists(path)) File.Create(path);
-            Thread.Sleep(1000);
-            return File.ReadAllText(path).Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries).ToList();
-        }
-
-        private static void RewriteFile(string path, IEnumerable<string> allLine)
-        {
-            if (File.Exists(path)) File.Delete(path);
-            File.WriteAllLines(path, allLine);
         }
     }
 }
