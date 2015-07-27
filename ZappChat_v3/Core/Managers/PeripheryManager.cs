@@ -1,4 +1,6 @@
-﻿using NAudio.Mixer;
+﻿using System;
+using System.IO;
+using NAudio.Mixer;
 using NAudio.Wave;
 using ZappChat_v3.Core.ChatElements;
 
@@ -52,6 +54,25 @@ namespace ZappChat_v3.Core.Managers
             PlayingDevice.Init(provider);
             RecordingDevice.StartRecording();
             PlayingDevice.Play();
+            Support.Logger.Info("Self-translation created");
+        }
+        //@TODO метод создания трансляции на основе двух делегатов 1 - подписывается на DataAvailable микрофона
+        //@TODO 2 - каким то образом определеяет откуда брать поток байт для пеера. Либо передать 
+        //@TEST - проверим, когда будет менеджер P2P
+        public static Action<byte[]> CreateTranslation(EventHandler<WaveInEventArgs> sendBayteAction)
+        {
+            DisposeTranslation();
+            RecordingDevice.DataAvailable += sendBayteAction;
+            Support.Logger.Info("Send's endpoints connect to P2P manager");
+            return PlayByteArray;
+        }
+
+        private static void PlayByteArray(byte[] soundInBytes)
+        {
+            //@TODO Возможно стоит попробовать поменять как то WaveFormat
+            var provider = new RawSourceWaveStream(new MemoryStream(soundInBytes), new WaveFormat());
+            PlayingDevice.Init(provider);
+            PlayingDevice.Play();
         }
         private static void DisposeTranslation()
         {
@@ -59,6 +80,7 @@ namespace ZappChat_v3.Core.Managers
             _inDevice = null;
             _outDevice.Dispose();
             _outDevice = null;
+            Support.Logger.Info("Resources periphery released");
         }
         
     }
