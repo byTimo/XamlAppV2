@@ -66,7 +66,13 @@ namespace ZappChat_v3.Core.Managers
             Support.Logger.Info("Send's endpoints connect to P2P manager");
             return PlayByteArray;
         }
-
+        /// <summary>
+        /// Метод освобождает все ресурсы менеджера
+        /// </summary>
+        public static void FinalizePeriphery()
+        {
+            DisposeTranslation();
+        }
         private static void PlayByteArray(byte[] soundInBytes)
         {
             //@TODO Возможно стоит попробовать поменять как то WaveFormat
@@ -76,12 +82,17 @@ namespace ZappChat_v3.Core.Managers
         }
         private static void DisposeTranslation()
         {
-            _inDevice.Dispose();
-            _inDevice = null;
-            _outDevice.Dispose();
-            _outDevice = null;
+            if (_inDevice != null)
+            {
+                _inDevice.Dispose();
+                _inDevice = null;
+            }
+            if (_outDevice != null)
+            {
+                _outDevice.Dispose();
+                _outDevice = null;
+            }
             Support.Logger.Info("Resources periphery released");
         }
-        
     }
 }

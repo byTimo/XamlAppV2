@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml.Serialization;
 using NUnit.Framework;
 using ZappChat_v3.Core.Managers;
@@ -63,26 +64,46 @@ namespace ZappChat_v3.Core
 
         private static SettingContent ReadSettingFromFile(string settingFilePath)
         {
-            SettingContent readingSetting;
-            var serializer = new XmlSerializer(typeof(SettingContent));
-            using (var stream = File.Open(settingFilePath, FileMode.Open))
+            try
             {
-                readingSetting = (SettingContent)serializer.Deserialize(stream);
-                Support.Logger.Trace("Successful reading of settings.");
+                var serializer = new XmlSerializer(typeof(SettingContent));
+                SettingContent readingSetting;
+                using (var stream = new FileStream(settingFilePath, FileMode.Open))
+                {
+                    try
+                    {
+                        readingSetting = (SettingContent)serializer.Deserialize(stream);
+                    }
+                    catch (InvalidOperationException ioe)
+                    {
+                        Support.Logger.Trace(ioe, "The settings file is empty.");
+                        try
+                        {
+                            Support.Logger.Info("Trying create new settings in file");
+                            readingSetting = InitializeContent(stream);
+                        }
+                        catch (Exception e)
+                        {
+                            Support.Logger.Fatal(e, "Trying create new settings is failed\n");
+                            throw;
+                        }
+                        Support.Logger.Trace("Exhibited default settings.");
+                    }
+                    Support.Logger.Trace("Successful reading of settings.");
+                }
+                return readingSetting;
             }
-            if (readingSetting == null)
+            catch (Exception e)
             {
-                Support.Logger.Trace("The settings file is empty.");
-                readingSetting = InitializeContent();
-                Support.Logger.Trace("Exhibited default settings.");
+                Support.Logger.Fatal(e,"PeripheryManager fail on ReadSettinFromFile method\n");
+                throw;
             }
-            return readingSetting;
         }
 
-        private static SettingContent InitializeContent()
+        private static SettingContent InitializeContent(FileStream settingFileStream)
         {
             var newSettingContent = new SettingContent();
-            SaveSettings(newSettingContent);
+            new XmlSerializer(typeof(SettingContent)).Serialize(settingFileStream, newSettingContent);
             return new SettingContent();
         }
     }
@@ -90,26 +111,20 @@ namespace ZappChat_v3.Core
     [TestFixture]
     public class SettingTests
     {
-        private Settings.SettingContent realSettingContent;
-
-        [SetUp]
-        public void SetUp()
-        {
-            realSettingContent = GetSettingNativeWay();
-        }
-
-        [TearDown]
-        public void TestDown()
-        {
-            SetSettingNativeWay(realSettingContent);
-        }
-
         [Test]
         public void GetterSettingTest()
         {
             Support.Logger.Trace("Start GetterSettingTest method");
             var currentSetting = Settings.Current;
-            Assert.NotNull(currentSetting);
+            try
+            {
+                Assert.NotNull(currentSetting);
+            }
+            catch (Exception e)
+            {
+                Support.Logger.Warn(e, "GetterSetting unit test is failed");
+                throw;
+            }
             Support.Logger.Trace("GetterSettingTest method successful");
 
         }
@@ -117,15 +132,23 @@ namespace ZappChat_v3.Core
         [Test]
         public void SavingSettingTest()
         {
-            Support.Logger.Trace("Start GetterSettingTest method");
+            Support.Logger.Trace("Start SavingSettingTest method");
             var currrentSetting = Settings.Current;
 
             currrentSetting.InDeviceNumber = 5;
             Settings.SaveSettings();
             var nativeContent = GetSettingNativeWay();
 
-            Assert.AreEqual(nativeContent.InDeviceNumber, 5);
-            Support.Logger.Trace("GetterSettingTest method successful");
+            try
+            {
+                Assert.AreEqual(nativeContent.InDeviceNumber, 5);
+            }
+            catch (Exception e)
+            {
+                Support.Logger.Warn(e, "SavingSetting unit test is failed");
+                throw;
+            }
+            Support.Logger.Trace("SavingSettingTest method successful");
         }
 
         private Settings.SettingContent GetSettingNativeWay()

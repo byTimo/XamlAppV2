@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -38,22 +39,38 @@ namespace ZappChat_v3.Core.Managers
 
         static FileManager()
         {
-            var appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            if (appDataDirectory == null) throw new Exception("Не возможно определить расположение ApplicationsData");
-
-            RootDirectory = Path.Combine(appDataDirectory, ZappChatDirectoryName);
-            UpdateFolderPath = Path.Combine(RootDirectory, UpdateDirectoryName);
-            SettingPath = Path.Combine(RootDirectory, SettingFileName);
+            try
+            {
+                var appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                RootDirectory = Path.Combine(appDataDirectory, ZappChatDirectoryName);
+                UpdateFolderPath = Path.Combine(RootDirectory, UpdateDirectoryName);
+                SettingPath = Path.Combine(RootDirectory, SettingFileName);
+            }
+            catch (Exception e)
+            {
+                Support.Logger.Fatal(e, "FileManager fail on static designer");
+            }
         }
 
         public static void CheckExistsFiles(string path = null)
         {
             try
             {
-                if (!Directory.Exists(RootDirectory)) Directory.CreateDirectory(RootDirectory);
-                if (!Directory.Exists(UpdateFolderPath)) Directory.CreateDirectory(UpdateFolderPath);
+                if (!Directory.Exists(RootDirectory))
+                {
+                    Directory.CreateDirectory(RootDirectory);
+                    Support.Logger.Info("{0} is created", RootDirectory);
+                }
+                if (!Directory.Exists(UpdateFolderPath))
+                {
+                    Directory.CreateDirectory(UpdateFolderPath);
+                    Support.Logger.Info("{0} is created", UpdateFolderPath);
+                }
                 if(path == null) return;
-                if (!File.Exists(path)) File.WriteAllText(path, "");
+                if (!File.Exists(path))
+                {
+                    File.WriteAllText(path,null);
+                }
             }
             catch (Exception e)
             {
