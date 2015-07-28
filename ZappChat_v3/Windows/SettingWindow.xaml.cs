@@ -38,7 +38,8 @@ namespace ZappChat_v3.Windows
 
         private void CreateTranslation()
         {
-            _test = PeripheryManager.CreateTranslation((sender, args) => _test.Invoke(args.Buffer, 0, args.BytesRecorded));
+            _test =
+                PeripheryManager.CreateTranslation((sender, args) => _test.Invoke(args.Buffer, 0, args.BytesRecorded));
         }
     }
 }

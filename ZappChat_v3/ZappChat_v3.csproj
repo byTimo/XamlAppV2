@@ -67,6 +67,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\ALawCodec.cs" />
     <Compile Include="Core\ChatElements\ChatMember.cs" />
     <Compile Include="Core\Managers\FileManager.cs" />
     <Compile Include="Core\Managers\PeripheryManager.cs" />

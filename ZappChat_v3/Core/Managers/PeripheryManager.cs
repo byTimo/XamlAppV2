@@ -1,4 +1,5 @@
 ﻿using System;
+using NAudio.CoreAudioApi;
 using NAudio.Wave;
 
 namespace ZappChat_v3.Core.Managers
@@ -8,6 +9,8 @@ namespace ZappChat_v3.Core.Managers
         private static WaveIn inDevice;
         private static WaveOut outDevice;
         private static BufferedWaveProvider waveProvider;
+
+        private static MMDevice cupturDevice;
         //private static ChatMember _interlocutor;
 
         //public static bool DeviceIsAvalible { get; private set; }
@@ -19,7 +22,8 @@ namespace ZappChat_v3.Core.Managers
                 inDevice = new WaveIn(WaveCallbackInfo.FunctionCallback())
                 {
                     DeviceNumber = Settings.Current.InDeviceNumber,
-                    WaveFormat = new WaveFormat(44100, WaveIn.GetCapabilities(Settings.Current.InDeviceNumber).Channels)
+                    WaveFormat = ALawCodec.RecordFormat,
+                    BufferMilliseconds = 50
                 };
                 return inDevice;
             }
@@ -57,15 +61,19 @@ namespace ZappChat_v3.Core.Managers
         {
             DisposeTranslation();
 
-            RecordingDevice.DataAvailable += sendBayteAction;
+            RecordingDevice.DataAvailable += (sender, args) =>
+            {
+                var encodedBytes = ALawCodec.Encode(args.Buffer, 0, args.BytesRecorded);
+                sendBayteAction.Invoke(sender, new WaveInEventArgs(encodedBytes, args.BytesRecorded));
+            };
             RecordingDevice.StartRecording();
             Support.Logger.Info("Send's endpoints connect to P2P manager");
-            //@TODO попробовать другие IWaveFormat
-            waveProvider = new BufferedWaveProvider(new WaveFormat());
+            waveProvider = new BufferedWaveProvider(ALawCodec.RecordFormat);
             PlayingDevice.Init(waveProvider);
             PlayingDevice.Play();
             return PlayByteArray;
         }
+
         /// <summary>
         /// Метод освобождает все ресурсы менеджера
         /// </summary>
@@ -77,17 +85,20 @@ namespace ZappChat_v3.Core.Managers
 
         private static void PlayByteArray(byte[] buffer, int offset, int count)
         {
-            waveProvider.AddSamples(buffer, offset, count);
+            var decodedBytes = ALawCodec.Decode(buffer, 0, buffer.Length);
+            waveProvider.AddSamples(decodedBytes, offset, count);
         }
         private static void DisposeTranslation()
         {
             if (inDevice != null)
             {
+                inDevice.StopRecording();
                 inDevice.Dispose();
                 inDevice = null;
             }
             if (outDevice != null)
             {
+                outDevice.Stop();
                 outDevice.Dispose();
                 outDevice = null;
             }
