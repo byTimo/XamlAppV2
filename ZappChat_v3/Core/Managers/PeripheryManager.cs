@@ -1,48 +1,42 @@
 ﻿using System;
-using System.IO;
-using NAudio.Mixer;
 using NAudio.Wave;
-using ZappChat_v3.Core.ChatElements;
 
 namespace ZappChat_v3.Core.Managers
 {
     public static class PeripheryManager
     {
-        private static WaveIn _inDevice;
-        private static WaveOut _outDevice;
-        private static ChatMember _interlocutor;
+        private static WaveIn inDevice;
+        private static WaveOut outDevice;
+        private static BufferedWaveProvider waveProvider;
+        //private static ChatMember _interlocutor;
 
         //public static bool DeviceIsAvalible { get; private set; }
         private static WaveIn RecordingDevice
         {
             get
             {
-                if (_inDevice != null) return _inDevice;
-                _inDevice = new WaveIn(WaveCallbackInfo.FunctionCallback())
+                if (inDevice != null) return inDevice;
+                inDevice = new WaveIn(WaveCallbackInfo.FunctionCallback())
                 {
                     DeviceNumber = Settings.Current.InDeviceNumber,
                     WaveFormat = new WaveFormat(44100, WaveIn.GetCapabilities(Settings.Current.InDeviceNumber).Channels)
                 };
-                return _inDevice;
+                return inDevice;
             }
         }
         private static WaveOut PlayingDevice
         {
             get
             {
-                if (_outDevice != null) return _outDevice;
-                _outDevice = new WaveOut
+                if (outDevice != null) return outDevice;
+                outDevice = new WaveOut
                 {
                     DeviceNumber = Settings.Current.OutDeviceNumber
                 };
-                return _outDevice;
+                return outDevice;
             }
         }
 
-        public static MixerLine RecordDeviceMixerLine
-        {
-            get { return RecordingDevice.GetMixerLine(); }
-        }
         /// <summary>
         /// Метод создаёт трансляцию, в которой захваченые байты передаются сразу на устройство вывода.
         /// </summary>
@@ -59,11 +53,17 @@ namespace ZappChat_v3.Core.Managers
         //@TODO метод создания трансляции на основе двух делегатов 1 - подписывается на DataAvailable микрофона
         //@TODO 2 - каким то образом определеяет откуда брать поток байт для пеера. Либо передать 
         //@TEST - проверим, когда будет менеджер P2P
-        public static Action<byte[]> CreateTranslation(EventHandler<WaveInEventArgs> sendBayteAction)
+        public static Action<byte[], int, int> CreateTranslation(EventHandler<WaveInEventArgs> sendBayteAction)
         {
             DisposeTranslation();
+
             RecordingDevice.DataAvailable += sendBayteAction;
+            RecordingDevice.StartRecording();
             Support.Logger.Info("Send's endpoints connect to P2P manager");
+            //@TODO попробовать другие IWaveFormat
+            waveProvider = new BufferedWaveProvider(new WaveFormat());
+            PlayingDevice.Init(waveProvider);
+            PlayingDevice.Play();
             return PlayByteArray;
         }
         /// <summary>
@@ -72,25 +72,29 @@ namespace ZappChat_v3.Core.Managers
         public static void FinalizePeriphery()
         {
             DisposeTranslation();
+            Support.Logger.Info("Successful dispose all periphery manager's recourses");
         }
-        private static void PlayByteArray(byte[] soundInBytes)
+
+        private static void PlayByteArray(byte[] buffer, int offset, int count)
         {
-            //@TODO Возможно стоит попробовать поменять как то WaveFormat
-            var provider = new RawSourceWaveStream(new MemoryStream(soundInBytes), new WaveFormat());
-            PlayingDevice.Init(provider);
-            PlayingDevice.Play();
+            waveProvider.AddSamples(buffer, offset, count);
         }
         private static void DisposeTranslation()
         {
-            if (_inDevice != null)
+            if (inDevice != null)
             {
-                _inDevice.Dispose();
-                _inDevice = null;
+                inDevice.Dispose();
+                inDevice = null;
             }
-            if (_outDevice != null)
+            if (outDevice != null)
             {
-                _outDevice.Dispose();
-                _outDevice = null;
+                outDevice.Dispose();
+                outDevice = null;
+            }
+            if (waveProvider != null)
+            {
+                waveProvider.ClearBuffer();
+                waveProvider = null;
             }
             Support.Logger.Info("Resources periphery released");
         }
