@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
 
@@ -6,38 +7,44 @@ namespace ZappChat_v3.Core.Managers
 {
     public static class PeripheryManager
     {
-        private static WaveIn inDevice;
-        private static WaveOut outDevice;
+        private static IWaveIn inDevice;
+        private static IWavePlayer outDevice;
         private static BufferedWaveProvider waveProvider;
 
-        private static MMDevice cupturDevice;
-        //private static ChatMember _interlocutor;
-
-        //public static bool DeviceIsAvalible { get; private set; }
-        private static WaveIn RecordingDevice
+        private static IWaveIn WaveIn
         {
             get
             {
                 if (inDevice != null) return inDevice;
-                inDevice = new WaveIn(WaveCallbackInfo.FunctionCallback())
-                {
-                    DeviceNumber = Settings.Current.InDeviceNumber,
-                    WaveFormat = ALawCodec.RecordFormat,
-                    BufferMilliseconds = 50
-                };
+                inDevice = new WasapiCapture(CapturedDevice);
                 return inDevice;
             }
         }
-        private static WaveOut PlayingDevice
+        private static IWavePlayer WaveOut
         {
             get
             {
                 if (outDevice != null) return outDevice;
-                outDevice = new WaveOut
-                {
-                    DeviceNumber = Settings.Current.OutDeviceNumber
-                };
+                outDevice = new WasapiOut(RenderDevice, AudioClientShareMode.Shared, false, 300);
                 return outDevice;
+            }
+        }
+
+        private static MMDevice CapturedDevice
+        {
+            get
+            {
+                return new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active)[
+                        Settings.Current.InDeviceNumber];
+            }
+        }
+
+        private static MMDevice RenderDevice
+        {
+            get
+            {
+                return new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active)[
+                        Settings.Current.OutDeviceNumber];
             }
         }
 
@@ -48,29 +55,28 @@ namespace ZappChat_v3.Core.Managers
         {
             DisposeTranslation();
 
-            var provider = new WaveInProvider(RecordingDevice);
-            PlayingDevice.Init(provider);
-            RecordingDevice.StartRecording();
-            PlayingDevice.Play();
+            var provider = new WaveInProvider(WaveIn);
+            WaveOut.Init(provider);
+            WaveIn.StartRecording();
+            WaveOut.Play();
             Support.Logger.Info("Self-translation created");
         }
-        //@TODO метод создания трансляции на основе двух делегатов 1 - подписывается на DataAvailable микрофона
-        //@TODO 2 - каким то образом определеяет откуда брать поток байт для пеера. Либо передать 
         //@TEST - проверим, когда будет менеджер P2P
         public static Action<byte[], int, int> CreateTranslation(EventHandler<WaveInEventArgs> sendBayteAction)
         {
             DisposeTranslation();
 
-            RecordingDevice.DataAvailable += (sender, args) =>
+            WaveIn.DataAvailable += (sender, args) =>
             {
-                var encodedBytes = ALawCodec.Encode(args.Buffer, 0, args.BytesRecorded);
+                var encodedBytes = args.Buffer;//Без кодирования
                 sendBayteAction.Invoke(sender, new WaveInEventArgs(encodedBytes, args.BytesRecorded));
             };
-            RecordingDevice.StartRecording();
+            WaveIn.StartRecording();
             Support.Logger.Info("Send's endpoints connect to P2P manager");
-            waveProvider = new BufferedWaveProvider(ALawCodec.RecordFormat);
-            PlayingDevice.Init(waveProvider);
-            PlayingDevice.Play();
+
+            waveProvider = new BufferedWaveProvider(WaveIn.WaveFormat /*Без кодирования*/);
+            WaveOut.Init(waveProvider);
+            WaveOut.Play();
             return PlayByteArray;
         }
 
@@ -85,7 +91,7 @@ namespace ZappChat_v3.Core.Managers
 
         private static void PlayByteArray(byte[] buffer, int offset, int count)
         {
-            var decodedBytes = ALawCodec.Decode(buffer, 0, buffer.Length);
+            var decodedBytes = buffer;//Без кодирования
             waveProvider.AddSamples(decodedBytes, offset, count);
         }
         private static void DisposeTranslation()

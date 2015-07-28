@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using NAudio.CoreAudioApi;
 using NAudio.Wave;
 using ZappChat_v3.Core;
 using ZappChat_v3.Core.Managers;
@@ -16,10 +17,16 @@ namespace ZappChat_v3.Windows
         public MainWindow()
         {
             InitializeComponent();
-            for (int i = 0; i < WaveIn.DeviceCount; i++)
-                InDeviceComboBox.Items.Add(WaveIn.GetCapabilities(i).ProductName);
-            for (int i = 0; i < WaveOut.DeviceCount; i++)
-                OutDeviceComboBox.Items.Add(WaveOut.GetCapabilities(i).ProductName);
+            var inputDevices = new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active);
+            foreach (var inputDevice in inputDevices)
+            {
+                InDeviceComboBox.Items.Add(inputDevice.ToString());
+            }
+            var outputDevices = new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+            foreach (var outputDevice in outputDevices)
+            {
+                OutDeviceComboBox.Items.Add(outputDevice.ToString());
+            }
             InDeviceComboBox.SelectedIndex = 0;
             OutDeviceComboBox.SelectedIndex = 0;
         }
@@ -40,6 +47,7 @@ namespace ZappChat_v3.Windows
         {
             _test =
                 PeripheryManager.CreateTranslation((sender, args) => _test.Invoke(args.Buffer, 0, args.BytesRecorded));
+
         }
     }
 }
