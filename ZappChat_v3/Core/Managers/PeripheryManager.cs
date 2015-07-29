@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
 
@@ -16,6 +18,7 @@ namespace ZappChat_v3.Core.Managers
             Settings.SettingsChanged += DisposeWave;
         }
 
+#region private properties
         private static IWaveIn WaveIn
         {
             get
@@ -56,6 +59,27 @@ namespace ZappChat_v3.Core.Managers
                         Settings.Current.OutDeviceNumber];
             }
         }
+#endregion
+        /// <summary>
+        /// Получить коллекцию всех активных устройств захвата звука
+        /// </summary>
+        public static List<MMDevice> CaptureDevicesCollection
+        {
+            get
+            {
+                return new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active).ToList();
+            }
+        }
+        /// <summary>
+        /// Получить коллекцию всех активных устройств вывода звука
+        /// </summary>
+        public static List<MMDevice> RenderDevicesCollection
+        {
+            get
+            {
+                return new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active).ToList();
+            }
+        }
 
         /// <summary>
         /// Метод начинает трансляцию, в которой захваченые байты передаются сразу на устройство вывода.
@@ -93,12 +117,13 @@ namespace ZappChat_v3.Core.Managers
         /// </summary>
         public static void StopTranslation()
         {
-            if(waveIn != null)
+            /*if(waveIn != null)
                 WaveIn.StopRecording();
             if(waveOut != null)
                 WaveOut.Stop();
             if(waveProvider != null)
-                waveProvider.ClearBuffer();
+                waveProvider.ClearBuffer();*/
+            DisposeWave();
             Support.Logger.Info("Translation is stoped successfully");
         }
         /// <summary>
@@ -124,6 +149,24 @@ namespace ZappChat_v3.Core.Managers
         {
             DisposeWave();
             Support.Logger.Info("Successfull dispose all periphery manager's recourses");
+        }
+        /// <summary>
+        /// Метод возвращает ID устройства захвата по его номеру
+        /// </summary>
+        /// <param name="deviceNumber">Порядковый номер устройства захвата</param>
+        /// <returns>Идентификатор устройства</returns>
+        public static string GetCapturedDeviceId(int deviceNumber)
+        {
+            return CaptureDevicesCollection[deviceNumber].ID;
+        }
+        /// <summary>
+        /// Метод возвращает ID устройства вывода по его номеру
+        /// </summary>
+        /// <param name="deviceNumber">Порядковый номер устройства вывода</param>
+        /// <returns>Идентификатор устройства</returns>
+        public static string GetRenderDeviceId(int deviceNumber)
+        {
+            return RenderDevicesCollection[deviceNumber].ID;
         }
 
         private static void PlayByteArray(byte[] buffer, int offset, int count)

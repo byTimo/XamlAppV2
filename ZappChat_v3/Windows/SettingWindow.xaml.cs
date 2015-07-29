@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -16,16 +17,13 @@ namespace ZappChat_v3.Windows
     public partial class MainWindow : Window
     {
         private Action<byte[], int, int> _test;
-        private List<MMDevice> InputDevices;
-        private List<MMDevice> OutputDevices;
         private bool mircoOff;
+        private bool call;
         public MainWindow()
         {
             InitializeComponent();
-            InputDevices = new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active).ToList();
-            InDeviceComboBox.ItemsSource = InputDevices;
-            OutputDevices = new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active).ToList();
-            OutDeviceComboBox.ItemsSource = OutputDevices;
+            InDeviceComboBox.ItemsSource = PeripheryManager.CaptureDevicesCollection;
+            OutDeviceComboBox.ItemsSource = PeripheryManager.RenderDevicesCollection;
             InDeviceComboBox.SelectedIndex = Settings.Current.InDeviceNumber;
             OutDeviceComboBox.SelectedIndex = Settings.Current.OutDeviceNumber;
         }
@@ -33,23 +31,15 @@ namespace ZappChat_v3.Windows
         private void InDeviceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Settings.Current.InDeviceNumber = InDeviceComboBox.SelectedIndex;
-            Settings.Current.InDeviceId = InputDevices[InDeviceComboBox.SelectedIndex].ID;
-            CreateTranslation();
+            Settings.Current.InDeviceId = PeripheryManager.GetCapturedDeviceId(InDeviceComboBox.SelectedIndex);
         }
 
         private void OutDeviceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Settings.Current.OutDeviceNumber = OutDeviceComboBox.SelectedIndex;
-            Settings.Current.OutDeviceId = OutputDevices[Settings.Current.OutDeviceNumber].ID;
-            CreateTranslation();
+            Settings.Current.OutDeviceId = PeripheryManager.GetRenderDeviceId(OutDeviceComboBox.SelectedIndex);
         }
 
-        private void CreateTranslation()
-        {
-            _test =
-                PeripheryManager.StartTranslation((sender, args) => _test.Invoke(args.Buffer, 0, args.BytesRecorded));
-
-        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -64,6 +54,21 @@ namespace ZappChat_v3.Windows
                 PeripheryManager.StartCaptureInputeWave();
             }
             mircoOff = !mircoOff;
+        }
+
+        private void CallButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!call)
+            {
+                CallButton.Content = "Break";
+                PeripheryManager.StartTranslation();
+            }
+            else
+            {
+                CallButton.Content = "Call";
+                PeripheryManager.StopTranslation();
+            }
+            call = !call;
         }
     }
 }
