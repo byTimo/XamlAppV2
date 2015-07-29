@@ -7,26 +7,31 @@ namespace ZappChat_v3.Core.Managers
 {
     public static class PeripheryManager
     {
-        private static IWaveIn inDevice;
-        private static IWavePlayer outDevice;
+        private static IWaveIn waveIn;
+        private static IWavePlayer waveOut;
         private static BufferedWaveProvider waveProvider;
+
+        static PeripheryManager()
+        {
+            Settings.SettingsChanged += DisposeWave;
+        }
 
         private static IWaveIn WaveIn
         {
             get
             {
-                if (inDevice != null) return inDevice;
-                inDevice = new WasapiCapture(CapturedDevice);
-                return inDevice;
+                if (waveIn != null) return waveIn;
+                waveIn = new WasapiCapture(CapturedDevice);
+                return waveIn;
             }
         }
         private static IWavePlayer WaveOut
         {
             get
             {
-                if (outDevice != null) return outDevice;
-                outDevice = new WasapiOut(RenderDevice, AudioClientShareMode.Shared, false, 300);
-                return outDevice;
+                if (waveOut != null) return waveOut;
+                waveOut = new WasapiOut(RenderDevice, AudioClientShareMode.Shared, false, 300);
+                return waveOut;
             }
         }
 
@@ -34,6 +39,8 @@ namespace ZappChat_v3.Core.Managers
         {
             get
             {
+                if (Settings.Current.InDeviceId != null)
+                    return new MMDeviceEnumerator().GetDevice(Settings.Current.InDeviceId);
                 return new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active)[
                         Settings.Current.InDeviceNumber];
             }
@@ -43,28 +50,29 @@ namespace ZappChat_v3.Core.Managers
         {
             get
             {
+                if (Settings.Current.OutDeviceId != null)
+                    return new MMDeviceEnumerator().GetDevice(Settings.Current.OutDeviceId);
                 return new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active)[
                         Settings.Current.OutDeviceNumber];
             }
         }
 
         /// <summary>
-        /// Метод создаёт трансляцию, в которой захваченые байты передаются сразу на устройство вывода.
+        /// Метод начинает трансляцию, в которой захваченые байты передаются сразу на устройство вывода.
         /// </summary>
-        public static void CreateTranslation()
+        public static void StartTranslation()
         {
-            DisposeTranslation();
-
+            StopTranslation();
             var provider = new WaveInProvider(WaveIn);
             WaveOut.Init(provider);
             WaveIn.StartRecording();
             WaveOut.Play();
             Support.Logger.Info("Self-translation created");
         }
-        //@TEST - проверим, когда будет менеджер P2P
-        public static Action<byte[], int, int> CreateTranslation(EventHandler<WaveInEventArgs> sendBayteAction)
+        //@TODO - проверим, когда будет менеджер P2P
+        public static Action<byte[], int, int> StartTranslation(EventHandler<WaveInEventArgs> sendBayteAction)
         {
-            DisposeTranslation();
+            StopTranslation();
 
             WaveIn.DataAvailable += (sender, args) =>
             {
@@ -81,12 +89,27 @@ namespace ZappChat_v3.Core.Managers
         }
 
         /// <summary>
+        /// Метод останавливает текущую трансляцию, если она активна
+        /// </summary>
+        public static void StopTranslation()
+        {
+            if(waveIn != null)
+                WaveIn.StopRecording();
+            if(waveOut != null)
+                WaveOut.Stop();
+            if(waveProvider != null)
+                waveProvider.ClearBuffer();
+            Support.Logger.Info("Translation is stoped successfully");
+        }
+
+
+        /// <summary>
         /// Метод освобождает все ресурсы менеджера
         /// </summary>
         public static void FinalizePeriphery()
         {
-            DisposeTranslation();
-            Support.Logger.Info("Successful dispose all periphery manager's recourses");
+            DisposeWave();
+            Support.Logger.Info("Successfull dispose all periphery manager's recourses");
         }
 
         private static void PlayByteArray(byte[] buffer, int offset, int count)
@@ -94,19 +117,19 @@ namespace ZappChat_v3.Core.Managers
             var decodedBytes = buffer;//Без кодирования
             waveProvider.AddSamples(decodedBytes, offset, count);
         }
-        private static void DisposeTranslation()
+        private static void DisposeWave()
         {
-            if (inDevice != null)
+            if (waveIn != null)
             {
-                inDevice.StopRecording();
-                inDevice.Dispose();
-                inDevice = null;
+                waveIn.StopRecording();
+                waveIn.Dispose();
+                waveIn = null;
             }
-            if (outDevice != null)
+            if (waveOut != null)
             {
-                outDevice.Stop();
-                outDevice.Dispose();
-                outDevice = null;
+                waveOut.Stop();
+                waveOut.Dispose();
+                waveOut = null;
             }
             if (waveProvider != null)
             {

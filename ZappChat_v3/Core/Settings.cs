@@ -11,13 +11,60 @@ namespace ZappChat_v3.Core
     /// </summary>
     public static class Settings
     {
+        public static event Action SettingsChanged;
         /// <summary>
         /// Вспомогательный класс, отображающий внутренню структуру файла настроек
         /// </summary>
         public class SettingContent
         {
-            public int InDeviceNumber { get; set; }
-            public int OutDeviceNumber { get; set; }
+            private int _inDeviceNumber;
+            private int _outDeviceNumber;
+            private string _inDeviceId;
+            private string _outDeviceId;
+
+            public int InDeviceNumber
+            {
+                get { return _inDeviceNumber; }
+                set
+                {
+                    _inDeviceNumber = value;
+                    SaveSettings();
+                    OnSettingsChanged();
+                }
+            }
+
+            public int OutDeviceNumber
+            {
+                get { return _outDeviceNumber; }
+                set
+                {
+                    _outDeviceNumber = value;
+                    SaveSettings();
+                    OnSettingsChanged();
+                }
+            }
+
+            public string InDeviceId
+            {
+                get { return _inDeviceId; }
+                set
+                {
+                    _inDeviceId = value;
+                    SaveSettings();
+                    OnSettingsChanged();
+                }
+            }
+
+            public string OutDeviceId
+            {
+                get { return _outDeviceId; }
+                set
+                {
+                    _outDeviceId = value;
+                    SaveSettings();
+                    OnSettingsChanged();
+                }
+            }
         }
 
         private static SettingContent currentSetting;
@@ -40,11 +87,7 @@ namespace ZappChat_v3.Core
         /// </summary>
         public static void SaveSettings()
         {
-            if (currentSetting == null)
-            {
-                Support.Logger.Warn("Trying to save the setting with an empty object.");
-                currentSetting = ReadSettingFromFile(FileManager.FullPathToSettingFile);
-            }
+            if (currentSetting == null) return;
             var serializer = new XmlSerializer(typeof(SettingContent));
             using (var stream = File.Open(FileManager.FullPathToSettingFile, FileMode.Create))
             {
@@ -105,6 +148,12 @@ namespace ZappChat_v3.Core
             var newSettingContent = new SettingContent();
             new XmlSerializer(typeof(SettingContent)).Serialize(settingFileStream, newSettingContent);
             return new SettingContent();
+        }
+
+        private static void OnSettingsChanged()
+        {
+            var handler = SettingsChanged;
+            if (handler != null) handler();
         }
     }
 
