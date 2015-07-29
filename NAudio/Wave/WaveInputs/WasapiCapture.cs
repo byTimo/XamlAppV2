@@ -211,6 +211,7 @@ namespace NAudio.CoreAudioApi
         /// </summary>
         public void StopRecording()
         {
+            Thread.Sleep(200);
             this.requestStop = true;
         }
 

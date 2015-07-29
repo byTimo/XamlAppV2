@@ -101,8 +101,22 @@ namespace ZappChat_v3.Core.Managers
                 waveProvider.ClearBuffer();
             Support.Logger.Info("Translation is stoped successfully");
         }
-
-
+        /// <summary>
+        /// Метод включает захват звука микрофоном
+        /// </summary>
+        public static void StartCaptureInputeWave()
+        {
+            if(waveIn != null)
+                WaveIn.StartRecording();
+        }
+        /// <summary>
+        /// Метод отключает захват звука микрофоном
+        /// </summary>
+        public static void StopCaptureInputeWave()
+        {
+            if(waveIn != null)
+                WaveIn.StopRecording();
+        }
         /// <summary>
         /// Метод освобождает все ресурсы менеджера
         /// </summary>

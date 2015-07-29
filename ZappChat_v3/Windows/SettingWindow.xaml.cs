@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -19,6 +18,7 @@ namespace ZappChat_v3.Windows
         private Action<byte[], int, int> _test;
         private List<MMDevice> InputDevices;
         private List<MMDevice> OutputDevices;
+        private bool mircoOff;
         public MainWindow()
         {
             InitializeComponent();
@@ -40,7 +40,7 @@ namespace ZappChat_v3.Windows
         private void OutDeviceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Settings.Current.OutDeviceNumber = OutDeviceComboBox.SelectedIndex;
-            Settings.Current.OutDeviceId = OutputDevices[Settings.Current.InDeviceNumber].ID;
+            Settings.Current.OutDeviceId = OutputDevices[Settings.Current.OutDeviceNumber].ID;
             CreateTranslation();
         }
 
@@ -49,6 +49,21 @@ namespace ZappChat_v3.Windows
             _test =
                 PeripheryManager.StartTranslation((sender, args) => _test.Invoke(args.Buffer, 0, args.BytesRecorded));
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!mircoOff)
+            {
+                Micro.Content = "Micro ON";
+                PeripheryManager.StopCaptureInputeWave();
+            }
+            else
+            {
+                Micro.Content = "Micro OFF";
+                PeripheryManager.StartCaptureInputeWave();
+            }
+            mircoOff = !mircoOff;
         }
     }
 }
