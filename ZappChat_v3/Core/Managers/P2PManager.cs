@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
 using Lidgren.Network;
 
 namespace ZappChat_v3.Core.Managers
@@ -9,19 +8,19 @@ namespace ZappChat_v3.Core.Managers
     {
         private static NetPeer peer;
         private static NetPeerConfiguration configuration;
+        private static Action<int, byte[]> soundCallback;
 
         private static NetPeerConfiguration Config
         {
             get
             {
                 if (configuration != null) return configuration;
-                configuration = new NetPeerConfiguration("ZappChatPeer");
+                configuration = new NetPeerConfiguration("ZappChatPeer")
+                {
+                    AcceptIncomingConnections = true
+                };
                 configuration.EnableMessageType(NetIncomingMessageType.DiscoveryRequest);
                 configuration.EnableMessageType(NetIncomingMessageType.DiscoveryResponse);
-//@TODO - пока не нужно, но может понадобиться
-//                configuration.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
-//@TODO - если понадобится при определении пира подключения, но пока попробуем так
-//                configuration.EnableMessageType(NetIncomingMessageType.UnconnectedData);
                 return configuration;
             }
         }
@@ -32,7 +31,6 @@ namespace ZappChat_v3.Core.Managers
                 if (peer != null) return peer;
                 peer = new NetPeer(Config);
                 peer.RegisterReceivedCallback(GotDataArray);
-                peer.Start();
                 return peer;
             }
         }
@@ -44,7 +42,16 @@ namespace ZappChat_v3.Core.Managers
         /// Происохдит, когда удалённая точка отключилась
         /// </summary>
         public static event EventHandler<NetConnection> RemoteDisconnect;
-
+        /// <summary>
+        /// Регистрация метода вызывающего класса. Данный метод будет вызван, когда будет получена информация с другого пира.
+        /// </summary>
+        /// <param name="callback">Метод вызвающего класса</param>
+        public static void RegisterSoundCallBack(Action<int, byte[]> callback)
+        {
+            soundCallback = callback;
+            Peer.Start();
+            Support.Logger.Info("Peer is started. Port:{0}, Id:{1}", Peer.Port, NetUtility.ToHexString(Peer.UniqueIdentifier));
+        }
         /// <summary>
         /// Отправить управляющий флаги для сеанса
         /// </summary>
@@ -69,9 +76,15 @@ namespace ZappChat_v3.Core.Managers
         {
             var message = Peer.CreateMessage();
             message.Write(controlFlag);
-            if (data != null) message.Write(data);
+            if (data != null)
+            {
+                message.WritePadBits();
+                message.Write(data);
+            }
             var method = data == null ? NetDeliveryMethod.ReliableOrdered : NetDeliveryMethod.Unreliable;
             Peer.SendMessage(message, connections, method , 0);
+            Support.Logger.Trace("Send message {0} data. ControlFlag: {1}", data != null ? "with" : "without",
+                controlFlag);
         }
 
         private static void GotDataArray(object gotterPeer)
@@ -103,7 +116,7 @@ namespace ZappChat_v3.Core.Managers
                         CheckConnectionStatus(im);
                         break;
                     case NetIncomingMessageType.Data:
-                        //@TODO обработать данные PeripheryManager-ом
+                        CheckData(im);
                         break;
                     default:
                         Support.Logger.Warn("Unhandled type: " + im.MessageType + " " + im.LengthBytes + " bytes");
@@ -134,8 +147,26 @@ namespace ZappChat_v3.Core.Managers
                     break;
             }
         }
-#region Event invokers
 
+        private static void CheckData(NetIncomingMessage im)
+        {
+            var controlFlag = im.ReadInt32();
+            byte[] buffer = null;
+//@TODO пока через try/catch, потом можно на конкретные значения привязать
+            try
+            {
+                var bufferSize = im.ReadInt32();
+                im.SkipPadBits();
+                buffer = im.ReadBytes(bufferSize);
+            }
+            finally
+            {
+                Support.Logger.Trace("Got message. ControlFlag: {0}{1}", controlFlag,
+                    buffer != null ? ", bufferSize: " + buffer.Length : "");
+                soundCallback.Invoke(controlFlag, buffer);
+            }
+        }
+#region Event invokers
         private static void OnRemoteConnect(NetConnection e)
         {
             var handler = RemoteConnect;

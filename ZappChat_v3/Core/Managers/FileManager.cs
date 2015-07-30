@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Windows;
-using NUnit.Framework;
 
 namespace ZappChat_v3.Core.Managers
 {
@@ -19,6 +12,9 @@ namespace ZappChat_v3.Core.Managers
         private const string SettingFileName = "Setting";
         private const string UpdateDirectoryName = "Update";
 
+        /// <summary>
+        /// Получить путь до файла настроек.
+        /// </summary>
         public static string FullPathToSettingFile
         {
             get
@@ -27,7 +23,9 @@ namespace ZappChat_v3.Core.Managers
                 return SettingPath;
             }
         }
-
+        /// <summary>
+        /// Получить путь до директории с файлами обновления
+        /// </summary>
         public static string FullPathToUpdateFolder
         {
             get
@@ -52,7 +50,7 @@ namespace ZappChat_v3.Core.Managers
             }
         }
 
-        public static void CheckExistsFiles(string path = null)
+        private static void CheckExistsFiles(string path = null)
         {
             try
             {

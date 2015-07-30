@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
@@ -117,12 +116,6 @@ namespace ZappChat_v3.Core.Managers
         /// </summary>
         public static void StopTranslation()
         {
-            /*if(waveIn != null)
-                WaveIn.StopRecording();
-            if(waveOut != null)
-                WaveOut.Stop();
-            if(waveProvider != null)
-                waveProvider.ClearBuffer();*/
             DisposeWave();
             Support.Logger.Info("Translation is stoped successfully");
         }
@@ -193,7 +186,7 @@ namespace ZappChat_v3.Core.Managers
                 waveProvider.ClearBuffer();
                 waveProvider = null;
             }
-            Support.Logger.Info("Resources periphery released");
+            Support.Logger.Trace("Resources periphery released");
         }
     }
 }

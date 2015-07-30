@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using NAudio.CoreAudioApi;
@@ -26,6 +27,7 @@ namespace ZappChat_v3.Windows
             OutDeviceComboBox.ItemsSource = PeripheryManager.RenderDevicesCollection;
             InDeviceComboBox.SelectedIndex = Settings.Current.InDeviceNumber;
             OutDeviceComboBox.SelectedIndex = Settings.Current.OutDeviceNumber;
+            P2PManager.RegisterSoundCallBack((i, bytes) => Thread.Sleep(1));
         }
 
         private void InDeviceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
