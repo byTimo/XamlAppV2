@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using Lidgren.Network;
 
 namespace ZappChat_v3.Core.Managers
@@ -53,6 +54,25 @@ namespace ZappChat_v3.Core.Managers
             Support.Logger.Info("Peer is started. Port:{0}, Id:{1}", Peer.Port, NetUtility.ToHexString(Peer.UniqueIdentifier));
         }
         /// <summary>
+        /// Присоединиться к пиру с заданной конечной точкой
+        /// </summary>
+        /// <param name="endPoint">Конечная точка удалённого пира</param>
+        /// <returns>Подключение к заданному пиру</returns>
+        public static NetConnection Connect(IPEndPoint endPoint)
+        {
+            Support.Logger.Trace("Create new connection to {0}:{1}", endPoint.Address, endPoint.Port);
+            try
+            {
+                return Peer.Connect(endPoint);
+            }
+            catch (Exception e)
+            {
+                Support.Logger.Error(e, "Connection error: Connection to {0}:{1} is failed", endPoint.Address,
+                    endPoint.Port);
+                throw;
+            }
+        }
+        /// <summary>
         /// Отправить управляющий флаги для сеанса
         /// </summary>
         /// <param name="connections">Целевые подключения</param>
@@ -86,7 +106,6 @@ namespace ZappChat_v3.Core.Managers
             Support.Logger.Trace("Send message {0} data. ControlFlag: {1}", data != null ? "with" : "without",
                 controlFlag);
         }
-
         private static void GotDataArray(object gotterPeer)
         {
             NetIncomingMessage im;
@@ -106,11 +125,11 @@ namespace ZappChat_v3.Core.Managers
                         break;
                     case NetIncomingMessageType.DiscoveryRequest:
                         Support.Logger.Trace("Discovery request from {0}", im.SenderEndPoint.ToString());
-                        Peer.SendDiscoveryResponse(null, im.SenderEndPoint);
+                        currentPeer.SendDiscoveryResponse(null, im.SenderEndPoint);
                         break;
                     case NetIncomingMessageType.DiscoveryResponse:
                         Support.Logger.Trace("Discovery response from {0}", im.SenderEndPoint.ToString());
-                        Peer.Connect(im.SenderEndPoint);
+                        currentPeer.Connect(im.SenderEndPoint);
                         break;
                     case NetIncomingMessageType.StatusChanged:
                         CheckConnectionStatus(im);
@@ -123,6 +142,7 @@ namespace ZappChat_v3.Core.Managers
                         break;
                 }
                 currentPeer.Recycle(im);
+                
             }
         }
 
