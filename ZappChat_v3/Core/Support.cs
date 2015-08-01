@@ -1,7 +1,4 @@
-﻿using System;
-using NAudio.Codecs;
-using NAudio.Wave;
-using NLog;
+﻿using NLog;
 
 namespace ZappChat_v3.Core
 {
