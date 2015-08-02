@@ -7,32 +7,32 @@ namespace ZappChat_v3.Core.Managers
 {
     public static class P2PManager
     {
-        private static NetPeer peer;
-        private static NetPeerConfiguration configuration;
-        private static Action<int, byte[]> soundCallback;
+        private static NetPeer _peer;
+        private static NetPeerConfiguration _configuration;
+        private static Action<int, byte[], NetConnection> _soundCallback;
 
         private static NetPeerConfiguration Config
         {
             get
             {
-                if (configuration != null) return configuration;
-                configuration = new NetPeerConfiguration("ZappChatPeer")
+                if (_configuration != null) return _configuration;
+                _configuration = new NetPeerConfiguration("ZappChatPeer")
                 {
                     AcceptIncomingConnections = true
                 };
-                configuration.EnableMessageType(NetIncomingMessageType.DiscoveryRequest);
-                configuration.EnableMessageType(NetIncomingMessageType.DiscoveryResponse);
-                return configuration;
+                _configuration.EnableMessageType(NetIncomingMessageType.DiscoveryRequest);
+                _configuration.EnableMessageType(NetIncomingMessageType.DiscoveryResponse);
+                return _configuration;
             }
         }
         private static NetPeer Peer
         {
             get
             {
-                if (peer != null) return peer;
-                peer = new NetPeer(Config);
-                peer.RegisterReceivedCallback(GotDataArray);
-                return peer;
+                if (_peer != null) return _peer;
+                _peer = new NetPeer(Config);
+                _peer.RegisterReceivedCallback(GotDataArray);
+                return _peer;
             }
         }
         /// <summary>
@@ -47,9 +47,9 @@ namespace ZappChat_v3.Core.Managers
         /// Регистрация метода вызывающего класса. Данный метод будет вызван, когда будет получена информация с другого пира.
         /// </summary>
         /// <param name="callback">Метод вызвающего класса</param>
-        public static void RegisterSoundCallBack(Action<int, byte[]> callback)
+        public static void RegisterSoundCallBack(Action<int, byte[], NetConnection> callback)
         {
-            soundCallback = callback;
+            _soundCallback = callback;
             Peer.Start();
             Support.Logger.Info("Peer is started. Port:{0}, Id:{1}", Peer.Port, NetUtility.ToHexString(Peer.UniqueIdentifier));
         }
@@ -73,6 +73,16 @@ namespace ZappChat_v3.Core.Managers
             }
         }
         /// <summary>
+        /// Отправить управляющий флаг одному подключению
+        /// </summary>
+        /// <param name="connection">Целевое подлючение</param>
+        /// <param name="controlFlag">Флаг</param>
+        public static void SendControlFlag(NetConnection connection, int controlFlag)
+        {
+            var connecionList = new List<NetConnection> {connection};
+            Send(connecionList, controlFlag, null);
+        }
+        /// <summary>
         /// Отправить управляющий флаги для сеанса
         /// </summary>
         /// <param name="connections">Целевые подключения</param>
@@ -82,12 +92,23 @@ namespace ZappChat_v3.Core.Managers
             Send(connections, controlFlag, null);
         }
         /// <summary>
-        /// Отправить звуковые байты
+        /// Отправить массив байт одному подключению
+        /// </summary>
+        /// <param name="connection">Целевое подключение</param>
+        /// <param name="controlFlag">Флаг</param>
+        /// <param name="data">Массив отправляющихся байт</param>
+        public static void SendData(NetConnection connection, int controlFlag, byte[] data)
+        {
+            var connectioList = new List<NetConnection> {connection};
+            Send(connectioList, controlFlag, data);
+        }
+        /// <summary>
+        /// Отправить массив байт
         /// </summary>
         /// <param name="connections">Целевые подключения</param>
-        /// <param name="controlFlag">Флаг, указывающий на сообщение со звуком</param>
-        /// <param name="data">Байты кодированного звука</param>
-        public static void SendSound(List<NetConnection> connections, int controlFlag, byte[] data)
+        /// <param name="controlFlag">Флаг</param>
+        /// <param name="data">Массив отправляющихся байт</param>
+        public static void SendData(List<NetConnection> connections, int controlFlag, byte[] data)
         {
             Send(connections, controlFlag, data);
         }
@@ -183,19 +204,19 @@ namespace ZappChat_v3.Core.Managers
             {
                 Support.Logger.Trace("Got message. ControlFlag: {0}{1}", controlFlag,
                     buffer != null ? ", bufferSize: " + buffer.Length : "");
-                soundCallback.Invoke(controlFlag, buffer);
+                _soundCallback.Invoke(controlFlag, buffer, im.SenderConnection);
             }
         }
 #region Event invokers
         private static void OnRemoteConnect(NetConnection e)
         {
             var handler = RemoteConnect;
-            if (handler != null) handler(null, e);
+            handler?.Invoke(null, e);
         }
         private static void OnRemoteDisconnect(NetConnection e)
         {
             var handler = RemoteDisconnect;
-            if (handler != null) handler(null, e);
+            handler?.Invoke(null, e);
         }
 #endregion
     }

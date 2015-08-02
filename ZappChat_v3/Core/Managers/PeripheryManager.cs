@@ -8,9 +8,9 @@ namespace ZappChat_v3.Core.Managers
 {
     public static class PeripheryManager
     {
-        private static IWaveIn waveIn;
-        private static IWavePlayer waveOut;
-        private static BufferedWaveProvider waveProvider;
+        private static IWaveIn _waveIn;
+        private static IWavePlayer _waveOut;
+        private static BufferedWaveProvider _waveProvider;
 
         static PeripheryManager()
         {
@@ -22,18 +22,18 @@ namespace ZappChat_v3.Core.Managers
         {
             get
             {
-                if (waveIn != null) return waveIn;
-                waveIn = new WasapiCapture(CapturedDevice);
-                return waveIn;
+                if (_waveIn != null) return _waveIn;
+                _waveIn = new WasapiCapture(CapturedDevice);
+                return _waveIn;
             }
         }
         private static IWavePlayer WaveOut
         {
             get
             {
-                if (waveOut != null) return waveOut;
-                waveOut = new WasapiOut(RenderDevice, AudioClientShareMode.Shared, false, 300);
-                return waveOut;
+                if (_waveOut != null) return _waveOut;
+                _waveOut = new WasapiOut(RenderDevice, AudioClientShareMode.Shared, false, 300);
+                return _waveOut;
             }
         }
 
@@ -62,23 +62,12 @@ namespace ZappChat_v3.Core.Managers
         /// <summary>
         /// Получить коллекцию всех активных устройств захвата звука
         /// </summary>
-        public static List<MMDevice> CaptureDevicesCollection
-        {
-            get
-            {
-                return new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active).ToList();
-            }
-        }
+        public static List<MMDevice> CaptureDevicesCollection => new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active).ToList();
+
         /// <summary>
         /// Получить коллекцию всех активных устройств вывода звука
         /// </summary>
-        public static List<MMDevice> RenderDevicesCollection
-        {
-            get
-            {
-                return new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active).ToList();
-            }
-        }
+        public static List<MMDevice> RenderDevicesCollection => new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active).ToList();
 
         /// <summary>
         /// Метод начинает трансляцию, в которой захваченые байты передаются сразу на устройство вывода.
@@ -105,8 +94,8 @@ namespace ZappChat_v3.Core.Managers
             WaveIn.StartRecording();
             Support.Logger.Info("Send's endpoints connect to P2P manager");
 
-            waveProvider = new BufferedWaveProvider(WaveIn.WaveFormat /*Без кодирования*/);
-            WaveOut.Init(waveProvider);
+            _waveProvider = new BufferedWaveProvider(WaveIn.WaveFormat /*Без кодирования*/);
+            WaveOut.Init(_waveProvider);
             WaveOut.Play();
             return PlayByteArray;
         }
@@ -124,7 +113,7 @@ namespace ZappChat_v3.Core.Managers
         /// </summary>
         public static void StartCaptureInputeWave()
         {
-            if(waveIn != null)
+            if(_waveIn != null)
                 WaveIn.StartRecording();
         }
         /// <summary>
@@ -132,7 +121,7 @@ namespace ZappChat_v3.Core.Managers
         /// </summary>
         public static void StopCaptureInputeWave()
         {
-            if(waveIn != null)
+            if(_waveIn != null)
                 WaveIn.StopRecording();
         }
         /// <summary>
@@ -165,26 +154,26 @@ namespace ZappChat_v3.Core.Managers
         private static void PlayByteArray(byte[] buffer, int offset, int count)
         {
             var decodedBytes = buffer;//Без кодирования
-            waveProvider.AddSamples(decodedBytes, offset, count);
+            _waveProvider.AddSamples(decodedBytes, offset, count);
         }
         private static void DisposeWave()
         {
-            if (waveIn != null)
+            if (_waveIn != null)
             {
-                waveIn.StopRecording();
-                waveIn.Dispose();
-                waveIn = null;
+                _waveIn.StopRecording();
+                _waveIn.Dispose();
+                _waveIn = null;
             }
-            if (waveOut != null)
+            if (_waveOut != null)
             {
-                waveOut.Stop();
-                waveOut.Dispose();
-                waveOut = null;
+                _waveOut.Stop();
+                _waveOut.Dispose();
+                _waveOut = null;
             }
-            if (waveProvider != null)
+            if (_waveProvider != null)
             {
-                waveProvider.ClearBuffer();
-                waveProvider = null;
+                _waveProvider.ClearBuffer();
+                _waveProvider = null;
             }
             Support.Logger.Trace("Resources periphery released");
         }

@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using Lidgren.Network;
 using ZappChat_v3.Core.ChatElements;
 
 namespace ZappChat_v3.Core.Managers
 {
-    public static class CallManager
+    public static partial class CallManager
     {
-        private static Dictionary<ChatMember, NetConnection> connections;
-        private static NetConnection serverConnection;
+        private static Dictionary<ChatMember, NetConnection> _connections;
+        private static NetConnection _serverConnection;
         private static Dictionary<ChatMember, NetConnection> CurrentConnections
         {
             get
             {
-                if (connections != null) return connections;
-                connections = new Dictionary<ChatMember, NetConnection>();
-                return connections;
+                if (_connections != null) return _connections;
+                _connections = new Dictionary<ChatMember, NetConnection>();
+                return _connections;
             }
         }
 
@@ -24,23 +26,22 @@ namespace ZappChat_v3.Core.Managers
         {
             get
             {
-                if (serverConnection != null) return serverConnection;
+                if (_serverConnection != null) return _serverConnection;
                 var serverEndPoint = new IPEndPoint(Constants.ServerIp, Constants.ServerPort);
-                serverConnection = P2PManager.Connect(serverEndPoint);
-                return serverConnection;
+                _serverConnection = P2PManager.Connect(serverEndPoint);
+                return _serverConnection;
             }
         }
-
         /// <summary>
         /// Начать звонок с объектом чата
         /// </summary>
         /// <param name="chatMember">Объект чата</param>
         public static void BeginCallWithChatMember(ChatMember chatMember)
         {
-            throw new NotImplementedException();
+            var bytes = Encoding.UTF8.GetBytes(chatMember.ChatMemberId);
+            P2PManager.SendData(ConnectionWithServer, (int)CallControlFlag.IpMemberDiscovery, bytes);
+            OnBeginCall(new CallEventArgs(chatMember, false));
         }
 
-
-        
     }
 }

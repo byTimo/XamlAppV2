@@ -69,10 +69,12 @@
     </Compile>
     <Compile Include="Core\ALawCodec.cs" />
     <Compile Include="Core\AppConstant.cs" />
-    <Compile Include="Core\Managers\CallControlFlagsEnum.cs" />
+    <Compile Include="Core\Managers\CallManagerControlFlags.cs" />
     <Compile Include="Core\Managers\CallManager.cs" />
     <Compile Include="Core\ChatElements\ChatElementTypeEnum.cs" />
     <Compile Include="Core\ChatElements\ChatMember.cs" />
+    <Compile Include="Core\Managers\CallManagerEvents.cs" />
+    <Compile Include="Core\Managers\CallManagerP2PCallback.cs" />
     <Compile Include="Core\Managers\FileManager.cs" />
     <Compile Include="Core\Managers\P2PManager.cs" />
     <Compile Include="Core\Managers\PeripheryManager.cs" />
