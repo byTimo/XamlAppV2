@@ -6,7 +6,7 @@ namespace ZappChat_v3.Core.Managers
     public static partial class CallManager
     {
         /// <summary>
-        /// Происходит, когда клиент обращается к серверу за внешним IP пира
+        /// Происходит, когда пользователь начинает звонок
         /// </summary>
         public static event EventHandler<CallEventArgs> BeginCall;
         /// <summary>
@@ -18,6 +18,10 @@ namespace ZappChat_v3.Core.Managers
         /// </summary>
         public static event EventHandler<CallEventArgs> PeerConnect;
         /// <summary>
+        /// Происходит, когда удалённый пир создаёт трансляцию
+        /// </summary>
+        public static event EventHandler<CallEventArgs> RemotePeerCall;
+        /// <summary>
         /// Происходит, когда пир отвечает на запрос звонка
         /// </summary>
         public static event EventHandler<CallEventArgs> PeerAnswer;
@@ -25,6 +29,7 @@ namespace ZappChat_v3.Core.Managers
         /// Происходит, когда пир завершает сессию звонка
         /// </summary>
         public static event EventHandler<CallEventArgs> PeerDrop;
+
 
         private static void OnBeginCall(CallEventArgs e)
         {
@@ -39,6 +44,11 @@ namespace ZappChat_v3.Core.Managers
         private static void OnPeerConnect(CallEventArgs e)
         {
             PeerConnect?.Invoke(null, e);
+        }
+
+        private static void OnRemotePeerCall(CallEventArgs e)
+        {
+            RemotePeerCall?.Invoke(null, e);
         }
 
         private static void OnPeerAnswer(CallEventArgs e)

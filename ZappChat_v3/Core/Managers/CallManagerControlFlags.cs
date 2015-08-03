@@ -46,10 +46,10 @@ namespace ZappChat_v3.Core.Managers
         /// <summary>
         /// Завершение голосовой сессии
         /// </summary>
-        BuyQuestion = 9,
+        ByeQuestion = 9,
         /// <summary>
         /// Подтверждение завершения голосовой сессии
         /// </summary>
-        BuyAnswer = 10
+        ByeAnswer = 10
     }
 }

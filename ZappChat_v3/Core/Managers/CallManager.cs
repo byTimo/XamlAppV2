@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Lidgren.Network;
+using NAudio.Wave;
 using ZappChat_v3.Core.ChatElements;
 
 namespace ZappChat_v3.Core.Managers
@@ -39,9 +40,13 @@ namespace ZappChat_v3.Core.Managers
         public static void BeginCallWithChatMember(ChatMember chatMember)
         {
             var bytes = Encoding.UTF8.GetBytes(chatMember.ChatMemberId);
-            P2PManager.SendData(ConnectionWithServer, (int)CallControlFlag.IpMemberDiscovery, bytes);
+            P2PManager.SendData(ConnectionWithServer, (int)CallControlFlag.IpMemberDiscovery, _peerId, bytes);
             OnBeginCall(new CallEventArgs(chatMember, false));
         }
 
+        private static void SendPeripheryData(object sender, WaveInEventArgs e)
+        {
+            P2PManager.SendData(CurrentCall.Value, (int)CallControlFlag.DataTransfer, _peerId, e.Buffer);
+        }
     }
 }

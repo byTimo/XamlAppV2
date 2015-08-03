@@ -9,7 +9,7 @@ namespace ZappChat_v3.Core.Managers
     {
         private static NetPeer _peer;
         private static NetPeerConfiguration _configuration;
-        private static Action<int, byte[], NetConnection> _soundCallback;
+        private static Action<int,string, byte[], NetConnection> _soundCallback;
 
         private static NetPeerConfiguration Config
         {
@@ -35,6 +35,7 @@ namespace ZappChat_v3.Core.Managers
                 return _peer;
             }
         }
+
         /// <summary>
         /// Происходит после успешного подключения удалённой точки
         /// </summary>
@@ -47,7 +48,7 @@ namespace ZappChat_v3.Core.Managers
         /// Регистрация метода вызывающего класса. Данный метод будет вызван, когда будет получена информация с другого пира.
         /// </summary>
         /// <param name="callback">Метод вызвающего класса</param>
-        public static void RegisterSoundCallBack(Action<int, byte[], NetConnection> callback)
+        public static void RegisterSoundCallBack(Action<int,string, byte[], NetConnection> callback)
         {
             _soundCallback = callback;
             Peer.Start();
@@ -73,23 +74,32 @@ namespace ZappChat_v3.Core.Managers
             }
         }
         /// <summary>
+        /// Отключает удалённый пир
+        /// </summary>
+        /// <param name="connection">Подключение к пиру</param>
+        /// <param name="peerId">Прощальное сообщение пиру</param>
+        public static void Disconnect(NetConnection connection, string peerId)
+        {
+            connection.Disconnect(peerId);
+        }
+        /// <summary>
         /// Отправить управляющий флаг одному подключению
         /// </summary>
         /// <param name="connection">Целевое подлючение</param>
         /// <param name="controlFlag">Флаг</param>
-        public static void SendControlFlag(NetConnection connection, int controlFlag)
+        public static void SendControlFlag(NetConnection connection, int controlFlag, string peerId)
         {
             var connecionList = new List<NetConnection> {connection};
-            Send(connecionList, controlFlag, null);
+            Send(connecionList, controlFlag, peerId, null);
         }
         /// <summary>
         /// Отправить управляющий флаги для сеанса
         /// </summary>
         /// <param name="connections">Целевые подключения</param>
         /// <param name="controlFlag">Флаг</param>
-        public static void SendControlFlag(List<NetConnection> connections, int controlFlag)
+        public static void SendControlFlag(List<NetConnection> connections, int controlFlag, string peerId)
         {
-            Send(connections, controlFlag, null);
+            Send(connections, controlFlag, peerId, null);
         }
         /// <summary>
         /// Отправить массив байт одному подключению
@@ -97,10 +107,10 @@ namespace ZappChat_v3.Core.Managers
         /// <param name="connection">Целевое подключение</param>
         /// <param name="controlFlag">Флаг</param>
         /// <param name="data">Массив отправляющихся байт</param>
-        public static void SendData(NetConnection connection, int controlFlag, byte[] data)
+        public static void SendData(NetConnection connection, int controlFlag, string peerId, byte[] data)
         {
             var connectioList = new List<NetConnection> {connection};
-            Send(connectioList, controlFlag, data);
+            Send(connectioList, controlFlag, peerId, data);
         }
         /// <summary>
         /// Отправить массив байт
@@ -108,15 +118,15 @@ namespace ZappChat_v3.Core.Managers
         /// <param name="connections">Целевые подключения</param>
         /// <param name="controlFlag">Флаг</param>
         /// <param name="data">Массив отправляющихся байт</param>
-        public static void SendData(List<NetConnection> connections, int controlFlag, byte[] data)
+        public static void SendData(List<NetConnection> connections, int controlFlag, string peerId, byte[] data)
         {
-            Send(connections, controlFlag, data);
+            Send(connections, controlFlag, peerId, data);
         }
-
-        private static void Send(List<NetConnection> connections, int controlFlag, byte[] data)
+        private static void Send(List<NetConnection> connections, int controlFlag, string peerId, byte[] data)
         {
             var message = Peer.CreateMessage();
             message.Write(controlFlag);
+            message.Write(peerId);
             if (data != null)
             {
                 message.WritePadBits();
@@ -192,6 +202,7 @@ namespace ZappChat_v3.Core.Managers
         private static void CheckData(NetIncomingMessage im)
         {
             var controlFlag = im.ReadInt32();
+            var peerId = im.ReadString();
             byte[] buffer = null;
 //@TODO пока через try/catch, потом можно на конкретные значения привязать
             try
@@ -204,7 +215,7 @@ namespace ZappChat_v3.Core.Managers
             {
                 Support.Logger.Trace("Got message. ControlFlag: {0}{1}", controlFlag,
                     buffer != null ? ", bufferSize: " + buffer.Length : "");
-                _soundCallback.Invoke(controlFlag, buffer, im.SenderConnection);
+                _soundCallback.Invoke(controlFlag, peerId, buffer, im.SenderConnection);
             }
         }
 #region Event invokers
