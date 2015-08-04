@@ -70,9 +70,9 @@ namespace ZappChat_v3.Core.Managers
         public static List<MMDevice> RenderDevicesCollection => new MMDeviceEnumerator().EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active).ToList();
 
         /// <summary>
-        /// Метод начинает трансляцию, в которой захваченые байты передаются сразу на устройство вывода.
+        /// Метод назначает прямой вывод захваченых байт выводящему устройству
         /// </summary>
-        public static void StartTranslation()
+        public static void BindingTranslation()
         {
             StopTranslation();
             var provider = new WaveInProvider(WaveIn);
@@ -82,7 +82,12 @@ namespace ZappChat_v3.Core.Managers
             Support.Logger.Info("Self-translation created");
         }
         //@TODO - проверим, когда будет менеджер P2P
-        public static Action<byte[], int, int> StartTranslation(EventHandler<WaveInEventArgs> sendBayteAction)
+        /// <summary>
+        /// Метод назначает передачу захваченного массива байт входному делегату и возвращает делегат, которому назначается воспроизведение полученого массива
+        /// </summary>
+        /// <param name="sendBayteAction">Делегат, работающий с захваченным массивом байт</param>
+        /// <returns>Делегат, вызов которго воспроизводит переданный массив байт</returns>
+        public static Action<byte[], int, int> BindingTranslation(EventHandler<WaveInEventArgs> sendBayteAction)
         {
             StopTranslation();
 
@@ -99,7 +104,15 @@ namespace ZappChat_v3.Core.Managers
             WaveOut.Play();
             return PlayByteArray;
         }
-
+        /// <summary>
+        /// Метод начинает трансляцию по текущему биндуы
+        /// </summary>
+        public static void StartTranslation()
+        {
+            StartCaptureInputeWave();
+            if (_waveOut != null)
+                WaveOut.Play();
+        }
         /// <summary>
         /// Метод останавливает текущую трансляцию, если она активна
         /// </summary>

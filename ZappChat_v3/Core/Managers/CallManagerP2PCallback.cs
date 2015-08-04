@@ -13,14 +13,14 @@ namespace ZappChat_v3.Core.Managers
         //@TODO - после того, как узнаем свой id
         private static string _peerId = "1";
         private static KeyValuePair<ChatMember, NetConnection> _curentCall;
-        private static Action<byte[], int, int> playByteArrayAction;
+        private static Action<byte[], int, int> _playByteArrayAction;
 
         private static KeyValuePair<ChatMember, NetConnection> CurrentCall
         {
             get { return _curentCall; }
             set
             {
-                P2PManager.SendControlFlag(_curentCall.Value, (int)CallControlFlag.ByeQuestion, _peerId);
+                PeripheryManager.StopTranslation();
                 P2PManager.Disconnect(_curentCall.Value, _peerId);
                 CurrentConnections.Remove(_curentCall.Key);
                 _curentCall = value;
@@ -43,13 +43,13 @@ namespace ZappChat_v3.Core.Managers
                     IpMemberOfferHandler(data);
                     break;
                 case CallControlFlag.HelloQuestion:
-                    HelloQuestionHandler(data,peerId, connection);
+                    HelloQuestionHandler(peerId, connection);
                     break;
                 case CallControlFlag.HelloAnswer:
                     HelloAnswerHandler(connection);
                     break;
                 case CallControlFlag.CreateSession:
-                    CreateSessionHandler(peerId, connection);
+                    CreateSessionHandler(peerId);
                     break;
                 case CallControlFlag.ApproveSession:
                     ApproveSessionHandler(peerId, connection);
@@ -61,10 +61,10 @@ namespace ZappChat_v3.Core.Managers
                     DataTransferHandler(data, peerId, connection);
                     break;
                 case CallControlFlag.ByeQuestion:
-                    ByeQuestionHandler(peerId, connection);
+                    ByeQuestionHandler(peerId);
                     break;
                 case CallControlFlag.ByeAnswer:
-                    ByeAnswerHandler(peerId, connection);
+                    ByeAnswerHandler();
                     break;
             }
         }
@@ -97,14 +97,15 @@ namespace ZappChat_v3.Core.Managers
                     ipAddress, port);
                 var endPoint = new IPEndPoint(ipAddress, port);
                 var connection = P2PManager.Connect(endPoint);
-                CurrentConnections.Add(chatMember.Key, connection);
+                CurrentConnections[chatMember.Key] = connection;
                 CurrentCall = chatMember;
+                //@TODO - timer
                 P2PManager.SendControlFlag(connection,(int)CallControlFlag.HelloQuestion, _peerId);
             }
             OnIpAddressOffer(new CallEventArgs(chatMember.Key, sereverReturnIp));
         }
 
-        private static void HelloQuestionHandler(byte[] data,string peerId, NetConnection connection)
+        private static void HelloQuestionHandler(string peerId, NetConnection connection)
         {
 //@TODO После реализации контент менеджера нужно определять конкретный ChatMember по id
             Support.Logger.Trace("CallManager.P2PCallback: Peer {0}-{1}:{2} connected", peerId,
@@ -120,9 +121,11 @@ namespace ZappChat_v3.Core.Managers
             Support.Logger.Trace("CallManager.P2PCallback: Peer {0}-{1}:{2} connected", _curentCall.Key,
                 connection.RemoteEndPoint.Address, connection.RemoteEndPoint.Port);
             OnPeerConnect(new CallEventArgs(_curentCall.Key, true));
+            //@TODO - timer
+            P2PManager.SendControlFlag(connection, (int)CallControlFlag.CreateSession, _peerId);
         }
 
-        private static void CreateSessionHandler(string peerId, NetConnection connection)
+        private static void CreateSessionHandler(string peerId)
         {
             var chatMamber = CurrentConnections.FirstOrDefault(c => c.Key.ChatMemberId == peerId).Key;
             if (chatMamber == null)
@@ -144,8 +147,9 @@ namespace ZappChat_v3.Core.Managers
                 return;
             }
             Support.Logger.Trace("CallManager.P2PCallback: Approve session with {0}", CurrentCall);
+            _playByteArrayAction = PeripheryManager.BindingTranslation(SendPeripheryData);
+            PeripheryManager.StartTranslation();
             OnPeerAnswer(new CallEventArgs(CurrentCall.Key, true));
-            playByteArrayAction = PeripheryManager.StartTranslation(SendPeripheryData);
         }
         private static void RefuseSessionHandler(string peerId, NetConnection connection)
         {
@@ -156,6 +160,8 @@ namespace ZappChat_v3.Core.Managers
                 return;
             }
             Support.Logger.Trace("CallManager.P2PCallback: Refuse session with {0}", CurrentCall);
+            P2PManager.Disconnect(CurrentCall.Value, _peerId);
+            OnPeerAnswer(new CallEventArgs(CurrentCall.Key, false));
             CurrentCall = new KeyValuePair<ChatMember, NetConnection>();
         }
 
@@ -167,20 +173,29 @@ namespace ZappChat_v3.Core.Managers
                     connection.RemoteEndPoint.Address, connection.RemoteEndPoint.Port);
                 return;
             }
-            playByteArrayAction.Invoke(data, 0, data.Length);
+            _playByteArrayAction.Invoke(data, 0, data.Length);
         }
 
-        private static void ByeQuestionHandler(string peerId, NetConnection connection)
+        private static void ByeQuestionHandler(string peerId)
         {
-            var chatMamber = CurrentConnections.FirstOrDefault(c => c.Key.ChatMemberId == peerId);
-            if (chatMamber.Value == null) return;
-            P2PManager.Disconnect(chatMamber.Value, peerId);
-            P2PManager.SendControlFlag(chatMamber.Value,(int)CallControlFlag.ByeAnswer, peerId);
-            OnPeerDrop(new CallEventArgs(chatMamber.Key, true));
-            CurrentConnections.Remove(chatMamber.Key);
+            if (CurrentCall.Key.ChatMemberId == peerId)
+            {
+                P2PManager.SendControlFlag(CurrentCall.Value, (int)CallControlFlag.ByeAnswer, _peerId);
+                OnPeerDrop(new CallEventArgs(CurrentCall.Key, true));
+                CurrentCall = new KeyValuePair<ChatMember, NetConnection>();
+            }
+            else
+            {
+                var chatMamber = CurrentConnections.FirstOrDefault(c => c.Key.ChatMemberId == peerId);
+                if (chatMamber.Value == null) return;
+                P2PManager.SendControlFlag(chatMamber.Value, (int)CallControlFlag.ByeAnswer, _peerId);
+                OnPeerDrop(new CallEventArgs(chatMamber.Key, true));
+                P2PManager.Disconnect(chatMamber.Value, _peerId);
+                CurrentConnections.Remove(chatMamber.Key);
+            }
         }
 
-        private static void ByeAnswerHandler(string peerId, NetConnection connection)
+        private static void ByeAnswerHandler()
         {
             //Всем насрать!
         }

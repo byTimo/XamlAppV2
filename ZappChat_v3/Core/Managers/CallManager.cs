@@ -37,11 +37,43 @@ namespace ZappChat_v3.Core.Managers
         /// Начать звонок с объектом чата
         /// </summary>
         /// <param name="chatMember">Объект чата</param>
-        public static void BeginCallWithChatMember(ChatMember chatMember)
+        public static void CallChatMamber(ChatMember chatMember)
         {
+            CurrentConnections.Add(chatMember, null);
             var bytes = Encoding.UTF8.GetBytes(chatMember.ChatMemberId);
             P2PManager.SendData(ConnectionWithServer, (int)CallControlFlag.IpMemberDiscovery, _peerId, bytes);
             OnBeginCall(new CallEventArgs(chatMember, false));
+        }
+        /// <summary>
+        /// Ответить или отменить звонок 
+        /// </summary>
+        /// <param name="chatMamber">Объект чата</param>
+        /// <param name="answer">Отвечаем на звонок</param>
+        public static void AnswerChatMamber(ChatMember chatMamber, bool answer)
+        {
+            var mamberAndConnection = CurrentConnections.FirstOrDefault(c => c.Key.Equals(chatMamber));
+            if (mamberAndConnection.Value == null)
+            {
+                var ex = new NullReferenceException("CallManager.AnswerChatMamaber null connection");
+                Support.Logger.Fatal(ex);
+                throw ex;
+            }
+            if (!answer)
+            {
+                P2PManager.SendControlFlag(mamberAndConnection.Value, (int)CallControlFlag.RefuseSession, _peerId);
+            }
+            else
+            {
+                P2PManager.SendControlFlag(mamberAndConnection.Value, (int)CallControlFlag.ApproveSession, _peerId);
+                CurrentCall = mamberAndConnection;
+            }
+        }
+        /// <summary>
+        /// Положить трубку
+        /// </summary>
+        public static void HangUp()
+        {
+            CurrentCall = new KeyValuePair<ChatMember, NetConnection>();
         }
 
         private static void SendPeripheryData(object sender, WaveInEventArgs e)
