@@ -96,12 +96,10 @@ namespace ZappChat_v3.Core.Managers
                 var encodedBytes = args.Buffer;//Без кодирования
                 sendBayteAction.Invoke(sender, new WaveInEventArgs(encodedBytes, args.BytesRecorded));
             };
-            WaveIn.StartRecording();
             Support.Logger.Info("Send's endpoints connect to P2P manager");
 
             _waveProvider = new BufferedWaveProvider(WaveIn.WaveFormat /*Без кодирования*/);
             WaveOut.Init(_waveProvider);
-            WaveOut.Play();
             return PlayByteArray;
         }
         /// <summary>
@@ -119,7 +117,7 @@ namespace ZappChat_v3.Core.Managers
         public static void StopTranslation()
         {
             DisposeWave();
-            Support.Logger.Info("Translation is stoped successfully");
+            Support.Logger.Trace("Translation is stoped successfully");
         }
         /// <summary>
         /// Метод включает захват звука микрофоном

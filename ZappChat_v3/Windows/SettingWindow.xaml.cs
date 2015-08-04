@@ -63,6 +63,7 @@ namespace ZappChat_v3.Windows
             {
                 CallButton.Content = "Break";
                 _test = PeripheryManager.BindingTranslation((o, args) => _test.Invoke(args.Buffer, 0, args.BytesRecorded));
+                PeripheryManager.StartTranslation();
             }
             else
             {
