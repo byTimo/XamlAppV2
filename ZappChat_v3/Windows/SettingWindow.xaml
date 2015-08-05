@@ -7,6 +7,8 @@
         <ComboBox x:Name="OutDeviceComboBox" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="OutDeviceComboBox_SelectionChanged"/>
         <Button x:Name="Micro" Content="Micro OFF" HorizontalAlignment="Left" Margin="90,80,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Button x:Name="CallButton" Content="Call" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Width="75" Click="CallButton_Click"/>
+        <ComboBox x:Name="TestComboBox" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" Width="120"/>
+
 
     </Grid>
 </Window>

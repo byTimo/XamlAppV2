@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
 using ZappChat_v3.Core;
+using ZappChat_v3.Core.ChatElements;
 using ZappChat_v3.Core.Managers;
 
 namespace ZappChat_v3.Windows
@@ -27,6 +28,7 @@ namespace ZappChat_v3.Windows
             OutDeviceComboBox.ItemsSource = PeripheryManager.RenderDevicesCollection;
             InDeviceComboBox.SelectedIndex = Settings.Current.InDeviceNumber;
             OutDeviceComboBox.SelectedIndex = Settings.Current.OutDeviceNumber;
+            TestComboBox.ItemsSource = DbContentManager.Instance.Friends.ToList();
         }
 
         private void InDeviceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

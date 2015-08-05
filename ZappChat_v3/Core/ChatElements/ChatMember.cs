@@ -1,11 +1,19 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZappChat_v3.Core.ChatElements
 {
     public abstract class ChatMember
     {
+        [Key]
         public string ChatMemberId { get; set; }
         public ChatElementType Type { get; set; }
+        public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, Id: {ChatMemberId}";
+        }
 
         protected bool Equals(ChatMember other)
         {
