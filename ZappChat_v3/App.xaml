@@ -1,9 +1,12 @@
 ﻿<Application x:Class="ZappChat_v3.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="Windows/SettingWindow.xaml"
-             Exit="App_OnExit">
+             Exit="App_OnExit" StartupUri="Windows/ChatWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Controls/ChatMamberTabControlTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

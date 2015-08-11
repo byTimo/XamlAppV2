@@ -31,7 +31,7 @@ namespace ZappChat_v3.Core.Managers
         {
             P2PManager.RegisterSoundCallBack(P2PCallback);
         }
-        private static void P2PCallback(int flag,string peerId, byte[] data, NetConnection connection)
+        private static void P2PCallback(int flag, string peerId, byte[] data, NetConnection connection)
         {
             var controlFlag = (CallControlFlag)flag;
             switch (controlFlag)
