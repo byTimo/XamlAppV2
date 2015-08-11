@@ -3,10 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:ZappChat_v3.Controls"
         mc:Ignorable="d"
-        Title="ChatWindow" WindowStyle="None" Background="{x:Null}" ResizeMode="CanResizeWithGrip" AllowsTransparency="True">
-    <Border CornerRadius="5,5,0,5" Background="White" BorderThickness="1" BorderBrush="Black">
-        <Grid Margin="5">
+        Title="ChatWindow" WindowStyle="None" Background="{x:Null}" ResizeMode="CanResizeWithGrip" AllowsTransparency="True"
+        MinHeight="600" MinWidth="800">
+    <Border CornerRadius="5,5,0,5" Background="White" BorderThickness="1" BorderBrush="#FFCFCFCF">
+        <Grid Margin="5,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="220*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -16,7 +18,9 @@
                 <RowDefinition Height="64"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <GridSplitter Grid.Column="1" Grid.RowSpan="2" Background="White" ResizeBehavior="PreviousAndNext" Width="3"/>
+            <!--  -->
+            <controls:StatusButton Grid.Row="0" Grid.Column="0" Content="Максим Гостюхин" FontFamily="HelveticaNeueCyr" FontSize="16" FontStretch="Condensed" FontWeight="Medium"/>
+            <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Background="White" ResizeBehavior="PreviousAndNext" Width="3"/>
             <TabControl x:Name="tabControl" Grid.Row="1" Grid.Column="0" Background="{x:Null}" BorderBrush="{x:Null}" Style="{DynamicResource TabControlChatMambers}">
                 <TabItem Header="Друзья" Style="{DynamicResource TabItemChatMamber}">
                     <Grid Background="#FFE5E5E5"/>
