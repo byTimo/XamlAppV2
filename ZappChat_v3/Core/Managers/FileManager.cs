@@ -50,7 +50,7 @@ namespace ZappChat_v3.Core.Managers
             }
         }
 
-        private static void CheckExistsFiles(string path = null)
+        public static void CheckExistsFiles(string path = null)
         {
             try
             {

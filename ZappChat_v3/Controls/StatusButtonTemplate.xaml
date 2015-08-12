@@ -39,10 +39,9 @@
                                 <Ellipse x:Name="statusEllipse" Fill="Green" Width="7" Height="7" />
                                 <TextBlock x:Name="statusText" Text="В сети" Margin="3,1,0,0" TextAlignment="Center" FontFamily="{TemplateBinding FontFamily}" FontStretch="{TemplateBinding FontStretch}" FontStyle="{TemplateBinding FontStyle}" FontWeight="{TemplateBinding FontWeight}" FontSize="10.667"/>
                             </StackPanel>
-                            <Image Grid.Column="2" Source="../Images/kg.png" Width="10" Height="7" VerticalAlignment="Center" Grid.RowSpan="2" Margin="0"/>
+                            <Image Grid.Column="2" Source="../Images/BottomArrow.png" Width="10" Height="7" VerticalAlignment="Center" Grid.RowSpan="2" Margin="0"/>
                         </Grid>
                     </Border>
-                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

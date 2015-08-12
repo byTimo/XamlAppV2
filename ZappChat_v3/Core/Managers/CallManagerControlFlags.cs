@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ZappChat_v3.Core.Managers
+﻿namespace ZappChat_v3.Core.Managers
 {
     /// <summary>
     /// Перечисление флагов, контролирующих сессию между подключёнными пирами
