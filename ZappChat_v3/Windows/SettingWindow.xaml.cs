@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using NAudio.CoreAudioApi;
-using NAudio.Wave;
 using ZappChat_v3.Core;
-using ZappChat_v3.Core.ChatElements;
 using ZappChat_v3.Core.Managers;
 
 namespace ZappChat_v3.Windows

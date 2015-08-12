@@ -8,6 +8,14 @@
         mc:Ignorable="d"
         Title="ChatWindow" WindowStyle="None" Background="{x:Null}" ResizeMode="CanResizeWithGrip" AllowsTransparency="True"
         MinHeight="600" MinWidth="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Controls/DataTemplates/FriendListBoxDataTemplate.xaml"/>
+                <ResourceDictionary Source="../Controls/DataTemplates/GroupTreeViewDataTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Border CornerRadius="5,5,0,5" Background="White" BorderThickness="1" BorderBrush="#FFCFCFCF">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -33,18 +41,14 @@
                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" 
                              Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" 
                              ItemsSource="{Binding Path=FriendCollection, RelativeSource={RelativeSource Mode=FindAncestor,
-                                                         AncestorType=Window}}"/>
+                                                         AncestorType=Window}}" ItemTemplate="{DynamicResource FriendListBoxTemplate}"/>
                 </TabItem>
                 <TabItem Header="Группы" Style="{DynamicResource TabItemChatMamber}">
                     <TreeView ItemsSource="{Binding Path=GroupCollection, RelativeSource={RelativeSource Mode=FindAncestor,
-                                                         AncestorType=Window}}" BorderThickness="0,0,0,3" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                                         AncestorType=Window}}" BorderThickness="0,0,0,3" Background="{x:Null}" 
+                              BorderBrush="{x:Null}" Padding="0" HorizontalContentAlignment="Stretch" 
+                              VerticalContentAlignment="Stretch" ItemTemplate="{StaticResource GroupTemplate}">
                         <TreeView.Resources>
-                            <HierarchicalDataTemplate DataType="{x:Type chatMamber:Group}" ItemsSource="{Binding FriendList}">
-                                <TextBlock Text="{Binding Name}"/>
-                            </HierarchicalDataTemplate>
-                            <DataTemplate DataType="{x:Type chatMamber:Friend}">
-                                <TextBlock Text="{Binding Name}"/>
-                            </DataTemplate>
                         </TreeView.Resources>
                     </TreeView>
                 </TabItem>

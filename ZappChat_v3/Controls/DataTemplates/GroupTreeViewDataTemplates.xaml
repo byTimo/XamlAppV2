@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:ZappChat_v3.Controls.DataTemplates"
                     xmlns:chatMamber="clr-namespace:ZappChat_v3.Core.ChatElements">
-    <HierarchicalDataTemplate x:Key="GroupHierarchicalDataTemplate" DataType="{x:Type chatMamber:Group}" ItemsSource="{Binding Friends}">
-        <TextBlock Text="{Binding Name}"/>
+    <HierarchicalDataTemplate x:Key="GroupTemplate" DataType="{x:Type chatMamber:Group}" ItemsSource="{Binding Friends}">
+        <TextBlock Text="{Binding}"/>
     </HierarchicalDataTemplate>
+    <DataTemplate x:Key="FriendInsideTemplate" DataType="{x:Type chatMamber:Friend}">
+        <TextBlock Text="{Binding}"/>
+    </DataTemplate>
 </ResourceDictionary>
