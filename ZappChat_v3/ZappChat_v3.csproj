@@ -60,6 +60,9 @@
       <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -93,6 +96,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\SettingButtonTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\StatusButtonTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,6 +117,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\StatusButton.cs" />
+    <Compile Include="Controls\ValueConverters\TabSizeConverter.cs" />
     <Compile Include="Core\ALawCodec.cs" />
     <Compile Include="Core\AppConstant.cs" />
     <Compile Include="Core\ChatElements\Friend.cs" />
@@ -156,6 +164,8 @@
     </EmbeddedResource>
     <Resource Include="Images\BottomArrow.png" />
     <Resource Include="Images\Group.png" />
+    <Resource Include="Images\settingOff.jpg" />
+    <Resource Include="Images\settingOn.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

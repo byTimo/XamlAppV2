@@ -2,18 +2,25 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:chatMamber="clr-namespace:ZappChat_v3.Core.ChatElements">
     <HierarchicalDataTemplate DataType="{x:Type chatMamber:Group}" ItemsSource="{Binding Friends}">
-        <Grid>
+        <Grid Margin="0,15,0,0"> 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Ellipse Grid.Column="0" Fill="DarkGray" Width="50" Height="50" Margin="17,0"/>
+            <Ellipse Grid.Column="0" Fill="DarkGray" Width="50" Height="50" Margin="15,0"/>
             <TextBlock Grid.Column="1" Text="{Binding Name}" FontFamily="HelveticaNeueCyr" FontSize="16" VerticalAlignment="Center" Margin="0,2,0,0"/>
             <Image Grid.Column="2" Source="/Images/Group.png" HorizontalAlignment="Right" VerticalAlignment="Center" Width="16" Margin="15,0"/>
         </Grid>
     </HierarchicalDataTemplate>
     <DataTemplate DataType="{x:Type chatMamber:Friend}">
-        <TextBlock Text="{Binding Name}"></TextBlock>
+        <Grid Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Ellipse Grid.Column="0" Fill="DarkGray" Width="20" Height="20" Margin="20,0,5,0"/>
+            <TextBlock Grid.Column="1" Text="{Binding Name}" FontFamily="HelveticaNeueCyr" FontSize="16" VerticalAlignment="Center" Margin="0,2,0,0"/>
+        </Grid>
     </DataTemplate>
 </ResourceDictionary>
