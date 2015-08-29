@@ -23,7 +23,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <!-- Top Row  -->
-            <controls:StatusButton Grid.Row="0" Grid.Column="0" Content="Антон Колчин" FontFamily="HelveticaNeueCyr" FontSize="16" FontStretch="Condensed" FontWeight="Medium"/>
+            <controls:StatusButton Grid.Row="0" Grid.Column="0" Content="Ася Бутакова" FontFamily="HelveticaNeueCyr" FontSize="16" FontStretch="Condensed" FontWeight="Medium"/>
             <ToggleButton Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25" Margin="15,0,0,0" BorderBrush="{x:Null}" Foreground="{x:Null}" Cursor="Hand">
                 <ToggleButton.Resources>
                     <ResourceDictionary Source="../Controls/SettingButtonTemplate.xaml"/>
@@ -48,8 +48,7 @@
                     <ListBox x:Name="friendList" 
                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" 
                              Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" 
-                             ItemsSource="{Binding Path=FriendCollection, RelativeSource={RelativeSource Mode=FindAncestor,
-                                                         AncestorType=Window}}" ItemTemplate="{DynamicResource FriendListBoxTemplate}"/>
+                             ItemsSource="{Binding FriendCollection}" ItemTemplate="{DynamicResource FriendListBoxTemplate}" Margin="0,1,0,-1"/>
                     <TabItem.Resources>
                         <ResourceDictionary Source="../Controls/DataTemplates/FriendListBoxDataTemplate.xaml"/>
                     </TabItem.Resources>
@@ -61,11 +60,10 @@
                             <Ellipse Stroke="Black" Width="30" Height="30"/>
                         </StackPanel>
                     </TabItem.Header>
-                    <TreeView BorderThickness="0,0,0,3" Background="{x:Null}" 
+                    <TreeView x:Name="GroupTreeView" BorderThickness="0,0,0,3" Background="{x:Null}" 
                               BorderBrush="{x:Null}" Padding="0" HorizontalContentAlignment="Stretch" 
                               VerticalContentAlignment="Stretch"
-                              ItemsSource="{Binding Path=GroupCollection, RelativeSource={RelativeSource Mode=FindAncestor,
-                                                         AncestorType=Window}}" ItemContainerStyle="{StaticResource TreeViewItemTemplate}">
+                              ItemsSource="{Binding GroupCollection}" ItemContainerStyle="{StaticResource TreeViewItemTemplate}">
                         <TreeView.Resources>
                             <ResourceDictionary>
                                 <ResourceDictionary.MergedDictionaries>
@@ -76,6 +74,8 @@
                     </TreeView>
                 </TabItem>
             </TabControl>
+            <ContentControl Grid.Row="2" Grid.Column="2" Content="{Binding MainContent}"/>
+            <!--<controls:GroupSettingContent x:Name="GroupSettingContent" Grid.Row="2" Grid.Column="2"></controls:GroupSettingContent>-->
         </Grid>
     </Border>
 </Window>

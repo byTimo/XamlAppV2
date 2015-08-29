@@ -1,71 +1,69 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
+using ZappChat_v3.Annotations;
+using ZappChat_v3.Controls;
 using ZappChat_v3.Core.ChatElements;
 using ZappChat_v3.Core.Managers;
 
 namespace ZappChat_v3.Windows
 {
-    public partial class ChatWindow : Window, INotifyPropertyChanged
+    public class ChatWindowModel : INotifyPropertyChanged
     {
-        private void AppShutdown(object sender, RoutedEventArgs e)
+        private ObservableCollection<Friend> _friends;
+        private ObservableCollection<Group> _groups;
+        private UserControl _currentContent;
+
+        public ChatWindowModel()
         {
-            Application.Current.Shutdown();
+            FriendCollection =
+                new ObservableCollection<Friend>(DbContentManager.Instance.Friends.Include(f => f.MembershipGroups));
+            GroupCollection =
+                new ObservableCollection<Group>(DbContentManager.Instance.Groups.Include(g => g.FriendList));
+            CommandManager.GroupSettingOpenCommand.Action += GroupSettingOpenCallBack;
         }
 
-        public void TestDB()
+        public ObservableCollection<Friend> FriendCollection
         {
-            var frien1 = new Friend
+            get { return _friends; }
+            set
             {
-                ChatMemberId = "1",
-                Name = "Вася",
-                Type = ChatElementType.Friend
-            };
-            var frien2 = new Friend
+                _friends = value;
+                OnPropertyChanged(nameof(FriendCollection));
+            }
+        }
+        public ObservableCollection<Group> GroupCollection
+        {
+            get { return _groups; }
+            set
             {
-                ChatMemberId = "2",
-                Name = "Стёпа",
-                Type = ChatElementType.Friend
-            };
+                _groups = value;
+                OnPropertyChanged(nameof(GroupCollection));
+            }
+        }
 
-            var frien3 = new Friend
+        public UserControl MainContent
+        {
+            get { return _currentContent; }
+            set
             {
-                ChatMemberId = "3",
-                Name = "Рыся",
-                Type = ChatElementType.Friend
-            };
+                _currentContent = value;
+                OnPropertyChanged(nameof(MainContent));
+            }
+        }
+        private void GroupSettingOpenCallBack()
+        {
+            MainContent = new GroupSettingContent();
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-            var frien4 = new Friend
-            {
-                ChatMemberId = "4",
-                Name = "Гоша",
-                Type = ChatElementType.Friend
-            };
-
-            var frien5 = new Friend
-            {
-                ChatMemberId = "5",
-                Name = "Пумба",
-                Type = ChatElementType.Friend
-            };
-            var group1 = new Group
-            {
-                ChatMemberId = "1",
-                Name = "Ребятки",
-                Type = ChatElementType.Group,
-                FriendList = new List<Friend> {frien1, frien2, frien4}
-            };
-            var group2 = new Group
-            {
-                ChatMemberId = "2",
-                Name = "Dota",
-                Type = ChatElementType.Group,
-                FriendList = new List<Friend>{frien1, frien5}
-            };
-            DbContentManager.Instance.Groups.AddRange(new[] {group1, group2});
-            DbContentManager.Instance.Friends.Add(frien3);
-            DbContentManager.Instance.SaveChanges();
-
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
