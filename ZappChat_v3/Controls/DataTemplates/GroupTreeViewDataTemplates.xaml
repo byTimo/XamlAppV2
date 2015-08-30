@@ -12,7 +12,10 @@
             </Grid.ColumnDefinitions>
             <Ellipse Grid.Column="0" Fill="DarkGray" Width="50" Height="50" Margin="15,0"/>
             <TextBlock Grid.Column="1" Text="{Binding Name}" FontFamily="HelveticaNeueCyr" FontSize="16" VerticalAlignment="Center" Margin="0,2,0,0"/>
-            <Button x:Name="GroupSettingOpen" Command="{Binding ElementName=GroupSettingOpen, Path=Name,Converter={StaticResource CommandConverter}}" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="16" Margin="15,0">
+            <Button x:Name="GroupSettingOpen" 
+                    Command="{Binding ElementName=GroupSettingOpen, Path=Name,Converter={StaticResource CommandConverter}}" 
+                    CommandParameter="{Binding ChatMemberId}"  
+                    Cursor="Hand" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="16" Margin="15,0">
                 <Image Source="/Images/Group.png"/>
             </Button>
         </Grid>

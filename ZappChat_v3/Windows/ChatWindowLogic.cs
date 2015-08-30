@@ -1,6 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,7 +25,7 @@ namespace ZappChat_v3.Windows
                 new ObservableCollection<Friend>(DbContentManager.Instance.Friends.Include(f => f.MembershipGroups));
             GroupCollection =
                 new ObservableCollection<Group>(DbContentManager.Instance.Groups.Include(g => g.FriendList));
-            CommandManager.GroupSettingOpenCommand.Action += GroupSettingOpenCallBack;
+            CommandManager.GroupSettingOpenCommand.ParameterizedAction += GroupSettingOpenCallBack;
         }
 
         public ObservableCollection<Friend> FriendCollection
@@ -54,9 +56,11 @@ namespace ZappChat_v3.Windows
                 OnPropertyChanged(nameof(MainContent));
             }
         }
-        private void GroupSettingOpenCallBack()
+        private void GroupSettingOpenCallBack(object param)
         {
-            MainContent = new GroupSettingContent();
+            if(param == null) throw new NullReferenceException();
+            var group = GroupCollection.First(g => g.ChatMemberId == (string)param);
+            MainContent = new GroupSettingContent(group);
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
