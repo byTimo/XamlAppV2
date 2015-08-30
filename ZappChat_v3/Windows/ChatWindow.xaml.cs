@@ -37,5 +37,17 @@ namespace ZappChat_v3.Windows
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void StatusButton_Checked(object sender, RoutedEventArgs e)
+        {
+            FullBlockator.Visibility = Visibility.Visible;
+            StatusMenu.Visibility = Visibility.Visible;
+        }
+
+        private void StatusButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            FullBlockator.Visibility = Visibility.Collapsed;
+            StatusMenu.Visibility = Visibility.Collapsed;
+        }
     }
 }

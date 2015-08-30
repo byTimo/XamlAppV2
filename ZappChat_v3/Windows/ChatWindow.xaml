@@ -22,14 +22,6 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <!-- Top Row  -->
-            <controls:StatusButton Grid.Row="0" Grid.Column="0" Content="Андрей Кондратьев" FontFamily="HelveticaNeueCyr" FontSize="16" FontStretch="Condensed" FontWeight="Medium"/>
-            <ToggleButton Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25" Margin="15,0,0,0" BorderBrush="{x:Null}" Foreground="{x:Null}" Cursor="Hand">
-                <ToggleButton.Resources>
-                    <ResourceDictionary Source="../Controls/SettingButtonTemplate.xaml"/>
-                </ToggleButton.Resources>
-            </ToggleButton>
-            <Button Grid.Row="0" x:Name="button" Content="Х" Grid.Column="2" HorizontalAlignment="Right" Width="50" Click="AppShutdown" VerticalAlignment="Center" Margin="0,0,15,0"/>
             <!-- Spliters -->
             <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Background="#e5e5e5" ResizeBehavior="PreviousAndNext" Width="1"/>
             <Rectangle Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Fill="#e5e5e5" Height="1" HorizontalAlignment="Stretch"/>
@@ -71,7 +63,17 @@
                 </TabItem>
             </TabControl>
             <ContentControl Grid.Row="2" Grid.Column="2" Content="{Binding MainContent}"/>
-            <!--<controls:GroupSettingContent x:Name="GroupSettingContent" Grid.Row="2" Grid.Column="2"></controls:GroupSettingContent>-->
+            <!-- Blockators -->
+            <Rectangle x:Name="FullBlockator" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" Fill="#A5FFFFFF" Visibility="Collapsed"/>
+            <!-- Top Row  -->
+            <controls:StatusButton Grid.Row="0" Grid.Column="0" Content="Андрей Кондратьев" FontFamily="HelveticaNeueCyr" FontSize="16" FontStretch="Condensed" FontWeight="Medium" Checked="StatusButton_Checked" Unchecked="StatusButton_Unchecked"/>
+            <controls:StatusMenu x:Name="StatusMenu" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+            <ToggleButton Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25" Margin="15,0,0,0" BorderBrush="{x:Null}" Foreground="{x:Null}" Cursor="Hand">
+                <ToggleButton.Resources>
+                    <ResourceDictionary Source="../Controls/SettingButtonTemplate.xaml"/>
+                </ToggleButton.Resources>
+            </ToggleButton>
+            <Button Grid.Row="0" x:Name="button" Content="Х" Grid.Column="2" HorizontalAlignment="Right" Width="50" Click="AppShutdown" VerticalAlignment="Center" Margin="0,0,15,0"/>
         </Grid>
     </Border>
 </Window>

@@ -170,7 +170,7 @@
         <!-- Middle -->
         <ListBox Grid.Row="1" ItemsSource="{Binding Path=Friends}" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" ItemTemplate="{DynamicResource DataTemplate1}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
         <!-- Bottom -->
-        <Button Grid.Row="2" HorizontalAlignment="Left" Background="#FFFFF9E7" Margin="15" Cursor="Hand">
+        <Button Grid.Row="2" HorizontalAlignment="Left" Background="#FFFDEEC2" Margin="15" Cursor="Hand">
             <Grid Margin="10,7">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

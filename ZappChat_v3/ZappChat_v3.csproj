@@ -108,6 +108,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\StatusMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\ChatWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,6 +128,9 @@
       <DependentUpon>GroupSettingContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\StatusButton.cs" />
+    <Compile Include="Controls\StatusMenu.xaml.cs">
+      <DependentUpon>StatusMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ValueConverters\CommandConverter.cs" />
     <Compile Include="Controls\ValueConverters\TabSizeConverter.cs" />
     <Compile Include="Core\ALawCodec.cs" />
@@ -176,6 +183,8 @@
     <Resource Include="Images\Group.png" />
     <Resource Include="Images\settingOff.jpg" />
     <Resource Include="Images\settingOn.png" />
+    <Resource Include="Images\GroupBig.png" />
+    <Resource Include="Images\AddUser.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
