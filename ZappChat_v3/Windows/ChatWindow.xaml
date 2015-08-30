@@ -66,9 +66,9 @@
             <!-- Blockators -->
             <Rectangle x:Name="FullBlockator" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" Fill="#A5FFFFFF" Visibility="Collapsed"/>
             <!-- Top Row  -->
-            <controls:StatusButton Grid.Row="0" Grid.Column="0" Content="Андрей Кондратьев" FontFamily="HelveticaNeueCyr" FontSize="16" FontStretch="Condensed" FontWeight="Medium" Checked="StatusButton_Checked" Unchecked="StatusButton_Unchecked"/>
+            <controls:StatusButton x:Name="StatusButton" Grid.Row="0" Grid.Column="0" Content="Андрей Кондратьев" FontFamily="HelveticaNeueCyr" FontSize="16" FontStretch="Condensed" FontWeight="Medium" Checked="StatusButton_Checked" Unchecked="StatusButton_Unchecked" Background="Transparent" BorderBrush="Transparent" Cursor="Hand"/>
             <controls:StatusMenu x:Name="StatusMenu" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
-            <ToggleButton Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25" Margin="15,0,0,0" BorderBrush="{x:Null}" Foreground="{x:Null}" Cursor="Hand">
+            <ToggleButton x:Name="SettingButton" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25" Margin="15,0,0,0" BorderBrush="{x:Null}" Foreground="{x:Null}" Cursor="Hand">
                 <ToggleButton.Resources>
                     <ResourceDictionary Source="../Controls/SettingButtonTemplate.xaml"/>
                 </ToggleButton.Resources>

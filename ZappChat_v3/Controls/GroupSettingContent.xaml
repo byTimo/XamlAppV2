@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:chatMamber="clr-namespace:ZappChat_v3.Core.ChatElements"
+             xmlns:converters="clr-namespace:ZappChat_v3.Controls.ValueConverters"
              mc:Ignorable="d" 
              d:DesignHeight="468" d:DesignWidth="515" DataContext="{Binding Group,RelativeSource={RelativeSource Self}}">
     <UserControl.Resources>
@@ -46,16 +46,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <DataTemplate DataType="{x:Type chatMamber:Friend}">
-            <Grid Margin="0,5" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Ellipse Grid.Column="0" Fill="DarkGray" Margin="20,5,10,5" Height="17" Width="17"/>
-                <TextBlock Grid.Column="1" Text="{Binding Name}" Background="Transparent" FontSize="14.667" FontFamily="HelveticaNeueCyr" Margin="0,2,0,0" VerticalAlignment="Center"/>
-            </Grid>
-        </DataTemplate>
+        
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -147,6 +138,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <converters:CommandConverter x:Key="CommandConverter"/>
     </UserControl.Resources>
 
 
@@ -168,9 +160,15 @@
             <Button Content="Добавить контакт" FontFamily="HelveticaNeueCyr" Margin="20,0,0,0" Padding="5" Background="Transparent" Cursor="Hand"/>
         </StackPanel>
         <!-- Middle -->
-        <ListBox Grid.Row="1" ItemsSource="{Binding Path=Friends}" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" ItemTemplate="{DynamicResource DataTemplate1}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Path=Friends}" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <ListBox.Resources>
+                <ResourceDictionary Source="../Controls/DataTemplates/UserControlsFriendDataTemplate.xaml"/>
+            </ListBox.Resources>
+        </ListBox>
         <!-- Bottom -->
-        <Button Grid.Row="2" HorizontalAlignment="Left" Background="#FFFDEEC2" Margin="15" Cursor="Hand">
+        <Button x:Name="GroupDelete" Grid.Row="2" HorizontalAlignment="Left" Background="#FFFDEEC2" Margin="15" Cursor="Hand" 
+                Command="{Binding Name, ElementName=GroupDelete, Converter={StaticResource CommandConverter}}"
+                CommandParameter="{Binding ChatMemberId}">
             <Grid Margin="10,7">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

@@ -11,13 +11,7 @@ namespace ZappChat_v3.Controls.ValueConverters
         {
             var commandName = value as string;
             if(commandName == null) throw new NullReferenceException("Ошибка при определении имени команды");
-            switch (commandName)
-            {
-                case "GroupSettingOpen":
-                    return CommandManager.GroupSettingOpenCommand;
-                default:
-                    throw new ArgumentException("Неизвестное имя команды");
-            }
+            return CommandManager.GetCommand(commandName);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -25,7 +25,11 @@ namespace ZappChat_v3.Windows
                 new ObservableCollection<Friend>(DbContentManager.Instance.Friends.Include(f => f.MembershipGroups));
             GroupCollection =
                 new ObservableCollection<Group>(DbContentManager.Instance.Groups.Include(g => g.FriendList));
+            CommandManager.CloseCurrentContent += () => MainContent = null;
+            CommandManager.GroupCreateOpenCommand.Action += GroupCreateCommandOnAction;
+            CommandManager.GroupCreateCommand.ParameterizedAction +=GroupCreateCommandOnParameterizedAction;
             CommandManager.GroupSettingOpenCommand.ParameterizedAction += GroupSettingOpenCallBack;
+            CommandManager.GroupDeleteCommand.ParameterizedAction += GroupDeleteCommandOnParameterizedAction;
         }
 
         public ObservableCollection<Friend> FriendCollection
@@ -37,6 +41,7 @@ namespace ZappChat_v3.Windows
                 OnPropertyChanged(nameof(FriendCollection));
             }
         }
+
         public ObservableCollection<Group> GroupCollection
         {
             get { return _groups; }
@@ -56,12 +61,37 @@ namespace ZappChat_v3.Windows
                 OnPropertyChanged(nameof(MainContent));
             }
         }
+
+        private void GroupCreateCommandOnAction()
+        {
+            MainContent = new GroupCreate();
+        }
+
+        private void GroupCreateCommandOnParameterizedAction(object o)
+        {
+            var group = o as Group;
+            DbContentManager.Instance.Groups.Add(group);
+            DbContentManager.Instance.SaveChanges();
+            GroupCollection.Add(group);
+            MainContent = null;
+        }
+
         private void GroupSettingOpenCallBack(object param)
         {
             if(param == null) throw new NullReferenceException();
-            var group = GroupCollection.First(g => g.ChatMemberId == (string)param);
+            var group = GroupCollection.First(g => g.ChatMemberId.Equals(param as string));
             MainContent = new GroupSettingContent(group);
         }
+
+        private void GroupDeleteCommandOnParameterizedAction(object o)
+        {
+            var group = GroupCollection.First(g => g.ChatMemberId.Equals(o as string));
+            DbContentManager.Instance.Groups.Remove(group);
+            DbContentManager.Instance.SaveChanges();
+            GroupCollection.Remove(group);
+            MainContent = null;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

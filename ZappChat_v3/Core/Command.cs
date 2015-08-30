@@ -9,10 +9,18 @@ namespace ZappChat_v3.Core
     public class Command : ICommand
     {
         /// <summary>
-        /// Действие(или параметризованное действие) которое вызывается при активации команды.
+        /// Получить имя команды
+        /// </summary>
+        public string Name { get; }
+        private event Action<string> PreviewExecuteCommand;
+        /// <summary>
+        /// Действие которое вызывается при активации команды.
         /// </summary>
         public event Action Action;
 
+        ///<summary>
+        /// Параметризованное действие которое вызывается при активации команды.
+        /// </summary>
         public event Action<object> ParameterizedAction;
 
         /// <summary>
@@ -20,36 +28,15 @@ namespace ZappChat_v3.Core
         /// </summary>
         private bool _canExecute;
 
-        /// <summary>
-        /// Инициализация нового экземпляра класса без параметров <see cref="Command"/>.
-        /// </summary>
-        /// <param name="action">Действие.</param>
-        /// <param name="canExecute">Если установлено в<c>true</c> [can execute] (выполнение разрешено).</param>
-        public Command(Action action, bool canExecute = true)
+        public Command(string name)
         {
-            //  Set the action.
-            Action = action;
-            _canExecute = canExecute;
+            _canExecute = true;
+            Name = name;
         }
 
-        /// <summary>
-        /// Инициализация нового экземпляра класса с параметрами <see cref="Command"/> class.
-        /// </summary>
-        /// <param name="parameterizedAction">Параметризированное действие.</param>
-        /// <param name="canExecute"> Если установлено в <c>true</c> [can execute](выполнение разрешено).</param>
-        public Command(Action<object> parameterizedAction, bool canExecute = true)
+        public Command(string name, Action<string> previewCallBack):this(name)
         {
-            //  Set the action.
-            ParameterizedAction = parameterizedAction;
-            _canExecute = canExecute;
-        }
-        /// <summary>
-        /// Инициализация нового экземпляра класса без начального действия
-        /// </summary>
-        /// <param name="canExecute">Если установлено в <c>true</c> [can execute](выполнение разрешено)</param>
-        public Command(bool canExecute = true)
-        {
-            _canExecute = canExecute;
+            PreviewExecuteCommand += previewCallBack;
         }
 
         /// <summary>
@@ -108,8 +95,14 @@ namespace ZappChat_v3.Core
         /// <param name="param">The param.</param>
         public virtual void DoExecute(object param)
         {
+            OnPreviewExecuteCommand();
             Action?.Invoke();
             ParameterizedAction?.Invoke(param);
+        }
+
+        protected virtual void OnPreviewExecuteCommand()
+        {
+            PreviewExecuteCommand?.Invoke(Name);
         }
     }
 }

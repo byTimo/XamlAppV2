@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
@@ -23,6 +24,13 @@ namespace ZappChat_v3.Windows
             InitializeComponent();
             _model = new ChatWindowModel();
             DataContext = _model;
+            CommandManager.PreviewExecuteCommand +=CommandManagerOnPreviewExecuteCommand;
+        }
+
+        private void CommandManagerOnPreviewExecuteCommand(string s)
+        {
+            StatusButton.IsChecked = false;
+            SettingButton.IsChecked = false;
         }
 
         private void AppShutdown(object sender, RoutedEventArgs e)

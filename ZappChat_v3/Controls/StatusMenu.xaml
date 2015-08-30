@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:ZappChat_v3.Controls.ValueConverters"
              mc:Ignorable="d" Width="850">
     <UserControl.Resources>
         <SolidColorBrush x:Key="Button.MouseOver.Background2" Color="#FFFDEEC2"/>
@@ -31,6 +32,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <converters:CommandConverter x:Key="CommandConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -81,7 +83,8 @@
             </Button>
         </Grid>
         </Border>
-        <Button Grid.Column="1" Grid.Row="0" BorderBrush="#B2DCDCDC" Background="White">
+        <Button x:Name="GroupCreateOpen" Grid.Column="1" Grid.Row="0" BorderBrush="#B2DCDCDC" Background="White" 
+                Command="{Binding ElementName=GroupCreateOpen, Path=Name, Converter={StaticResource CommandConverter}}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/GroupBig.png" Width="75" Height="54"/>
                 <TextBlock Text="Создать группу" FontFamily="HelveticaNeueCyr" FontSize="18.667" TextAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>
