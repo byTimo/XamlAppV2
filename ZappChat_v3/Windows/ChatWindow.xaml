@@ -30,7 +30,7 @@
                 <TabControl.Resources>
                     <ResourceDictionary Source="../Controls/ChatMamberTabControlTemplate.xaml"/>
                 </TabControl.Resources>
-                <TabItem Padding="0,7,0,7">
+                <TabItem Padding="0,7,0,7" Cursor="Hand">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="Друзья" FontFamily="HelveticaNeueCyr" FontSize="16" Margin="0,5,10,0"/>
@@ -45,7 +45,7 @@
                         <ResourceDictionary Source="../Controls/DataTemplates/FriendListBoxDataTemplate.xaml"/>
                     </TabItem.Resources>
                 </TabItem>
-                <TabItem Padding="0,7,0,7">
+                <TabItem Padding="0,7,0,7" Cursor="Hand">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="Группы" FontFamily="HelveticaNeueCyr" FontSize="16" Margin="0,5,10,0"/>

@@ -1,0 +1,15 @@
+﻿<Window x:Class="ZappChat_v3.Windows.TEST_addFriend"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZappChat_v3.Windows"
+        mc:Ignorable="d"
+        Title="TEST_addFriend" Height="300" Width="300">
+    <StackPanel>
+        <TextBlock Text="Имя:"/>
+        <TextBox Background="#FFB7F0B1" Text="{Binding NameFriend, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Mode=TwoWay}" />
+        <Button Content="добавить" Click="ButtonBase_OnClick"/>
+        <TextBlock x:Name="Sostoyanie" Foreground="#FF6AFF3E"/>
+    </StackPanel>
+</Window>

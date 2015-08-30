@@ -77,7 +77,7 @@
                         <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
                             <Grid>
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                <Button x:Name="Bn" HorizontalAlignment="Right" Visibility="Collapsed" Background="#ffffc916" Margin="0,0,40,0" Cursor="Hand">
+                                <Button x:Name="Bn" HorizontalAlignment="Right" Visibility="Collapsed" Background="#ffffc916" Margin="0,0,40,0" Cursor="Hand" Click="Bn_OnClick">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
@@ -157,7 +157,9 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Margin="30,25">
             <Button Content="Переименовать" FontFamily="HelveticaNeueCyr" Margin="0,0,20,0" Padding="5" Background="Transparent" Click="Button_Click" Cursor="Hand" />
-            <Button Content="Добавить контакт" FontFamily="HelveticaNeueCyr" Margin="20,0,0,0" Padding="5" Background="Transparent" Cursor="Hand"/>
+            <Button x:Name="AddFriendInGroup" Content="Добавить контакт" FontFamily="HelveticaNeueCyr" Margin="20,0,0,0" Padding="5" Background="Transparent" Cursor="Hand"
+                    Command="{Binding Name, ElementName=AddFriendInGroup, Converter={StaticResource CommandConverter}}"
+                    CommandParameter="{Binding ChatMemberId}"/>
         </StackPanel>
         <!-- Middle -->
         <ListBox Grid.Row="1" ItemsSource="{Binding Path=Friends}" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">

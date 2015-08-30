@@ -80,6 +80,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Windows\TEST_addFriend.xaml.cs">
+      <DependentUpon>TEST_addFriend.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\TEST_addFriendInGroup.xaml.cs">
+      <DependentUpon>TEST_addFriendInGroup.xaml</DependentUpon>
+    </Compile>
     <Page Include="Controls\ChatMamberTabControlTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -171,6 +177,14 @@
       <DependentUpon>SettingWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\TEST_addFriend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\TEST_addFriendInGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

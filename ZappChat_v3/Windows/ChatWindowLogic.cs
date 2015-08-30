@@ -30,6 +30,15 @@ namespace ZappChat_v3.Windows
             CommandManager.GroupCreateCommand.ParameterizedAction +=GroupCreateCommandOnParameterizedAction;
             CommandManager.GroupSettingOpenCommand.ParameterizedAction += GroupSettingOpenCallBack;
             CommandManager.GroupDeleteCommand.ParameterizedAction += GroupDeleteCommandOnParameterizedAction;
+            CommandManager.AddFriendInGroupCommand.ParameterizedAction +=AddFriendInGroupCommandOnParameterizedAction;
+            CommandManager.AddFriendCommand.Action += AddFriendCommandOnAction;
+        }
+
+        private void AddFriendCommandOnAction()
+        {
+            var add = new TEST_addFriend(FriendCollection);
+            add.ShowDialog();
+            add.Close();
         }
 
         public ObservableCollection<Friend> FriendCollection
@@ -90,6 +99,14 @@ namespace ZappChat_v3.Windows
             DbContentManager.Instance.SaveChanges();
             GroupCollection.Remove(group);
             MainContent = null;
+        }
+
+        private void AddFriendInGroupCommandOnParameterizedAction(object o)
+        {
+            var group = GroupCollection.First(g => g.ChatMemberId.Equals(o as string));
+            var add = new TEST_addFriendInGroup(group);
+            add.ShowDialog();
+            add.Close();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
