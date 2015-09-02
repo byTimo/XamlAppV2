@@ -7,8 +7,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Ellipse Grid.Column="0" Fill="DarkGray" Width="20" Height="20" Margin="17,0"/>
-            <TextBlock Grid.Column="1" Text="{Binding Name}" FontFamily="HelveticaNeueCyr" FontSize="16" VerticalAlignment="Center" Margin="0,2,0,0"/>
+            <Ellipse Grid.Column="0" Fill="{StaticResource ZappChat.LightSky}" Width="20" Height="20" Margin="17,0"/>
+            <TextBlock Grid.Column="1" Text="{Binding Name}" FontFamily="HelveticaNeueCyr" FontSize="16" VerticalAlignment="Center" Margin="0,2,0,0" FontWeight="Medium"/>
         </Grid>
     </DataTemplate>
 

@@ -49,7 +49,7 @@ namespace ZappChat_v3.Controls
             {
                 _friendDictionary[friend] = true;
                 button.Content = "Удалить";
-                listBoxItem.Background = new SolidColorBrush(Color.FromRgb(255, 201, 22));
+                listBoxItem.Background = new SolidColorBrush(Color.FromRgb(206,235,246));
             }
 
         }
@@ -61,7 +61,8 @@ namespace ZappChat_v3.Controls
                 MessageBox.Show("Введите название группы", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            var id = long.Parse(DbContentManager.Instance.Groups.Max(g => g.ChatMemberId)) + 1;
+            var max = DbContentManager.Instance.Groups.Max(g => g.ChatMemberId);
+            var id = max != null ? long.Parse(max) + 1 : 0;
             var newGroup = new Group()
             {
                 ChatMemberId = id.ToString(),

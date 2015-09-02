@@ -8,8 +8,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Ellipse Grid.Column="0" Fill="DarkGray" Margin="20,5,10,5" Height="17" Width="17"/>
-            <TextBlock Grid.Column="1" Text="{Binding Name}" Background="Transparent" FontSize="14.667" FontFamily="HelveticaNeueCyr" Margin="0,2,0,0" VerticalAlignment="Center"/>
+            <Ellipse Grid.Column="0" Fill="{StaticResource ZappChat.Blue}" Margin="20,5,10,5" Height="17" Width="17"/>
+            <TextBlock Grid.Column="1" Text="{Binding Name}" Background="Transparent" FontSize="14.667" FontFamily="HelveticaNeueCyr" Margin="0,2,0,0" VerticalAlignment="Center" FontWeight="Medium"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

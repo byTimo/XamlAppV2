@@ -57,5 +57,15 @@ namespace ZappChat_v3.Windows
             FullBlockator.Visibility = Visibility.Collapsed;
             StatusMenu.Visibility = Visibility.Collapsed;
         }
+
+        private void WindowStateChange(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void HideWindow(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
     }
 }

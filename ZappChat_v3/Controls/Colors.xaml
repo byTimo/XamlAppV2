@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="LightSky" A="255" R="206" G="235" B="246"/>
+    <SolidColorBrush x:Key="ZappChat.Sky" Color="#5dbde1"/>
+    <SolidColorBrush x:Key="ZappChat.Grey" Color="#b2b2b2"/>
+    <SolidColorBrush x:Key="ZappChat.Blue" Color="#4d80bf"/>
+    <SolidColorBrush x:Key="ZappChat.Puple" Color="#ad5aa6"/>
+    <SolidColorBrush x:Key="ZappChat.LightSky" Color="{StaticResource LightSky}"/>
+</ResourceDictionary>

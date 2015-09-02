@@ -34,6 +34,9 @@
         </Style>
         <converters:CommandConverter x:Key="CommandConverter"/>
     </UserControl.Resources>
+    <UserControl.Effect>
+        <DropShadowEffect Color="{StaticResource LightSky}" Direction="0" ShadowDepth="0" BlurRadius="15"/>
+    </UserControl.Effect>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -44,7 +47,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Grid.Column="0" Background="White" BorderThickness="1" BorderBrush="#FFE0E0E0">
+        <Border Grid.Row="0" Grid.Column="0" Background="White" BorderThickness="1" BorderBrush="{StaticResource ZappChat.Grey}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

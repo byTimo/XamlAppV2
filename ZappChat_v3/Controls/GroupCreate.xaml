@@ -6,8 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="468" d:DesignWidth="515">
     <UserControl.Resources>
-        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#ffffc916"/>
-        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#ffffc916"/>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -21,21 +19,9 @@
                             <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsDefaulted" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
-                            </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
-                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource ZappChat.Blue}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ZappChat.Blue}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -51,12 +37,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#1F26A0DA"/>
-        <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#a826A0Da"/>
-        <SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="#3DDADADA"/>
-        <SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="#FFDADADA"/>
-        <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#3D26A0DA"/>
-        <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="#FF26A0DA"/>
         <Style TargetType="{x:Type ListBoxItem}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Padding" Value="4,1"/>
@@ -72,7 +52,7 @@
                         <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
                             <Grid>
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                <Button x:Name="Bn" Visibility="Collapsed" HorizontalAlignment="Right" Margin="0,0,40,0" Content="Добавить" Padding="30,7,28,7" Background="LightGray" BorderBrush="Transparent" Click="Bn_OnClick"/>
+                                <Button x:Name="Bn" Visibility="Collapsed" HorizontalAlignment="Right" Margin="0,0,40,0" Content="Добавить" Padding="30,7,28,7" Background="{DynamicResource ZappChat.Sky}" BorderBrush="Transparent" Click="Bn_OnClick" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Width="125" />
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -81,6 +61,7 @@
                                     <Condition Property="IsMouseOver" Value="True"/>
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="Bn" Property="Visibility" Value="Visible"/>
+                                <Setter Property="Background" Value="{StaticResource ZappChat.LightSky}"/>
                             </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -96,11 +77,11 @@
         <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal" Margin="30,35">
                 <TextBlock Text="Название" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="HelveticaNeueCyr" FontSize="16" Foreground="DarkGray"/>
-                <TextBox Text="{Binding GroupName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" FontFamily="HelveticaNeueCyr" FontSize="18.667" Background="{x:Null}" BorderBrush="Black" BorderThickness="0,0,0,1" MinWidth="20" FontWeight="Medium"/>
+                <TextBox Text="{Binding GroupName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" FontFamily="HelveticaNeueCyr" FontSize="18.667" Background="{x:Null}" BorderBrush="{DynamicResource ZappChat.LightSky}" BorderThickness="0,0,0,1" MinWidth="20" FontWeight="Medium"/>
             </StackPanel>
-            <Button Content="Создать" HorizontalAlignment="Right" VerticalAlignment="Center" BorderBrush="Transparent" Background="LightGray" Cursor="Hand" Margin="0,0,40,0" Padding="30,10,28,10" FontFamily="HelveticaNeueCyr" FontSize="13.333" Click="Button_Click"/>
+            <Button Content="Создать" HorizontalAlignment="Right" VerticalAlignment="Center" Background="{StaticResource ZappChat.Sky}" Cursor="Hand" Margin="0,0,40,0" Padding="40,10" FontFamily="HelveticaNeueCyr" FontSize="16" Click="Button_Click" BorderBrush="{DynamicResource ZappChat.Sky}" Foreground="White"/>
         </Grid>
-        <ListBox Grid.Row="1" ItemsSource="{Binding Friends,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" Background="{x:Null}" BorderBrush="#FFD1D1D1" BorderThickness="0,1,0,0">
+        <ListBox Grid.Row="1" ItemsSource="{Binding Friends,RelativeSource={RelativeSource AncestorType=UserControl}}" Background="{x:Null}" BorderThickness="0,1,0,0">
             <ListBox.Resources>
                 <ResourceDictionary Source="../Controls/DataTemplates/UserControlsFriendDataTemplate.xaml"/>
             </ListBox.Resources>

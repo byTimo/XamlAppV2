@@ -8,7 +8,7 @@
         Title="ChatWindow" WindowStyle="None" Background="{x:Null}" ResizeMode="CanResizeWithGrip" AllowsTransparency="True"
         MinHeight="600" MinWidth="850" d:DesignHeight="600" d:DesignWidth="850">
     <Window.Resources>
-        
+
     </Window.Resources>
     <Border CornerRadius="5,5,0,5" Background="White" BorderThickness="1" BorderBrush="#FFCFCFCF">
         <Grid>
@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="620*" MinWidth="530"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="64"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
@@ -33,8 +33,10 @@
                 <TabItem Padding="0,7,0,7" Cursor="Hand">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Text="Друзья" FontFamily="HelveticaNeueCyr" FontSize="16" Margin="0,5,10,0"/>
-                            <Ellipse Stroke="Black" Width="30" Height="30"/>
+                            <TextBlock Text="Все друзья" FontFamily="HelveticaNeueCyr" FontSize="13.333" Margin="0,7,10,0" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" FontWeight="Medium"/>
+                            <Border BorderThickness="1" BorderBrush="{Binding BorderBrush, RelativeSource={RelativeSource AncestorType=TabItem}}" CornerRadius="45" Width="32" Height="{Binding Width, RelativeSource={RelativeSource Self}}" Background="#FFF9F9F9">
+                                <TextBlock Text="99+" FontFamily="HelveticaNeueCyr" FontSize="13.333" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{Binding Background, RelativeSource={RelativeSource AncestorType=TabItem}}"/>
+                            </Border>
                         </StackPanel>
                     </TabItem.Header>
                     <ListBox x:Name="friendList" 
@@ -48,21 +50,28 @@
                 <TabItem Padding="0,7,0,7" Cursor="Hand">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Text="Группы" FontFamily="HelveticaNeueCyr" FontSize="16" Margin="0,5,10,0"/>
-                            <Ellipse Stroke="Black" Width="30" Height="30"/>
+                            <TextBlock Text="Группы" FontFamily="HelveticaNeueCyr" FontSize="13.333" Margin="0,7,10,0" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" FontWeight="Medium"/>
+                            <Border BorderThickness="1" BorderBrush="{Binding BorderBrush, RelativeSource={RelativeSource AncestorType=TabItem}}" CornerRadius="45" Width="32" Height="{Binding Width, RelativeSource={RelativeSource Self}}" Background="#FFF9F9F9">
+                                <TextBlock Text="99+" FontFamily="HelveticaNeueCyr" FontSize="13.333" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{Binding Background, RelativeSource={RelativeSource AncestorType=TabItem}}" FontWeight="Medium"/>
+                            </Border>
                         </StackPanel>
                     </TabItem.Header>
                     <TreeView x:Name="GroupTreeView" BorderThickness="0,0,0,3" Background="{x:Null}" 
                               BorderBrush="{x:Null}" Padding="0" HorizontalContentAlignment="Stretch" 
                               VerticalContentAlignment="Stretch"
-                              ItemsSource="{Binding Path=GroupCollection}" ItemContainerStyle="{StaticResource TreeViewItemTemplate}">
+                              ItemsSource="{Binding Path=GroupCollection}">
                         <TreeView.Resources>
-                            <ResourceDictionary Source="../Controls/DataTemplates/GroupTreeViewDataTemplates.xaml"/>
+                            <ResourceDictionary>
+                                <ResourceDictionary.MergedDictionaries>
+                                    <ResourceDictionary Source="../Controls/DataTemplates/GroupTreeViewDataTemplates.xaml"/>
+                                    <ResourceDictionary Source="../Controls/GroupTreeViewTemplate.xaml"/>
+                                </ResourceDictionary.MergedDictionaries>
+                            </ResourceDictionary>
                         </TreeView.Resources>
                     </TreeView>
                 </TabItem>
             </TabControl>
-            <ContentControl Grid.Row="2" Grid.Column="2" Content="{Binding MainContent}"/>
+            <ContentControl Grid.Row="1" Grid.Column="2" Content="{Binding MainContent}" Margin="0,0,0,1" Grid.RowSpan="2"/>
             <!-- Blockators -->
             <Rectangle x:Name="FullBlockator" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" Fill="#A5FFFFFF" Visibility="Collapsed"/>
             <!-- Top Row  -->
@@ -73,7 +82,21 @@
                     <ResourceDictionary Source="../Controls/SettingButtonTemplate.xaml"/>
                 </ToggleButton.Resources>
             </ToggleButton>
-            <Button Grid.Row="0" x:Name="button" Content="Х" Grid.Column="2" HorizontalAlignment="Right" Width="50" Click="AppShutdown" VerticalAlignment="Center" Margin="0,0,15,0"/>
+            <Button Grid.Row="0" x:Name="ExitButton" Grid.Column="2" HorizontalAlignment="Right" Width="10" Click="AppShutdown" VerticalAlignment="Center" Margin="0,0,32,0" Height="10" Background="{DynamicResource ZappChat.LightSky}" BorderBrush="{DynamicResource ZappChat.LightSky}" Cursor="Hand">
+                <Button.Resources>
+                    <ResourceDictionary Source="../Controls/CircleButton.xaml"/>
+                </Button.Resources>
+            </Button>
+            <Button Grid.Row="0" x:Name="ResizeModeButton" Grid.Column="2" HorizontalAlignment="Right" Width="10" Click="WindowStateChange" VerticalAlignment="Center" Margin="0,0,48,0" Height="10" Background="{DynamicResource ZappChat.Sky}" BorderBrush="{DynamicResource ZappChat.Sky}" Cursor="Hand">
+                <Button.Resources>
+                    <ResourceDictionary Source="../Controls/CircleButton.xaml"/>
+                </Button.Resources>
+            </Button>
+            <Button Grid.Row="0" x:Name="MinimazeModeButton" Grid.Column="2" HorizontalAlignment="Right" Width="10" Click="HideWindow" VerticalAlignment="Center" Margin="0,0,64,0" Height="10" Background="{DynamicResource ZappChat.Blue}" BorderBrush="{DynamicResource ZappChat.Blue}" Cursor="Hand">
+                <Button.Resources>
+                    <ResourceDictionary Source="../Controls/CircleButton.xaml"/>
+                </Button.Resources>
+            </Button>
         </Grid>
     </Border>
 </Window>
