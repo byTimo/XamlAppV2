@@ -10,6 +10,7 @@ using ZappChat_v3.Annotations;
 using ZappChat_v3.Controls;
 using ZappChat_v3.Core.ChatElements;
 using ZappChat_v3.Core.Managers;
+using ZappChat_v3.Core.Messaging;
 
 namespace ZappChat_v3.Windows
 {
@@ -23,6 +24,7 @@ namespace ZappChat_v3.Windows
         {
             FriendCollection =
                 new ObservableCollection<Friend>(DbContentManager.Instance.Friends.Include(f => f.MembershipGroups));
+                        DbContentManager.Instance.SaveChanges();
             GroupCollection =
                 new ObservableCollection<Group>(DbContentManager.Instance.Groups.Include(g => g.FriendList));
             CommandManager.CloseCurrentContent += () => MainContent = null;

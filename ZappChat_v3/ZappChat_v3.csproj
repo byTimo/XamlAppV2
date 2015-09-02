@@ -80,6 +80,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Core\Messaging\IMessage.cs" />
+    <Compile Include="Core\Messaging\MessageTypeEnum.cs" />
+    <Compile Include="Core\Messaging\TextMessage.cs" />
     <Compile Include="Windows\TEST_addFriend.xaml.cs">
       <DependentUpon>TEST_addFriend.xaml</DependentUpon>
     </Compile>

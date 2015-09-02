@@ -28,7 +28,8 @@ namespace ZappChat_v3.Windows
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             if(string.IsNullOrEmpty(NameFriend)) return;
-            var id = _friends.Max(f=>long.Parse(f.ChatMemberId)) + 1;
+            var max = _friends.Max(f => f.ChatMemberId);
+            var id = max != null ? long.Parse(max) + 1 : 0; 
             var friend = new Friend
             {
                 ChatMemberId = id.ToString(),
