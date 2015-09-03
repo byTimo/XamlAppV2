@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +8,7 @@ using ZappChat_v3.Core;
 using ZappChat_v3.Core.ChatElements;
 using ZappChat_v3.Core.Managers;
 
-namespace ZappChat_v3.Controls
+namespace ZappChat_v3.Controls.MainContentControls
 {
     /// <summary>
     /// Interaction logic for GroupSettingContent.xaml
@@ -76,7 +75,6 @@ namespace ZappChat_v3.Controls
             var listBoxItem = Support.FindAnchestor<ListBoxItem>((DependencyObject) e.OriginalSource);
             var friend = listBoxItem.DataContext as Friend;
 
-            Group.Friends.Remove(friend);
             Group.FriendList.Remove(friend);
             friend.MembershipGroups.Remove(Group);
             DbContentManager.Instance.SaveChanges();

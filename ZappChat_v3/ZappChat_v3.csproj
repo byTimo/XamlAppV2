@@ -83,6 +83,7 @@
     <Compile Include="Core\Messaging\IMessage.cs" />
     <Compile Include="Core\Messaging\MessageTypeEnum.cs" />
     <Compile Include="Core\Messaging\TextMessage.cs" />
+    <Compile Include="Windows\ChatWindowCommandCallback.cs" />
     <Compile Include="Windows\TEST_addFriend.xaml.cs">
       <DependentUpon>TEST_addFriend.xaml</DependentUpon>
     </Compile>
@@ -109,11 +110,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\GroupCreate.xaml">
+    <Page Include="Controls\MainContentControls\GroupCreateContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\GroupSettingContent.xaml">
+    <Page Include="Controls\MainContentControls\GroupSettingContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -149,10 +150,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\GroupCreate.xaml.cs">
-      <DependentUpon>GroupCreate.xaml</DependentUpon>
+    <Compile Include="Controls\MainContentControls\GroupCreateContent.xaml.cs">
+      <DependentUpon>GroupCreateContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\GroupSettingContent.xaml.cs">
+    <Compile Include="Controls\MainContentControls\GroupSettingContent.xaml.cs">
       <DependentUpon>GroupSettingContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\StatusButton.cs" />
@@ -169,7 +170,7 @@
     <Compile Include="Core\Managers\CallManagerControlFlags.cs" />
     <Compile Include="Core\Managers\CallManager.cs" />
     <Compile Include="Core\ChatElements\ChatElementTypeEnum.cs" />
-    <Compile Include="Core\ChatElements\ChatMember.cs" />
+    <Compile Include="Core\ChatElements\IChatMember.cs" />
     <Compile Include="Core\Managers\CallManagerEvents.cs" />
     <Compile Include="Core\Managers\CallManagerP2PCallback.cs" />
     <Compile Include="Core\Managers\CommandManager.cs" />
@@ -183,7 +184,7 @@
     <Compile Include="Windows\ChatWindow.xaml.cs">
       <DependentUpon>ChatWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ChatWindowLogic.cs" />
+    <Compile Include="Windows\ChatWindowModel.cs" />
     <Compile Include="Windows\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

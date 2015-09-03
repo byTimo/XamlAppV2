@@ -81,7 +81,6 @@ namespace ZappChat_v3.Windows
             var listBoxItem = Support.FindAnchestor<ListBoxItem>((DependencyObject) e.OriginalSource);
             var friend = listBoxItem.DataContext as Friend;
 
-            Group.Friends.Add(friend);
             Group.FriendList.Add(friend);
             friend.MembershipGroups.Add(Group);
             DbContentManager.Instance.SaveChanges();

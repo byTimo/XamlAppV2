@@ -1,21 +1,48 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ZappChat_v3.Core.ChatElements
 {
     [Table("Groups",Schema = "dbo")]
-    public class Group : ChatMember
+    public class Group : IChatMember
     {
-        private ObservableCollection<Friend> _friends;
+        [Key]
+        public string ChatMemberId { get; set; }
+        public ChatElementType Type { get; set; }
+        public string Name { get; set; }
         public ICollection<Friend> FriendList { get; set; }
-
-        [NotMapped]
-        public ObservableCollection<Friend> Friends => _friends ?? (_friends = new ObservableCollection<Friend>(FriendList));
 
         public Group()
         {
-            FriendList = new List<Friend>();
+            FriendList = new ObservableCollection<Friend>();
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} - {ChatMemberId}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Friend)obj);
+        }
+
+        protected bool Equals(Friend other)
+        {
+            return string.Equals(ChatMemberId, other.ChatMemberId) && Type == other.Type;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((ChatMemberId?.GetHashCode() ?? 0) * 397) ^ (int)Type;
+            }
         }
     }
 }

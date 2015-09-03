@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ZappChat_v3.Controls.GroupCreate"
+﻿<UserControl x:Class="ZappChat_v3.Controls.MainContentControls.GroupCreate"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -83,7 +83,7 @@
         </Grid>
         <ListBox Grid.Row="1" ItemsSource="{Binding Friends,RelativeSource={RelativeSource AncestorType=UserControl}}" Background="{x:Null}" BorderThickness="0,1,0,0">
             <ListBox.Resources>
-                <ResourceDictionary Source="../Controls/DataTemplates/UserControlsFriendDataTemplate.xaml"/>
+                <ResourceDictionary Source="/Controls/DataTemplates/UserControlsFriendDataTemplate.xaml"/>
             </ListBox.Resources>
         </ListBox>
     </Grid>

@@ -9,16 +9,16 @@ namespace ZappChat_v3.Core.Managers
         public static event Action CloseCurrentContent;
         static CommandManager()
         {
-            GroupSettingOpenCommand = new Command("GroupSettingOpen", OnPreviewExecuteCommand);
-            GroupCreateOpenCommand = new Command("GroupCreateOpen", OnPreviewExecuteCommand);
+            OpenGroupSettingCommand = new Command("OpenGroupSetting", OnPreviewExecuteCommand);
+            OpenGroupCreateCommand = new Command("OpenGroupCreate", OnPreviewExecuteCommand);
             GroupCreateCommand = new Command("GroupCreate", OnPreviewExecuteCommand);
             GroupDeleteCommand = new Command("GroupDelete", OnPreviewExecuteCommand);
             AddFriendInGroupCommand = new Command("AddFriendInGroup", OnPreviewExecuteCommand);
             AddFriendCommand = new Command("AddFriend", OnPreviewExecuteCommand);
         }
 
-        public static Command GroupSettingOpenCommand { get; }
-        public static Command GroupCreateOpenCommand { get; }
+        public static Command OpenGroupSettingCommand { get; }
+        public static Command OpenGroupCreateCommand { get; }
         public static Command GroupCreateCommand { get; }
         public static Command GroupDeleteCommand { get; }
         public static Command AddFriendInGroupCommand { get; }
@@ -33,10 +33,10 @@ namespace ZappChat_v3.Core.Managers
         {
             switch (commandName)
             {
-                case "GroupSettingOpen":
-                    return GroupSettingOpenCommand;
-                case "GroupCreateOpen":
-                    return GroupCreateOpenCommand;
+                case "OpenGroupSetting":
+                    return OpenGroupSettingCommand;
+                case "OpenGroupCreate":
+                    return OpenGroupCreateCommand;
                 case "GroupCreate":
                     return GroupCreateCommand;
                 case "GroupDelete":

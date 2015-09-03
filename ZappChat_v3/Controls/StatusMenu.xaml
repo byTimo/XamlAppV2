@@ -86,8 +86,8 @@
             </Button>
         </Grid>
         </Border>
-        <Button x:Name="GroupCreateOpen" Grid.Column="1" Grid.Row="0" BorderBrush="#B2DCDCDC" Background="White" 
-                Command="{Binding ElementName=GroupCreateOpen, Path=Name, Converter={StaticResource CommandConverter}}">
+        <Button x:Name="OpenGroupCreate" Grid.Column="1" Grid.Row="0" BorderBrush="#B2DCDCDC" Background="White" 
+                Command="{Binding ElementName=OpenGroupCreate, Path=Name, Converter={StaticResource CommandConverter}}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/GroupBig.png" Width="75" Height="54"/>
                 <TextBlock Text="Создать группу" FontFamily="HelveticaNeueCyr" FontSize="18.667" TextAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>

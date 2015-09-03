@@ -8,7 +8,7 @@ using ZappChat_v3.Core;
 using ZappChat_v3.Core.ChatElements;
 using ZappChat_v3.Core.Managers;
 
-namespace ZappChat_v3.Controls
+namespace ZappChat_v3.Controls.MainContentControls
 {
     /// <summary>
     /// Interaction logic for GroupCreate.xaml

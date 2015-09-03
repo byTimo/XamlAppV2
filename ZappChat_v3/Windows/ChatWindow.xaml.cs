@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using ZappChat_v3.Annotations;
-using ZappChat_v3.Controls;
-using ZappChat_v3.Core.ChatElements;
 using ZappChat_v3.Core.Managers;
 
 namespace ZappChat_v3.Windows
@@ -16,7 +9,7 @@ namespace ZappChat_v3.Windows
     /// <summary>
     /// Interaction logic for ChatWindow.xaml
     /// </summary>
-    public partial class ChatWindow : Window, INotifyPropertyChanged
+    public partial class ChatWindow: Window, INotifyPropertyChanged
     {
         private readonly ChatWindowModel _model;
         public ChatWindow()

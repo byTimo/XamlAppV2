@@ -12,10 +12,10 @@ namespace ZappChat_v3.Core.Managers
     {
         //@TODO - после того, как узнаем свой id
         private static string _peerId = "1";
-        private static KeyValuePair<ChatMember, NetConnection> _curentCall;
+        private static KeyValuePair<IChatMember, NetConnection> _curentCall;
         private static Action<byte[], int, int> _playByteArrayAction;
 
-        private static KeyValuePair<ChatMember, NetConnection> CurrentCall
+        private static KeyValuePair<IChatMember, NetConnection> CurrentCall
         {
             get { return _curentCall; }
             set
@@ -162,7 +162,7 @@ namespace ZappChat_v3.Core.Managers
             Support.Logger.Trace("CallManager.P2PCallback: Refuse session with {0}", CurrentCall);
             P2PManager.Disconnect(CurrentCall.Value, _peerId);
             OnPeerAnswer(new CallEventArgs(CurrentCall.Key, false));
-            CurrentCall = new KeyValuePair<ChatMember, NetConnection>();
+            CurrentCall = new KeyValuePair<IChatMember, NetConnection>();
         }
 
         private static void DataTransferHandler(byte[] data, string peerId, NetConnection connection)
@@ -182,7 +182,7 @@ namespace ZappChat_v3.Core.Managers
             {
                 P2PManager.SendControlFlag(CurrentCall.Value, (int)CallControlFlag.ByeAnswer, _peerId);
                 OnPeerDrop(new CallEventArgs(CurrentCall.Key, true));
-                CurrentCall = new KeyValuePair<ChatMember, NetConnection>();
+                CurrentCall = new KeyValuePair<IChatMember, NetConnection>();
             }
             else
             {

@@ -11,14 +11,14 @@ namespace ZappChat_v3.Core.Managers
 {
     public static partial class CallManager
     {
-        private static Dictionary<ChatMember, NetConnection> _connections;
+        private static Dictionary<IChatMember, NetConnection> _connections;
         private static NetConnection _serverConnection;
-        private static Dictionary<ChatMember, NetConnection> CurrentConnections
+        private static Dictionary<IChatMember, NetConnection> CurrentConnections
         {
             get
             {
                 if (_connections != null) return _connections;
-                _connections = new Dictionary<ChatMember, NetConnection>();
+                _connections = new Dictionary<IChatMember, NetConnection>();
                 return _connections;
             }
         }
@@ -37,7 +37,7 @@ namespace ZappChat_v3.Core.Managers
         /// Начать звонок с объектом чата
         /// </summary>
         /// <param name="chatMember">Объект чата</param>
-        public static void CallChatMamber(ChatMember chatMember)
+        public static void CallChatMamber(IChatMember chatMember)
         {
             CurrentConnections.Add(chatMember, null);
             var bytes = Encoding.UTF8.GetBytes(chatMember.ChatMemberId);
@@ -49,7 +49,7 @@ namespace ZappChat_v3.Core.Managers
         /// </summary>
         /// <param name="chatMamber">Объект чата</param>
         /// <param name="answer">Отвечаем на звонок</param>
-        public static void AnswerChatMamber(ChatMember chatMamber, bool answer)
+        public static void AnswerChatMamber(IChatMember chatMamber, bool answer)
         {
             var mamberAndConnection = CurrentConnections.FirstOrDefault(c => c.Key.Equals(chatMamber));
             if (mamberAndConnection.Value == null)
@@ -73,7 +73,7 @@ namespace ZappChat_v3.Core.Managers
         /// </summary>
         public static void HangUp()
         {
-            CurrentCall = new KeyValuePair<ChatMember, NetConnection>();
+            CurrentCall = new KeyValuePair<IChatMember, NetConnection>();
         }
 
         private static void SendPeripheryData(object sender, WaveInEventArgs e)

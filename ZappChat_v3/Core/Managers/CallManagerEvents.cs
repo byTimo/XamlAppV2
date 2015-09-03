@@ -64,10 +64,10 @@ namespace ZappChat_v3.Core.Managers
 
     public class CallEventArgs : EventArgs
     {
-        public ChatMember Member { get; private set; }
+        public IChatMember Member { get; private set; }
         public bool Answer { get; private set; }
 
-        public CallEventArgs(ChatMember member, bool answer)
+        public CallEventArgs(IChatMember member, bool answer)
         {
             Member = member;
             Answer = answer;

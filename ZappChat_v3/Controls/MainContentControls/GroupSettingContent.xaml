@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ZappChat_v3.Controls.GroupSettingContent"
+﻿<UserControl x:Class="ZappChat_v3.Controls.MainContentControls.GroupSettingContent"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -132,7 +132,7 @@
                     CommandParameter="{Binding ChatMemberId}" FontSize="14.667"/>
         </StackPanel>
         <!-- Middle -->
-        <ListBox Grid.Row="1" ItemsSource="{Binding Path=Friends}" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        <ListBox Grid.Row="1" ItemsSource="{Binding Path=FriendList}" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
             <ListBox.Resources>
                 <DataTemplate DataType="{x:Type chatMamber:Friend}">
                     <Grid Margin="0,10" >
