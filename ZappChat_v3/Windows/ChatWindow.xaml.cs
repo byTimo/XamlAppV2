@@ -60,5 +60,13 @@ namespace ZappChat_v3.Windows
         {
             WindowState = WindowState.Minimized;
         }
+
+        private void friendList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if(friendList.SelectedIndex == -1) return;
+            var friend = friendList.Items[friendList.SelectedIndex];
+            CommandManager.OpenFriendChatCommand.DoExecute(friend);
+            friendList.SelectedIndex = -1;
+        }
     }
 }

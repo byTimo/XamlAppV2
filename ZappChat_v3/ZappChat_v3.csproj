@@ -80,9 +80,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Core\Messaging\IMessage.cs" />
+    <Compile Include="Controls\MainContentControls\FriendChatContent.xaml.cs">
+      <DependentUpon>FriendChatContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ValueConverters\FriendMultibindingConverter.cs" />
+    <Compile Include="Core\Messaging\MessageClassEnum.cs" />
     <Compile Include="Core\Messaging\MessageTypeEnum.cs" />
-    <Compile Include="Core\Messaging\TextMessage.cs" />
+    <Compile Include="Core\Messaging\Message.cs" />
     <Compile Include="Windows\ChatWindowCommandCallback.cs" />
     <Compile Include="Windows\TEST_addFriend.xaml.cs">
       <DependentUpon>TEST_addFriend.xaml</DependentUpon>
@@ -107,6 +111,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DataTemplates\GroupTreeViewDataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MainContentControls\FriendChatContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,10 +226,13 @@
     </EmbeddedResource>
     <Resource Include="Images\BottomArrow.png" />
     <Resource Include="Images\Group.png" />
-    <Resource Include="Images\settingOff.jpg" />
-    <Resource Include="Images\settingOn.png" />
     <Resource Include="Images\GroupBig.png" />
     <Resource Include="Images\AddUser.png" />
+    <Resource Include="Images\Mail.png" />
+    <Resource Include="Images\MenuBlue.png" />
+    <Resource Include="Images\MenuSky.png" />
+    <Resource Include="Images\SettingOff.png" />
+    <Resource Include="Images\SettingOn.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

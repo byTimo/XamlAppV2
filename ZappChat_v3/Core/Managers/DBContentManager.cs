@@ -19,7 +19,7 @@ namespace ZappChat_v3.Core.Managers
 
             public DbSet<Friend> Friends { get; set; }
             public DbSet<Group> Groups { get; set; }
-            public DbSet<TextMessage> Messages { get; set; }
+            public DbSet<Message> Messages { get; set; }
 
             protected override void OnModelCreating(DbModelBuilder modelBuilder)
             {

@@ -9,6 +9,8 @@
     <StackPanel>
         <TextBlock Text="Имя:"/>
         <TextBox Background="#FFB7F0B1" Text="{Binding NameFriend, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Mode=TwoWay}" />
+        <TextBlock Text="Фамилия:"/>
+        <TextBox Background="#FFB7F0B1" Text="{Binding LastFriend, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Mode=TwoWay}" />
         <Button Content="добавить" Click="ButtonBase_OnClick"/>
         <TextBlock x:Name="Sostoyanie" Foreground="#FF6AFF3E"/>
     </StackPanel>

@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:ZappChat_v3.Controls">
-    <ImageBrush x:Key="SettingButton.OffImage" ImageSource="/Images/settingOff.jpg"/>
-    <ImageBrush x:Key="SettingButton.OnImage" ImageSource="/Images/settingOn.png"/>
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ImageBrush x:Key="SettingButton.OffImage" ImageSource="/Images/SettingOff.png"/>
+    <ImageBrush x:Key="SettingButton.OnImage" ImageSource="/Images/SettingOn.png"/>
     <SolidColorBrush x:Key="Button.Static.Background2" Color="#FFDDDDDD"/>
     <SolidColorBrush x:Key="Button.Static.Border2" Color="#FF707070"/>
     <SolidColorBrush x:Key="Button.MouseOver.Background2" Color="#FFBEE6FD"/>

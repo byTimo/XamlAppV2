@@ -7,24 +7,18 @@ using ZappChat_v3.Core.ChatElements;
 
 namespace ZappChat_v3.Core.Messaging
 {
-    public class TextMessage : IMessage
+    public class Message
     {
         [Key]
         public long Id { get; set; }
 
-        public MessageType Type { get; }
+        public MessageType Type { get; set; }
+
+        public MessageClass Class { get; set; }
 
         public string Text { get; set; }
 
-        [ForeignKey(nameof(Author))]
-        public string AuthorId { get; set; }
-
-        public virtual Friend Author { get; set; }
-
-        public TextMessage(MessageType type)
-        {
-            Type = type;
-        }
+        public virtual Friend AuthorOrRecipient { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -39,7 +33,7 @@ namespace ZappChat_v3.Core.Messaging
             return $"{Text} - {Id}";
         }
 
-        protected bool Equals(TextMessage other)
+        protected bool Equals(Message other)
         {
             return Id == other.Id;
         }
@@ -54,7 +48,7 @@ namespace ZappChat_v3.Core.Messaging
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((TextMessage) obj);
+            return Equals((Message) obj);
         }
     }
 }

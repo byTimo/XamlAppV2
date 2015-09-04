@@ -23,8 +23,8 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <!-- Spliters -->
-            <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Background="#e5e5e5" ResizeBehavior="PreviousAndNext" Width="1"/>
-            <Rectangle Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Fill="#e5e5e5" Height="1" HorizontalAlignment="Stretch"/>
+            <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Background="{StaticResource ZappChat.Grey}" ResizeBehavior="PreviousAndNext" Width="1"/>
+            <Rectangle Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Fill="{StaticResource ZappChat.Grey}" Height="1" HorizontalAlignment="Stretch"/>
             <!-- Bottom Row -->
             <TabControl x:Name="tabControl" Grid.Row="2" Grid.Column="0" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0">
                 <TabControl.Resources>
@@ -42,7 +42,7 @@
                     <ListBox x:Name="friendList" 
                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" 
                              Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" 
-                             ItemsSource="{Binding FriendCollection}" ItemTemplate="{DynamicResource FriendListBoxTemplate}" Margin="0,1,0,-1"/>
+                             ItemsSource="{Binding FriendCollection}" ItemTemplate="{DynamicResource FriendListBoxTemplate}" Margin="0,1,0,-1" SelectionChanged="friendList_SelectionChanged"/>
                     <TabItem.Resources>
                         <ResourceDictionary Source="../Controls/DataTemplates/FriendListBoxDataTemplate.xaml"/>
                     </TabItem.Resources>

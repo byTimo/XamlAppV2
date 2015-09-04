@@ -20,12 +20,12 @@ namespace ZappChat_v3.Core.ChatElements
 
         public ICollection<Group> MembershipGroups { get; set; }
 
-        public virtual ICollection<IMessage> Messages { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
 
         public Friend()
         {
             MembershipGroups = new ObservableCollection<Group>();
-            Messages = new ObservableCollection<IMessage>();
+            Messages = new ObservableCollection<Message>();
         }
 
         public override string ToString()

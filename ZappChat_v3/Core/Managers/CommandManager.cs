@@ -11,6 +11,7 @@ namespace ZappChat_v3.Core.Managers
         {
             OpenGroupSettingCommand = new Command("OpenGroupSetting", OnPreviewExecuteCommand);
             OpenGroupCreateCommand = new Command("OpenGroupCreate", OnPreviewExecuteCommand);
+            OpenFriendChatCommand = new Command("OpenFriendChat", OnPreviewExecuteCommand);
             GroupCreateCommand = new Command("GroupCreate", OnPreviewExecuteCommand);
             GroupDeleteCommand = new Command("GroupDelete", OnPreviewExecuteCommand);
             AddFriendInGroupCommand = new Command("AddFriendInGroup", OnPreviewExecuteCommand);
@@ -19,6 +20,7 @@ namespace ZappChat_v3.Core.Managers
 
         public static Command OpenGroupSettingCommand { get; }
         public static Command OpenGroupCreateCommand { get; }
+        public static Command OpenFriendChatCommand { get; }
         public static Command GroupCreateCommand { get; }
         public static Command GroupDeleteCommand { get; }
         public static Command AddFriendInGroupCommand { get; }
@@ -37,6 +39,8 @@ namespace ZappChat_v3.Core.Managers
                     return OpenGroupSettingCommand;
                 case "OpenGroupCreate":
                     return OpenGroupCreateCommand;
+                case "OpenFriendChat":
+                    return OpenFriendChatCommand;
                 case "GroupCreate":
                     return GroupCreateCommand;
                 case "GroupDelete":

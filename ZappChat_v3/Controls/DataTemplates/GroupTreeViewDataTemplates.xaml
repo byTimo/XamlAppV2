@@ -14,10 +14,15 @@
             <Button Grid.Column="1" x:Name="OpenGroupSetting" 
                     Command="{Binding ElementName=OpenGroupSetting, Path=Name,Converter={StaticResource CommandConverter}}" 
                     CommandParameter="{Binding ChatMemberId}"  
-                    Cursor="Hand" Background="Transparent" Visibility="Visible" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="16" Margin="15,0">
+                    Cursor="Hand" Background="Transparent" Visibility="Collapsed" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="16" Margin="15,0">
                 <Image Source="/Images/Group.png"/>
             </Button>
         </Grid>
+        <HierarchicalDataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=TreeViewItem}}" Value="True">
+                <Setter TargetName="OpenGroupSetting" Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </HierarchicalDataTemplate.Triggers>
     </HierarchicalDataTemplate>
     <DataTemplate DataType="{x:Type chatMamber:Friend}" >
         <Grid Margin="0,10">

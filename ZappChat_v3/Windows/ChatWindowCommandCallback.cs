@@ -18,6 +18,7 @@ namespace ZappChat_v3.Windows
             CommandManager.GroupDeleteCommand.ParameterizedAction += GroupDeleteCommandCallback;
             CommandManager.AddFriendInGroupCommand.ParameterizedAction += AddFriendInGroupCommandCallback;
             CommandManager.AddFriendCommand.Action += AddFriendCommandCallback;
+            CommandManager.OpenFriendChatCommand.ParameterizedAction +=OpenFriendChatCommandCallback;
         }
 
         private void AddFriendCommandCallback()
@@ -26,6 +27,7 @@ namespace ZappChat_v3.Windows
             add.ShowDialog();
             add.Close();
         }
+
         private void GroupCreateCommandCallback()
         {
             MainContent = new GroupCreate();
@@ -62,6 +64,13 @@ namespace ZappChat_v3.Windows
             var add = new TEST_addFriendInGroup(group);
             add.ShowDialog();
             add.Close();
+        }
+
+        private void OpenFriendChatCommandCallback(object friendParam)
+        {
+            var friend = friendParam as Friend;
+            if(friend == null) throw new NullReferenceException("Не возможно открыть чат! Ссылка ссылается на null");
+            MainContent = new FriendChatContent(friend.ChatMemberId);
         }
     }
 }

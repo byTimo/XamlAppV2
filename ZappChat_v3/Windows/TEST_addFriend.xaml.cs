@@ -19,6 +19,7 @@ namespace ZappChat_v3.Windows
         }
 
         public string NameFriend { get; set; }
+        public string LastFriend { get; set; }
 
         public TEST_addFriend(ObservableCollection<Friend> friends) : this()
         {
@@ -28,12 +29,14 @@ namespace ZappChat_v3.Windows
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             if(string.IsNullOrEmpty(NameFriend)) return;
+            if(string.IsNullOrEmpty(LastFriend)) return;
             var max = _friends.Max(f => f.ChatMemberId);
             var id = max != null ? long.Parse(max) + 1 : 0; 
             var friend = new Friend
             {
                 ChatMemberId = id.ToString(),
                 Name = NameFriend,
+                LastName = LastFriend,
                 Type = ChatElementType.Friend
             };
             _friends.Add(friend);
