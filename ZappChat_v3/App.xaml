@@ -5,6 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Controls/ValueConverters.xaml"/>
                 <ResourceDictionary Source="/Controls/Colors.xaml"/>
                 <ResourceDictionary Source="/Controls/StatusButtonTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>

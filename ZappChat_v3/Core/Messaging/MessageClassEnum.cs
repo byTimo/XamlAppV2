@@ -20,6 +20,6 @@
         /// <summary>
         /// Стикер
         /// </summary>
-        Stiker
+        Sticker
     }
 }

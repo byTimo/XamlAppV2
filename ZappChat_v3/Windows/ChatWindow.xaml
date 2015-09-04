@@ -6,16 +6,16 @@
         xmlns:controls="clr-namespace:ZappChat_v3.Controls"
         mc:Ignorable="d"
         Title="ChatWindow" WindowStyle="None" Background="{x:Null}" ResizeMode="CanResizeWithGrip" AllowsTransparency="True"
-        MinHeight="600" MinWidth="850" d:DesignHeight="600" d:DesignWidth="850">
+        MinHeight="600" MinWidth="900" d:DesignHeight="600" d:DesignWidth="850">
     <Window.Resources>
 
     </Window.Resources>
     <Border CornerRadius="5,5,0,5" Background="White" BorderThickness="1" BorderBrush="#FFCFCFCF">
-        <Grid>
+        <Grid x:Name="Left">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="180*" MinWidth="270"/>
+                <ColumnDefinition Width="300" MinWidth="270" MaxWidth="400"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="620*" MinWidth="530"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -42,7 +42,7 @@
                     <ListBox x:Name="friendList" 
                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" 
                              Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" 
-                             ItemsSource="{Binding FriendCollection}" ItemTemplate="{DynamicResource FriendListBoxTemplate}" Margin="0,1,0,-1" SelectionChanged="friendList_SelectionChanged"/>
+                             ItemsSource="{Binding FriendCollection}" Margin="0" SelectionChanged="friendList_SelectionChanged" Padding="0,15,0,0"/>
                     <TabItem.Resources>
                         <ResourceDictionary Source="../Controls/DataTemplates/FriendListBoxDataTemplate.xaml"/>
                     </TabItem.Resources>
@@ -71,7 +71,7 @@
                     </TreeView>
                 </TabItem>
             </TabControl>
-            <ContentControl Grid.Row="1" Grid.Column="2" Content="{Binding MainContent}" Margin="0,0,0,1" Grid.RowSpan="2"/>
+            <ContentControl Grid.Row="2" Grid.Column="2" Content="{Binding MainContent}"/>
             <!-- Blockators -->
             <Rectangle x:Name="FullBlockator" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" Fill="#A5FFFFFF" Visibility="Collapsed"/>
             <!-- Top Row  -->

@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:message="clr-namespace:ZappChat_v3.Core.Messaging">
+    <DataTemplate x:Key="OutgoingTextMessage" DataType="{x:Type message:Message}">
+        <Grid>
+            <Border x:Name="Br" CornerRadius="10" Background="{StaticResource ZappChat.Sky}"  HorizontalAlignment="Right" Margin="40,0,5,0">
+                <TextBox Text="{Binding Text}" 
+                     Foreground="White" 
+                     Background="Transparent" 
+                     BorderBrush="{x:Null}" 
+                     IsReadOnly="True" FontFamily="HelveticaNeueCyr" FontSize="14.667" FontWeight="Normal" TextWrapping="Wrap" Margin="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" TextAlignment="Left"/>
+            </Border>
+            <Path Data="M87.130579,42.049785 C87.248515,44.182892 87.138526,46.198634 87.29687,48.440641 87.551303,50.97126 89.924816,55.46724 91.731291,56.588518 87.716253,56.634535 84.459456,55.375806 82.473989,51.561074" Fill="{DynamicResource ZappChat.Sky}" HorizontalAlignment="Right" Height="15.784" Margin="0,0,0,0.102" Stretch="Fill" Stroke="{x:Null}" VerticalAlignment="Bottom" Width="10.438"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="IncomingTextMessage" DataType="{x:Type message:Message}">
+        <Grid>
+            <Border x:Name="Br" CornerRadius="10" Background="{StaticResource ZappChat.Dirt}"  HorizontalAlignment="Left" Margin="5,0,40,0">
+                <TextBox Text="{Binding Text}" 
+                     Foreground="Black" 
+                     Background="Transparent" 
+                     BorderBrush="{x:Null}" 
+                     IsReadOnly="True" FontFamily="HelveticaNeueCyr" FontSize="14.667" FontWeight="Normal" TextWrapping="Wrap" Margin="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" TextAlignment="Left"/>
+            </Border>
+            <Path Data="M87.130579,42.049785 C87.248515,44.182892 87.138526,46.198634 87.29687,48.440641 87.551303,50.97126 89.924816,55.46724 91.731291,56.588518 87.716253,56.634535 84.459456,55.375806 82.473989,51.561074" Fill="{DynamicResource ZappChat.Dirt}" HorizontalAlignment="Left" Height="15.784" Margin="0,0,46.439,-0.273" Stretch="Fill" Stroke="{x:Null}" VerticalAlignment="Bottom" Width="9" RenderTransformOrigin="0.5,0.5">
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Path.RenderTransform>
+            </Path>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

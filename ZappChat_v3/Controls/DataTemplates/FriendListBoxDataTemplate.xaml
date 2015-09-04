@@ -1,16 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:chatMamber="clr-namespace:ZappChat_v3.Core.ChatElements"
-                    xmlns:converters="clr-namespace:ZappChat_v3.Controls.ValueConverters">
-    <converters:FriendMultibindingConverter x:Key="MultibindingConverter"/>
-    <DataTemplate x:Key="FriendListBoxTemplate" DataType="{x:Type chatMamber:Friend}">
+                    xmlns:chatMamber="clr-namespace:ZappChat_v3.Core.ChatElements">
+    <DataTemplate DataType="{x:Type chatMamber:Friend}">
         <Grid Margin="0,15" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Ellipse Grid.Column="0" Fill="{StaticResource ZappChat.LightSky}" Width="20" Height="20" Margin="17,0"/>
-            <TextBlock Grid.Column="1" FontFamily="HelveticaNeueCyr" FontSize="16" VerticalAlignment="Center" Margin="0,2,0,0" FontWeight="Medium">
+            <Ellipse Grid.Column="0" Fill="{Binding Converter={StaticResource ColorRandomizer}}" Width="17" Height="17" Margin="20,0"/>
+            <TextBlock Grid.Column="1" FontFamily="HelveticaNeueCyr" FontSize="14.667" VerticalAlignment="Center" Margin="0,2,0,0" FontWeight="Medium">
                 <TextBlock.Text>
                     <MultiBinding Converter="{StaticResource MultibindingConverter}">
                         <Binding Path="Name"/>
@@ -20,5 +18,4 @@
             </TextBlock>
         </Grid>
     </DataTemplate>
-
 </ResourceDictionary>

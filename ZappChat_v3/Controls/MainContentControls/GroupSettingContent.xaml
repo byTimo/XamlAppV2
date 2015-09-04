@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:converters="clr-namespace:ZappChat_v3.Controls.ValueConverters"
              xmlns:chatMamber="clr-namespace:ZappChat_v3.Core.ChatElements"
              mc:Ignorable="d" 
              d:DesignHeight="468" d:DesignWidth="515" DataContext="{Binding Group,RelativeSource={RelativeSource Self}}">
@@ -108,7 +107,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <converters:CommandConverter x:Key="CommandConverter"/>
     </UserControl.Resources>
 
 

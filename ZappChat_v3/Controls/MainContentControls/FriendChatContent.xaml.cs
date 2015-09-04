@@ -16,7 +16,7 @@ namespace ZappChat_v3.Controls.MainContentControls
     public partial class FriendChatContent : UserControl, INotifyPropertyChanged
     {
         private Friend _friend;
-
+        public MessageType TEST_Type { get; set; }
         public Friend Friend
         {
             get { return _friend; }
@@ -31,6 +31,7 @@ namespace ZappChat_v3.Controls.MainContentControls
         public FriendChatContent()
         {
             InitializeComponent();
+            TEST_Type = MessageType.Outgoing;
         }
 
         public FriendChatContent(string friendId) : this()
@@ -55,7 +56,7 @@ namespace ZappChat_v3.Controls.MainContentControls
             if(string.IsNullOrWhiteSpace(userText)) return;
             var message = new Message()
             {
-                Type = MessageType.Outgoing,
+                Type = TEST_Type,
                 Class = MessageClass.Text,
                 Text = userText.Trim(),
                 AuthorOrRecipient = _friend
@@ -63,6 +64,11 @@ namespace ZappChat_v3.Controls.MainContentControls
             Friend.Messages.Add(message);
             DbContentManager.Instance.SaveChanges();
             UserInput.Text = "";
+        }
+
+        private void Button_Click_1(object sender, System.Windows.RoutedEventArgs e)
+        {
+            TEST_Type = TEST_Type == MessageType.Outgoing ? MessageType.Incomming : MessageType.Outgoing;
         }
     }
 }

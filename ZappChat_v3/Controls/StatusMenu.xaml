@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:converters="clr-namespace:ZappChat_v3.Controls.ValueConverters"
              mc:Ignorable="d" Width="850">
     <UserControl.Resources>
         <SolidColorBrush x:Key="Button.MouseOver.Background2" Color="#FFFDEEC2"/>
@@ -32,7 +31,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <converters:CommandConverter x:Key="CommandConverter"/>
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect Color="{StaticResource LightSky}" Direction="0" ShadowDepth="0" BlurRadius="15"/>

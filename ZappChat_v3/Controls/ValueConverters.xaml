@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:ZappChat_v3.Controls.ValueConverters">
+    <converters:CommandConverter x:Key="CommandConverter"/>
+    <converters:FriendMultibindingConverter x:Key="MultibindingConverter"/>
+    <converters:MessageWidthConverter x:Key="MessageWidthConverter"/>
+    <converters:TabSizeConverter x:Key="TabSizeConverter"/>
+    <converters:ListBoxItemHorizontalAlignmentConverter x:Key="AlignmentConverter"/>
+    <converters:ColorRandomizer x:Key="ColorRandomizer"/>
+</ResourceDictionary>

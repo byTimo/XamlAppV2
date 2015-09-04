@@ -1,7 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:ZappChat_v3"
-                    xmlns:converters="clr-namespace:ZappChat_v3.Controls.ValueConverters"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
     <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#ACACAC"/>
@@ -25,7 +23,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <converters:TabSizeConverter x:Key="TabSizeConverter"/>
     <Style TargetType="{x:Type TabItem}">
 
         <Setter Property="Width">

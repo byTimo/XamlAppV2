@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using ZappChat_v3.Annotations;
-using ZappChat_v3.Core.Managers;
+using CommandManager = ZappChat_v3.Core.Managers.CommandManager;
 
 namespace ZappChat_v3.Windows
 {
@@ -67,6 +68,12 @@ namespace ZappChat_v3.Windows
             var friend = friendList.Items[friendList.SelectedIndex];
             CommandManager.OpenFriendChatCommand.DoExecute(friend);
             friendList.SelectedIndex = -1;
+        }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            DragMove();
         }
     }
 }

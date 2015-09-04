@@ -83,7 +83,11 @@
     <Compile Include="Controls\MainContentControls\FriendChatContent.xaml.cs">
       <DependentUpon>FriendChatContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TemplateSelector\MessageDataTemplateSelector.cs" />
+    <Compile Include="Controls\ValueConverters\ColorRandomizer.cs" />
     <Compile Include="Controls\ValueConverters\FriendMultibindingConverter.cs" />
+    <Compile Include="Controls\ValueConverters\ListBoxItemHorizontalAlignmentConverter.cs" />
+    <Compile Include="Controls\ValueConverters\MessageWidthConverter.cs" />
     <Compile Include="Core\Messaging\MessageClassEnum.cs" />
     <Compile Include="Core\Messaging\MessageTypeEnum.cs" />
     <Compile Include="Core\Messaging\Message.cs" />
@@ -111,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DataTemplates\GroupTreeViewDataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DataTemplates\TextMessageDataTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DataTemplates\UserControlsFriendDataTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ValueConverters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
