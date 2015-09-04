@@ -7,4 +7,7 @@
     <SolidColorBrush x:Key="ZappChat.Puple" Color="#ad5aa6"/>
     <SolidColorBrush x:Key="ZappChat.Dirt" Color="#fff3d7"/>
     <SolidColorBrush x:Key="ZappChat.LightSky" Color="{StaticResource LightSky}"/>
+    <SolidColorBrush x:Key="ZappChat.Status.Green" Color="#68b62f"/>
+    <SolidColorBrush x:Key="ZappChat.Status.Yellow" Color="#ffcc24"/>
+    <SolidColorBrush x:Key="ZappChat.Status.Red" Color="#de5151"/>
 </ResourceDictionary>

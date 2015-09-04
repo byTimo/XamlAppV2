@@ -12,7 +12,7 @@ namespace ZappChat_v3.Controls.ValueConverters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var width = (double)value;
-            return width >= 770.0D ? width - 22.0D : width-70;
+            return width >= 770.0D ? width - 22.0D : width-40;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

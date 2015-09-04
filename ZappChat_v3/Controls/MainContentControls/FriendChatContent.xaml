@@ -29,6 +29,15 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style x:Key="FocusVisual">
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -44,8 +53,23 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Padding="0" Background="Transparent" BorderBrush="Transparent" Margin="22,22,17,22" Cursor="Hand">
+            <Button Grid.Column="0" Padding="2" Background="Transparent" BorderBrush="Transparent" Margin="22,22,17,22" Cursor="Hand">
                 <Image Source="/Images/MenuBlue.png" Width="14"/>
+                <Button.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Resources>
             </Button>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" FontFamily="HelveticaNeueCyr" FontSize="16" FontWeight="Medium" Foreground="{StaticResource ZappChat.Blue}">
                 <TextBlock.Text>
@@ -72,7 +96,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="UserInput" Grid.Column="0" BorderThickness="0" MaxLength="1000" TextWrapping="Wrap" MaxHeight="100" FontSize="14.667" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="HelveticaNeueCyr" FontWeight="Medium" VerticalContentAlignment="Center" Padding="25,0,10,0"/>
+            <TextBox x:Name="UserInput" Grid.Column="0" BorderThickness="0" MaxLength="1000" TextWrapping="Wrap" MaxHeight="100" FontSize="14.667" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="HelveticaNeueCyr" FontWeight="Medium" VerticalContentAlignment="Center" Padding="25,0,10,0" Style="{DynamicResource TextBoxStyle1}"/>
             <Button Grid.Column="1" Background="Red" BorderBrush="{x:Null}" BorderThickness="0" Width="20" Click="Button_Click_1"/>
             <Button Grid.Column="2" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0"/>
             <Button Grid.Column="3" Background="{DynamicResource ZappChat.Sky}" Padding="19,18" BorderBrush="{DynamicResource ZappChat.Grey}" BorderThickness="1,0,0,0" Cursor="Hand" Click="Button_Click">
