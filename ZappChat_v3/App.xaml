@@ -8,6 +8,7 @@
                 <ResourceDictionary Source="/Controls/ValueConverters.xaml"/>
                 <ResourceDictionary Source="/Controls/Colors.xaml"/>
                 <ResourceDictionary Source="/Controls/StatusButtonTemplate.xaml"/>
+                <ResourceDictionary Source="Controls/FriendContextMenuTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

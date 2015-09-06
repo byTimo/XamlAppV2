@@ -75,5 +75,15 @@ namespace ZappChat_v3.Windows
             base.OnMouseLeftButtonDown(e);
             DragMove();
         }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StatusButton.IsChecked = false;
+        }
+
+        private void friendList_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

@@ -10,4 +10,6 @@
     <SolidColorBrush x:Key="ZappChat.Status.Green" Color="#68b62f"/>
     <SolidColorBrush x:Key="ZappChat.Status.Yellow" Color="#ffcc24"/>
     <SolidColorBrush x:Key="ZappChat.Status.Red" Color="#de5151"/>
+    <SolidColorBrush x:Key="ZappChat.DarkGrey" Color="#939393"/>
+    <SolidColorBrush x:Key="ZappChat.ContextMenu" Color="#f7fafb"/>
 </ResourceDictionary>

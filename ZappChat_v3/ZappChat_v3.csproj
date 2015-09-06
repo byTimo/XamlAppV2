@@ -80,6 +80,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\FriendContextMenu.cs" />
     <Compile Include="Controls\MainContentControls\FriendChatContent.xaml.cs">
       <DependentUpon>FriendChatContent.xaml</DependentUpon>
     </Compile>
@@ -119,6 +120,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DataTemplates\TextMessageDataTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FriendContextMenuTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FriendListBoxItemTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,6 +254,10 @@
     <Resource Include="Images\MenuSky.png" />
     <Resource Include="Images\SettingOff.png" />
     <Resource Include="Images\SettingOn.png" />
+    <Resource Include="Images\FriendDelete.png" />
+    <Resource Include="Images\FriendInfo.png" />
+    <Resource Include="Images\Message.png" />
+    <Resource Include="Images\Phone.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

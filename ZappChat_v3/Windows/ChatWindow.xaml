@@ -6,9 +6,8 @@
         xmlns:controls="clr-namespace:ZappChat_v3.Controls"
         mc:Ignorable="d"
         Title="ChatWindow" WindowStyle="None" Background="{x:Null}" ResizeMode="CanResizeWithGrip" AllowsTransparency="True"
-        MinHeight="600" MinWidth="900" d:DesignHeight="600" d:DesignWidth="850">
+        MinHeight="600" MinWidth="900" d:DesignHeight="600" d:DesignWidth="850" MouseDown="Window_MouseDown">
     <Window.Resources>
-
     </Window.Resources>
     <Border CornerRadius="5,5,0,5" Background="White" BorderThickness="1" BorderBrush="#FFCFCFCF">
         <Grid x:Name="Left">
@@ -39,12 +38,18 @@
                             </Border>
                         </StackPanel>
                     </TabItem.Header>
-                    <ListBox x:Name="friendList" 
+                    <ListBox x:Name="friendList" ScrollViewer.CanContentScroll="False"
                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" 
                              Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" 
-                             ItemsSource="{Binding FriendCollection}" Margin="0" SelectionChanged="friendList_SelectionChanged" Padding="0,15,0,0"/>
+                             ItemsSource="{Binding FriendCollection}" Margin="0" SelectionChanged="friendList_SelectionChanged" Padding="0,15,0,0" PreviewMouseRightButtonDown="friendList_PreviewMouseRightButtonDown">
+                    </ListBox>
                     <TabItem.Resources>
-                        <ResourceDictionary Source="../Controls/DataTemplates/FriendListBoxDataTemplate.xaml"/>
+                        <ResourceDictionary>
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="../Controls/DataTemplates/FriendListBoxDataTemplate.xaml"/>
+                                <ResourceDictionary Source="../Controls/FriendListBoxItemTemplate.xaml"/>
+                            </ResourceDictionary.MergedDictionaries>
+                        </ResourceDictionary>
                     </TabItem.Resources>
                 </TabItem>
                 <TabItem Padding="0,7,0,7" Cursor="Hand">
@@ -70,6 +75,7 @@
                         </TreeView.Resources>
                     </TreeView>
                 </TabItem>
+
             </TabControl>
             <ContentControl Grid.Row="2" Grid.Column="2" Content="{Binding MainContent}"/>
             <!-- Blockators -->

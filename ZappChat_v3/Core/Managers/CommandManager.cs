@@ -16,6 +16,7 @@ namespace ZappChat_v3.Core.Managers
             GroupDeleteCommand = new Command("GroupDelete", OnPreviewExecuteCommand);
             AddFriendInGroupCommand = new Command("AddFriendInGroup", OnPreviewExecuteCommand);
             AddFriendCommand = new Command("AddFriend", OnPreviewExecuteCommand);
+            DeleteFriendCommand = new Command("DeleteFriend", OnPreviewExecuteCommand);
         }
 
         public static Command OpenGroupSettingCommand { get; }
@@ -25,6 +26,7 @@ namespace ZappChat_v3.Core.Managers
         public static Command GroupDeleteCommand { get; }
         public static Command AddFriendInGroupCommand { get; }
         public static Command AddFriendCommand { get; }
+        public static Command DeleteFriendCommand { get; }
 
         /// <summary>
         /// Возвращает объект команды по её имени.
@@ -49,6 +51,8 @@ namespace ZappChat_v3.Core.Managers
                     return AddFriendInGroupCommand;
                 case "AddFriend":
                     return AddFriendCommand;
+                case "DeleteFriend":
+                    return DeleteFriendCommand;
                 default:
                     throw new ArgumentException("Неизвестное имя команды");
             }

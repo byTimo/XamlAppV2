@@ -29,7 +29,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Ellipse Grid.Column="0" Fill="{Binding Converter={StaticResource ColorRandomizer}}" Width="20" Height="20" Margin="20,0,5,0"/>
-            <TextBlock Grid.Column="1" Text="{Binding Name}" FontFamily="HelveticaNeueCyr" FontSize="16" VerticalAlignment="Center" Margin="0,2,0,0" FontWeight="Medium"/>
+            <TextBlock Grid.Column="1" FontFamily="HelveticaNeueCyr" FontSize="16" VerticalAlignment="Center" Margin="0,2,0,0" FontWeight="Medium">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource MultibindingConverter}">
+                        <Binding Path="Name"/>
+                        <Binding Path="LastName"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

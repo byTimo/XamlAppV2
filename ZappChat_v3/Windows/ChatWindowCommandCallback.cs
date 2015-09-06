@@ -19,6 +19,7 @@ namespace ZappChat_v3.Windows
             CommandManager.AddFriendInGroupCommand.ParameterizedAction += AddFriendInGroupCommandCallback;
             CommandManager.AddFriendCommand.Action += AddFriendCommandCallback;
             CommandManager.OpenFriendChatCommand.ParameterizedAction +=OpenFriendChatCommandCallback;
+            CommandManager.DeleteFriendCommand.ParameterizedAction +=DeleteFriendCommandOnParameterizedAction;
         }
 
         private void AddFriendCommandCallback()
@@ -71,6 +72,19 @@ namespace ZappChat_v3.Windows
             var friend = friendParam as Friend;
             if(friend == null) throw new NullReferenceException("Не возможно открыть чат! Ссылка ссылается на null");
             MainContent = new FriendChatContent(friend.ChatMemberId);
+        }
+
+        private void DeleteFriendCommandOnParameterizedAction(object friendParam)
+        {
+            var friend = friendParam as Friend;
+            if (MainContent is FriendChatContent)
+            {
+                var chat = MainContent as FriendChatContent;
+                if ((chat.DataContext as Friend).Equals(friend)) MainContent = null;
+            }
+            FriendCollection.Remove(friend);
+            DbContentManager.Instance.Friends.Remove(friend);
+            DbContentManager.Instance.SaveChanges();
         }
     }
 }

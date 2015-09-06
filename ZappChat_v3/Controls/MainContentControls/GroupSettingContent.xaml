@@ -130,9 +130,9 @@
                     CommandParameter="{Binding ChatMemberId}" FontSize="14.667"/>
         </StackPanel>
         <!-- Middle -->
-        <ListBox Grid.Row="1" ItemsSource="{Binding Path=FriendList}" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        <ListBox ScrollViewer.CanContentScroll="False" Grid.Row="1" ItemsSource="{Binding Path=FriendList}" Background="{x:Null}" BorderBrush="{StaticResource ZappChat.Grey}" BorderThickness="0,1,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,10,0,5">
             <ListBox.Resources>
-                <DataTemplate DataType="{x:Type chatMamber:Friend}">
+                <!--<DataTemplate DataType="{x:Type chatMamber:Friend}">
                     <Grid Margin="0,10" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -141,7 +141,8 @@
                         <Ellipse Grid.Column="0" Fill="{StaticResource ZappChat.LightSky}" Margin="20,5,10,5" Height="17" Width="17"/>
                         <TextBlock Grid.Column="1" Text="{Binding Name}" Background="Transparent" FontSize="14.667" FontFamily="HelveticaNeueCyr" Margin="0,2,0,0" VerticalAlignment="Center" FontWeight="Medium"/>
                     </Grid>
-                </DataTemplate>
+                </DataTemplate>-->
+                <ResourceDictionary Source="/Controls/DataTemplates/UserControlsFriendDataTemplate.xaml"/>
             </ListBox.Resources>
         </ListBox>
         <!-- Bottom -->

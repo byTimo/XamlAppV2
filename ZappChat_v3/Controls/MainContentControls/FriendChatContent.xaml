@@ -81,7 +81,8 @@
             </TextBlock>
         </Grid>
         <!-- Midle -->
-        <ListBox Grid.Row="1" ItemsSource="{Binding Path=Messages}" BorderBrush="{StaticResource ZappChat.Grey}" BorderThickness="0,1" Background="{x:Null}" HorizontalContentAlignment="Right" Padding="5,25,15,5">
+        <ListBox ScrollViewer.CanContentScroll="False"
+            Grid.Row="1" ItemsSource="{Binding Path=Messages}" BorderBrush="{StaticResource ZappChat.Grey}" BorderThickness="0,1" Background="{x:Null}" HorizontalContentAlignment="Right" Padding="5,25,15,5">
             <ListBox.ItemTemplateSelector>
                 <selectors:MessageDataTemplateSelector
                     OutgoingTextMessageDataTemplate="{StaticResource OutgoingTextMessage}"
@@ -96,7 +97,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="UserInput" Grid.Column="0" BorderThickness="0" MaxLength="1000" TextWrapping="Wrap" MaxHeight="100" FontSize="14.667" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="HelveticaNeueCyr" FontWeight="Medium" VerticalContentAlignment="Center" Padding="25,0,10,0" Style="{DynamicResource TextBoxStyle1}"/>
+            <TextBox x:Name="UserInput" Grid.Column="0" BorderThickness="0" MaxLength="1000" TextWrapping="Wrap" MaxHeight="100" FontSize="14.667" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="HelveticaNeueCyr" FontWeight="Medium" VerticalContentAlignment="Center" Padding="25,0,10,0"/>
             <Button Grid.Column="1" Background="Red" BorderBrush="{x:Null}" BorderThickness="0" Width="20" Click="Button_Click_1"/>
             <Button Grid.Column="2" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0"/>
             <Button Grid.Column="3" Background="{DynamicResource ZappChat.Sky}" Padding="19,18" BorderBrush="{DynamicResource ZappChat.Grey}" BorderThickness="1,0,0,0" Cursor="Hand" Click="Button_Click">

@@ -1,0 +1,99 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ZappChat_v3.Controls">
+    <Style TargetType="{x:Type local:FriendContextMenu}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:FriendContextMenu}">
+                    <Grid Background="White">
+                        <Grid.Effect>
+                            <DropShadowEffect Color="{StaticResource LightSky}" Direction="-90" ShadowDepth="2" BlurRadius="15" RenderingBias="Quality"/>
+                        </Grid.Effect>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="ChatButton" Grid.Column="0" Background="{StaticResource ZappChat.Sky}">
+                                <StackPanel Margin="17,20,17,15" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Image  Source="/Images/Message.png" Stretch="Fill" Width="25"/>
+                                    <TextBlock Margin="7,0,0,0" FontWeight="Medium" FontFamily="HelveticaNeueCyr" FontSize="14.667" Foreground="White" Text="Написать" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="CallButton" Grid.Column="1" Background="{StaticResource ZappChat.Status.Yellow}">
+                                <StackPanel Margin="17,20,17,15" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Image Source="/Images/Phone.png" Stretch="Fill" Width="25"/>
+                                    <TextBlock Margin="7,0,0,0" FontWeight="Medium" FontFamily="HelveticaNeueCyr" FontSize="14.667" Foreground="Black" Text="Позвонить" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                        <Button x:Name="InfoButton" Grid.Row="1" Background="Transparent" VerticalContentAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Margin="15,25,15,10" VerticalAlignment="Center">
+                                <Image Source="/Images/FriendInfo.png" Width="17" Height="17"/>
+                                <TextBlock Margin="10,0,0,0" FontWeight="Medium" FontFamily="HelveticaNeueCyr" FontSize="14.667" Foreground="Black" Text="Посмотреть инфомацию"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="DeleteButton" Grid.Row="2" Background="Transparent" VerticalContentAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Margin="15,15,10,20" VerticalAlignment="Center">
+                                <Image Source="/Images/FriendDelete.png" Width="17" Height="17"/>
+                                <TextBlock Margin="10,0,0,0" FontWeight="Medium" FontFamily="HelveticaNeueCyr" FontSize="14.667" Foreground="Black" Text="Удалить пользователя"/>
+                            </StackPanel>
+                        </Button>
+                        <Grid x:Name="DeleteStateGrid" Background="{StaticResource ZappChat.ContextMenu}" Grid.Row="0" Grid.RowSpan="3" Visibility="Collapsed" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Background="White">
+                                <Image Source="/Images/FriendDelete.png" Margin="15,0,10,0" Width="18" Height="18"/>
+                                <TextBlock Margin="10,0,0,0" FontWeight="Medium" FontFamily="HelveticaNeueCyr" FontSize="14.667" Foreground="Black" Text="Удалить контакт?" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="45,25,0,25">
+                                <Button x:Name="YesButton" Content="Да" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Style="{DynamicResource DeleteState}" 
+                                        FontFamily="HelveticaNeueCyr" FontSize="14.667" FontWeight="Medium" Padding="25,15" Background="{StaticResource ZappChat.Sky}" Foreground="White"/>
+                                <Button x:Name="NoButton" Content="Нет" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Style="{DynamicResource DeleteState}"
+                                        FontFamily="HelveticaNeueCyr" FontSize="14.667" FontWeight="Medium" Padding="25,15" Margin="10,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="DeleteState" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" CornerRadius="10" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

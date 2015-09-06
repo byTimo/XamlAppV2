@@ -81,7 +81,7 @@
             </StackPanel>
             <Button Content="Создать" HorizontalAlignment="Right" VerticalAlignment="Center" Background="{StaticResource ZappChat.Sky}" Cursor="Hand" Margin="0,0,40,0" Padding="40,10" FontFamily="HelveticaNeueCyr" FontSize="16" Click="Button_Click" BorderBrush="{DynamicResource ZappChat.Sky}" Foreground="White"/>
         </Grid>
-        <ListBox Grid.Row="1" ItemsSource="{Binding Friends,RelativeSource={RelativeSource AncestorType=UserControl}}" Background="{x:Null}" BorderThickness="0,1,0,0">
+        <ListBox Grid.Row="1" ScrollViewer.CanContentScroll="False" ItemsSource="{Binding Friends,RelativeSource={RelativeSource AncestorType=UserControl}}" Background="{x:Null}" BorderThickness="0,1,0,0">
             <ListBox.Resources>
                 <ResourceDictionary Source="/Controls/DataTemplates/UserControlsFriendDataTemplate.xaml"/>
             </ListBox.Resources>
