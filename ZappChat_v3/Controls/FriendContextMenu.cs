@@ -67,6 +67,7 @@ namespace ZappChat_v3.Controls
             var friend = DataContext as Friend;
             CommandManager.DeleteFriendCommand.DoExecute(friend);
             IsOpen = false;
+            _deleteStateGrid.Visibility = Visibility.Collapsed;
         }
 
         private void NoButtonOnClick(object sender, RoutedEventArgs routedEventArgs)

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ZappChat_v3.Core.ChatElements.Enums;
 
 namespace ZappChat_v3.Core.ChatElements
 {
@@ -12,6 +13,8 @@ namespace ZappChat_v3.Core.ChatElements
         public string ChatMemberId { get; set; }
         public ChatElementType Type { get; set; }
         public string Name { get; set; }
+        public Status Status { get; set; }
+
         public ICollection<Friend> FriendList { get; set; }
 
         public Group()
@@ -29,10 +32,10 @@ namespace ZappChat_v3.Core.ChatElements
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Friend)obj);
+            return Equals((Group)obj);
         }
 
-        protected bool Equals(Friend other)
+        protected bool Equals(Group other)
         {
             return string.Equals(ChatMemberId, other.ChatMemberId) && Type == other.Type;
         }

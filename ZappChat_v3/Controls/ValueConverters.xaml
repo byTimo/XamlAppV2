@@ -7,4 +7,5 @@
     <converters:TabSizeConverter x:Key="TabSizeConverter"/>
     <converters:ListBoxItemHorizontalAlignmentConverter x:Key="AlignmentConverter"/>
     <converters:ColorRandomizer x:Key="ColorRandomizer"/>
+    <converters:StatusConverter x:Key="StatusConverter"/>
 </ResourceDictionary>

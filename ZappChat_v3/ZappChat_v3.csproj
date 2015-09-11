@@ -89,6 +89,8 @@
     <Compile Include="Controls\ValueConverters\FriendMultibindingConverter.cs" />
     <Compile Include="Controls\ValueConverters\ListBoxItemHorizontalAlignmentConverter.cs" />
     <Compile Include="Controls\ValueConverters\MessageWidthConverter.cs" />
+    <Compile Include="Controls\ValueConverters\StatusConverter.cs" />
+    <Compile Include="Core\ChatElements\Enums\StatusEnum.cs" />
     <Compile Include="Core\Messaging\MessageClassEnum.cs" />
     <Compile Include="Core\Messaging\MessageTypeEnum.cs" />
     <Compile Include="Core\Messaging\Message.cs" />
@@ -198,7 +200,7 @@
     <Compile Include="Core\Command.cs" />
     <Compile Include="Core\Managers\CallManagerControlFlags.cs" />
     <Compile Include="Core\Managers\CallManager.cs" />
-    <Compile Include="Core\ChatElements\ChatElementTypeEnum.cs" />
+    <Compile Include="Core\ChatElements\Enums\ChatElementTypeEnum.cs" />
     <Compile Include="Core\ChatElements\IChatMember.cs" />
     <Compile Include="Core\Managers\CallManagerEvents.cs" />
     <Compile Include="Core\Managers\CallManagerP2PCallback.cs" />
@@ -258,6 +260,7 @@
     <Resource Include="Images\FriendInfo.png" />
     <Resource Include="Images\Message.png" />
     <Resource Include="Images\Phone.png" />
+    <Resource Include="Images\Smile.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

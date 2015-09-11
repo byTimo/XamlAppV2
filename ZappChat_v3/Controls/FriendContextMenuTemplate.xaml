@@ -19,16 +19,16 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="ChatButton" Grid.Column="0" Background="{StaticResource ZappChat.Sky}">
-                                <StackPanel Margin="17,20,17,15" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <Image  Source="/Images/Message.png" Stretch="Fill" Width="25"/>
-                                    <TextBlock Margin="7,0,0,0" FontWeight="Medium" FontFamily="HelveticaNeueCyr" FontSize="14.667" Foreground="White" Text="Написать" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
                             <Button x:Name="CallButton" Grid.Column="1" Background="{StaticResource ZappChat.Status.Yellow}">
                                 <StackPanel Margin="17,20,17,15" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <Image Source="/Images/Phone.png" Stretch="Fill" Width="25"/>
                                     <TextBlock Margin="7,0,0,0" FontWeight="Medium" FontFamily="HelveticaNeueCyr" FontSize="14.667" Foreground="Black" Text="Позвонить" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="ChatButton" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource ZappChat.Sky}">
+                                <StackPanel Margin="17,20,17,15" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Image  Source="/Images/Message.png" Stretch="Fill" Width="25"/>
+                                    <TextBlock Margin="7,0,0,0" FontWeight="Medium" FontFamily="HelveticaNeueCyr" FontSize="14.667" Foreground="White" Text="Написать" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
                         </Grid>

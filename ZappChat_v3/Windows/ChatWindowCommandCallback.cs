@@ -77,10 +77,13 @@ namespace ZappChat_v3.Windows
         private void DeleteFriendCommandOnParameterizedAction(object friendParam)
         {
             var friend = friendParam as Friend;
-            if (MainContent is FriendChatContent)
+            var content = MainContent as FriendChatContent;
+            if (content != null)
             {
-                var chat = MainContent as FriendChatContent;
-                if ((chat.DataContext as Friend).Equals(friend)) MainContent = null;
+                var chat = content;
+                var chatFriend = chat.DataContext as Friend;
+                if (chatFriend != null && chatFriend.Equals(friend))
+                    MainContent = null;
             }
             FriendCollection.Remove(friend);
             DbContentManager.Instance.Friends.Remove(friend);

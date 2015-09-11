@@ -42,6 +42,7 @@ namespace ZappChat_v3.Windows
 
         private void StatusButton_Checked(object sender, RoutedEventArgs e)
         {
+            StatusMenu.SetGroup(_model.GroupCollection);
             FullBlockator.Visibility = Visibility.Visible;
             StatusMenu.Visibility = Visibility.Visible;
         }

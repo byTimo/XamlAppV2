@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ZappChat_v3.Core.ChatElements.Enums;
 using ZappChat_v3.Core.Messaging;
 
 namespace ZappChat_v3.Core.ChatElements
@@ -17,6 +18,7 @@ namespace ZappChat_v3.Core.ChatElements
         public string Name { get; set; }
 
         public string LastName { get; set; }
+        public Status Status { get; set; }
 
         public ICollection<Group> MembershipGroups { get; set; }
 
