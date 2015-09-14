@@ -83,7 +83,7 @@
             <!-- Top Row  -->
             <controls:StatusButton x:Name="StatusButton" Grid.Row="0" Grid.Column="0" Content="Андрей Кондратьев" FontFamily="HelveticaNeueCyr" FontSize="16" FontStretch="Condensed" Checked="StatusButton_Checked" Unchecked="StatusButton_Unchecked" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" FontWeight="Medium"/>
             <controls:StatusMenu x:Name="StatusMenu" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed" HorizontalAlignment="Left"/>
-            <ToggleButton x:Name="SettingButton" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25" Margin="15,0,0,0" BorderBrush="{x:Null}" Foreground="{x:Null}" Cursor="Hand">
+            <ToggleButton x:Name="SettingButton" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25" Margin="15,0,0,0" BorderBrush="{x:Null}" Foreground="{x:Null}" Cursor="Hand" Checked="SettingButton_Checked" Unchecked="SettingButton_Unchecked">
                 <ToggleButton.Resources>
                     <ResourceDictionary Source="../Controls/SettingButtonTemplate.xaml"/>
                 </ToggleButton.Resources>

@@ -52,6 +52,7 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -83,6 +84,9 @@
     <Compile Include="Controls\FriendContextMenu.cs" />
     <Compile Include="Controls\MainContentControls\FriendChatContent.xaml.cs">
       <DependentUpon>FriendChatContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MainContentControls\SettingsContent.xaml.cs">
+      <DependentUpon>SettingsContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TemplateSelector\MessageDataTemplateSelector.cs" />
     <Compile Include="Controls\ValueConverters\ColorRandomizer.cs" />
@@ -146,6 +150,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\GroupTreeViewTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MainContentControls\SettingsContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

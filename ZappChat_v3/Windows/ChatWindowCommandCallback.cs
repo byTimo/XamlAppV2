@@ -13,6 +13,7 @@ namespace ZappChat_v3.Windows
         {
             CommandManager.CloseCurrentContent += () => MainContent = null;
             CommandManager.OpenGroupCreateCommand.Action += GroupCreateCommandCallback;
+            CommandManager.OpenSettingCommand.Action +=OpenSettingCommandOnAction;
             CommandManager.GroupCreateCommand.ParameterizedAction += GroupCreateCommandCallback;
             CommandManager.OpenGroupSettingCommand.ParameterizedAction += OpenGroupSettingCommandCallback;
             CommandManager.GroupDeleteCommand.ParameterizedAction += GroupDeleteCommandCallback;
@@ -20,6 +21,12 @@ namespace ZappChat_v3.Windows
             CommandManager.AddFriendCommand.Action += AddFriendCommandCallback;
             CommandManager.OpenFriendChatCommand.ParameterizedAction +=OpenFriendChatCommandCallback;
             CommandManager.DeleteFriendCommand.ParameterizedAction +=DeleteFriendCommandOnParameterizedAction;
+        }
+
+        private void OpenSettingCommandOnAction()
+        {
+            var settingContent = new SettingsContent(MainContent);
+            MainContent = settingContent;
         }
 
         private void AddFriendCommandCallback()

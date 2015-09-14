@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -85,6 +86,16 @@ namespace ZappChat_v3.Windows
         private void friendList_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void SettingButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CommandManager.OpenSettingCommand.DoExecute(null);
+        }
+
+        private void SettingButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
