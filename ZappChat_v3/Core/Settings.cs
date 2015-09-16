@@ -78,7 +78,7 @@ namespace ZappChat_v3.Core
             {
                 if (currentSetting != null)
                     return currentSetting;
-                currentSetting = ReadSettingFromFile(FileManager.FullPathToSettingFile);
+                currentSetting = ReadSettingFromFile(FileManager.CommoSettingsFile);
                 return currentSetting;
             }
         }
@@ -89,7 +89,7 @@ namespace ZappChat_v3.Core
         {
             if (currentSetting == null) return;
             var serializer = new XmlSerializer(typeof(SettingContent));
-            using (var stream = File.Open(FileManager.FullPathToSettingFile, FileMode.Create))
+            using (var stream = File.Open(FileManager.CommoSettingsFile, FileMode.Create))
             {
                serializer.Serialize(stream, currentSetting); 
             }
@@ -204,7 +204,7 @@ namespace ZappChat_v3.Core
         {
             Settings.SettingContent settingContent;
             var serialazer = new XmlSerializer(typeof (Settings.SettingContent));
-            using (var stream = File.Open(FileManager.FullPathToSettingFile, FileMode.Open))
+            using (var stream = File.Open(FileManager.CommoSettingsFile, FileMode.Open))
             {
                 settingContent = (Settings.SettingContent) serialazer.Deserialize(stream);
             }
@@ -214,7 +214,7 @@ namespace ZappChat_v3.Core
         private void SetSettingNativeWay(Settings.SettingContent settingContent)
         {
             var serialazer = new XmlSerializer(typeof(Settings.SettingContent));
-            using (var stream = File.Open(FileManager.FullPathToSettingFile, FileMode.Create))
+            using (var stream = File.Open(FileManager.CommoSettingsFile, FileMode.Create))
             {
                 serialazer.Serialize(stream, settingContent);
             }

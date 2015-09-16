@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Controls;
-using ZappChat_v3.Controls;
 using ZappChat_v3.Controls.MainContentControls;
 using ZappChat_v3.Core;
 using ZappChat_v3.Core.ChatElements;

@@ -1,7 +1,7 @@
 ﻿<Application x:Class="ZappChat_v3.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Exit="App_OnExit" StartupUri="Windows/ChatWindow.xaml">
+             Exit="App_OnExit" Startup="Application_Startup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

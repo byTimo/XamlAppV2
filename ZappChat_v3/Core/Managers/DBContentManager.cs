@@ -1,8 +1,5 @@
-﻿using System;
-using System.Configuration;
-using System.Data.Entity;
-using System.Linq;
-using System.Windows.Media;
+﻿using System.Data.Entity;
+using System.IO;
 using ZappChat_v3.Core.ChatElements;
 using ZappChat_v3.Core.Messaging;
 
@@ -14,7 +11,6 @@ namespace ZappChat_v3.Core.Managers
         {
             public ZappDbContext() : base(ZappDbConnectionString)
             {
-                FileManager.CheckExistsFiles();
             }
 
             public DbSet<Friend> Friends { get; set; }
@@ -36,16 +32,9 @@ namespace ZappChat_v3.Core.Managers
             }
 
         }
+        public static string ZappDbConnectionString => Path.Combine(FileManager.ProfileFolder, "dbfile");
 
-        private static string _zappDbConnectionString;
         private static ZappDbContext _instance;
-
-        private static string ZappDbConnectionString => _zappDbConnectionString ??
-                                                        (_zappDbConnectionString =
-                                                            ConfigurationManager.ConnectionStrings["ZappDbConnectionString"].ConnectionString
-                                                                .Replace("%APPDATA%",
-                                                                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)));
-
         public static ZappDbContext Instance => _instance ?? (_instance = new ZappDbContext());
     }
 }
