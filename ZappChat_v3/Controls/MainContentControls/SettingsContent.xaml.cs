@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ZappChat_v3.Annotations;
 
 namespace ZappChat_v3.Controls.MainContentControls
@@ -23,7 +10,7 @@ namespace ZappChat_v3.Controls.MainContentControls
     /// </summary>
     public partial class SettingsContent : UserControl, INotifyPropertyChanged
     {
-        private readonly UserControl _lastControl;
+        public UserControl LastControl { get; }
         private SettingsContent()
         {
             InitializeComponent();
@@ -31,12 +18,12 @@ namespace ZappChat_v3.Controls.MainContentControls
 
         public SettingsContent(UserControl lastControl) : this()
         {
-            _lastControl = lastControl;
+            LastControl = lastControl;
         }
 
         public UserControl Close()
         {
-            return _lastControl;
+            return LastControl;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

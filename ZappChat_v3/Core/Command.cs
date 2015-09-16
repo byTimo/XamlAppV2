@@ -12,16 +12,11 @@ namespace ZappChat_v3.Core
         /// Получить имя команды
         /// </summary>
         public string Name { get; }
-        private event Action<string> PreviewExecuteCommand;
-        /// <summary>
-        /// Действие которое вызывается при активации команды.
-        /// </summary>
-        public event Action Action;
 
         ///<summary>
         /// Параметризованное действие которое вызывается при активации команды.
         /// </summary>
-        public event Action<object> ParameterizedAction;
+        public event Action<object> Do;
 
         /// <summary>
         /// Будевое значение, отвечающие за возможность выполнения команды.
@@ -32,11 +27,6 @@ namespace ZappChat_v3.Core
         {
             _canExecute = true;
             Name = name;
-        }
-
-        public Command(string name, Action<string> previewCallBack):this(name)
-        {
-            PreviewExecuteCommand += previewCallBack;
         }
 
         /// <summary>
@@ -95,14 +85,7 @@ namespace ZappChat_v3.Core
         /// <param name="param">The param.</param>
         public virtual void DoExecute(object param)
         {
-            OnPreviewExecuteCommand();
-            Action?.Invoke();
-            ParameterizedAction?.Invoke(param);
-        }
-
-        protected virtual void OnPreviewExecuteCommand()
-        {
-            PreviewExecuteCommand?.Invoke(Name);
+            Do?.Invoke(param);
         }
     }
 }

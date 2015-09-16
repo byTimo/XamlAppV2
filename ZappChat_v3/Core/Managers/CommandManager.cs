@@ -5,31 +5,30 @@ namespace ZappChat_v3.Core.Managers
 {
     public static class CommandManager
     {
-        public static event Action<string> PreviewExecuteCommand;
-        public static event Action CloseCurrentContent;
-        static CommandManager()
-        {
-            OpenGroupSettingCommand = new Command("OpenGroupSetting", OnPreviewExecuteCommand);
-            OpenGroupCreateCommand = new Command("OpenGroupCreate", OnPreviewExecuteCommand);
-            OpenFriendChatCommand = new Command("OpenFriendChat", OnPreviewExecuteCommand);
-            OpenSettingCommand = new Command("OpenSettings", OnPreviewExecuteCommand);
-            
-            GroupCreateCommand = new Command("GroupCreate", OnPreviewExecuteCommand);
-            GroupDeleteCommand = new Command("GroupDelete", OnPreviewExecuteCommand);
-            AddFriendInGroupCommand = new Command("AddFriendInGroup", OnPreviewExecuteCommand);
-            AddFriendCommand = new Command("AddFriend", OnPreviewExecuteCommand);
-            DeleteFriendCommand = new Command("DeleteFriend", OnPreviewExecuteCommand);
-        }
-
-        public static Command OpenGroupSettingCommand { get; }
-        public static Command OpenGroupCreateCommand { get; }
-        public static Command OpenFriendChatCommand { get; }
-        public static Command OpenSettingCommand { get; }
         public static Command GroupCreateCommand { get; }
         public static Command GroupDeleteCommand { get; }
         public static Command AddFriendInGroupCommand { get; }
         public static Command AddFriendCommand { get; }
         public static Command DeleteFriendCommand { get; }
+
+        public static OpenCommand GroupSettingOpenCommand { get; }
+        public static OpenCommand GroupCreateOpenCommand { get; }
+        public static OpenCommand FriendChatOpenCommand { get; }
+        public static OpenCommand SettingOpenCommand { get; }
+
+        static CommandManager()
+        {
+            GroupCreateCommand = new Command("GroupCreate");
+            GroupDeleteCommand = new Command("GroupDelete");
+            AddFriendInGroupCommand = new Command("AddFriendInGroup");
+            AddFriendCommand = new Command("AddFriend");
+            DeleteFriendCommand = new Command("DeleteFriend");
+
+            GroupSettingOpenCommand = new OpenCommand("OpenGroupSetting");
+            GroupCreateOpenCommand = new OpenCommand("OpenGroupCreate");
+            FriendChatOpenCommand = new OpenCommand("OpenFriendChat");
+            SettingOpenCommand = new OpenCommand("OpenSettings");
+        }
 
         /// <summary>
         /// Возвращает объект команды по её имени.
@@ -41,13 +40,13 @@ namespace ZappChat_v3.Core.Managers
             switch (commandName)
             {
                 case "OpenGroupSetting":
-                    return OpenGroupSettingCommand;
+                    return GroupSettingOpenCommand;
                 case "OpenGroupCreate":
-                    return OpenGroupCreateCommand;
+                    return GroupCreateOpenCommand;
                 case "OpenFriendChat":
-                    return OpenFriendChatCommand;
+                    return FriendChatOpenCommand;
                 case "OpenSettings":
-                    return OpenSettingCommand;
+                    return SettingOpenCommand;
                 case "GroupCreate":
                     return GroupCreateCommand;
                 case "GroupDelete":
@@ -62,16 +61,6 @@ namespace ZappChat_v3.Core.Managers
                     throw new ArgumentException("Неизвестное имя команды");
             }
 
-        }
-
-        private static void OnPreviewExecuteCommand(string obj)
-        {
-            PreviewExecuteCommand?.Invoke(obj);
-        }
-
-        public static void CloseContent()
-        {
-            CloseCurrentContent?.Invoke();
         }
     }
 }

@@ -77,7 +77,7 @@
                 </TabItem>
 
             </TabControl>
-            <ContentControl Grid.Row="2" Grid.Column="2" Content="{Binding MainContent}"/>
+            <ContentControl x:Name="ContentControl" Grid.Row="2" Grid.Column="2" Content="{Binding MainContent}"/>
             <!-- Blockators -->
             <Rectangle x:Name="FullBlockator" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" Fill="#A5FFFFFF" Visibility="Collapsed"/>
             <!-- Top Row  -->

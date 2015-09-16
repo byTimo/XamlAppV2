@@ -11,12 +11,14 @@ namespace ZappChat_v3.Windows
 {
     public partial class ChatWindowModel : INotifyPropertyChanged
     {
+        private readonly ChatWindow _chatWindow;
         private ObservableCollection<Friend> _friends;
         private ObservableCollection<Group> _groups;
         private UserControl _currentContent;
 
-        public ChatWindowModel()
+        public ChatWindowModel(ChatWindow window)
         {
+            _chatWindow = window;
             BindCommandCallbacks();
 
             FriendCollection =

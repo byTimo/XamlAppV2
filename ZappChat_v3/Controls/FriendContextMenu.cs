@@ -53,7 +53,7 @@ namespace ZappChat_v3.Controls
         {
             var friend = DataContext as Friend;
             if (friend == null) throw new NullReferenceException("Невозможно открыть чат с пользователем.");
-            CommandManager.OpenFriendChatCommand.DoExecute(friend);
+            CommandManager.FriendChatOpenCommand.DoExecute(friend);
             IsOpen = false;
         }
 
