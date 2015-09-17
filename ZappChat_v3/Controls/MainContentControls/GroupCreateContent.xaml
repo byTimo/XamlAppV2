@@ -61,7 +61,7 @@
                                     <Condition Property="IsMouseOver" Value="True"/>
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="Bn" Property="Visibility" Value="Visible"/>
-                                <Setter Property="Background" Value="{StaticResource ZappChat.LightSky}"/>
+                                <Setter Property="Background" Value="{StaticResource ZappChat.VeryLightSky}"/>
                             </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -77,7 +77,7 @@
         <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal" Margin="30,35">
                 <TextBlock Text="Название" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="HelveticaNeueCyr" FontSize="16" Foreground="DarkGray"/>
-                <TextBox Text="{Binding GroupName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" FontFamily="HelveticaNeueCyr" FontSize="18.667" Background="{x:Null}" BorderBrush="{DynamicResource ZappChat.LightSky}" BorderThickness="0,0,0,1" MinWidth="20" FontWeight="Medium"/>
+                <TextBox Text="{Binding GroupName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" FontFamily="HelveticaNeueCyr" FontSize="18.667" Background="{x:Null}" BorderBrush="{DynamicResource ZappChat.VeryLightSky}" BorderThickness="0,0,0,1" MinWidth="20" FontWeight="Medium"/>
             </StackPanel>
             <Button Content="Создать" HorizontalAlignment="Right" VerticalAlignment="Center" Background="{StaticResource ZappChat.Sky}" Cursor="Hand" Margin="0,0,40,0" Padding="40,10" FontFamily="HelveticaNeueCyr" FontSize="16" Click="Button_Click" BorderBrush="{DynamicResource ZappChat.Sky}" Foreground="White"/>
         </Grid>

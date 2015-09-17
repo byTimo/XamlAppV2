@@ -61,8 +61,7 @@ namespace ZappChat_v3.Controls.MainContentControls
                 MessageBox.Show("Введите название группы", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            var max = DbContentManager.Instance.Groups.Max(g => g.ChatMemberId);
-            var id = max != null ? long.Parse(max) + 1 : 0;
+            var id = DbContentManager.Instance.Groups.Count();
             var newGroup = new Group()
             {
                 ChatMemberId = id.ToString(),

@@ -6,10 +6,11 @@
     <SolidColorBrush x:Key="ZappChat.Blue" Color="#4d80bf"/>
     <SolidColorBrush x:Key="ZappChat.Puple" Color="#ad5aa6"/>
     <SolidColorBrush x:Key="ZappChat.Dirt" Color="#fff3d7"/>
-    <SolidColorBrush x:Key="ZappChat.LightSky" Color="{StaticResource LightSky}"/>
+    <SolidColorBrush x:Key="ZappChat.VeryLightSky" Color="{StaticResource LightSky}"/>
     <SolidColorBrush x:Key="ZappChat.Status.Green" Color="#68b62f"/>
     <SolidColorBrush x:Key="ZappChat.Status.Yellow" Color="#ffcc24"/>
     <SolidColorBrush x:Key="ZappChat.Status.Red" Color="#de5151"/>
     <SolidColorBrush x:Key="ZappChat.DarkGrey" Color="#939393"/>
     <SolidColorBrush x:Key="ZappChat.ContextMenu" Color="#f7fafb"/>
+    <SolidColorBrush x:Key="ZappChat.LightSky" Color="#eaf1f3"/>
 </ResourceDictionary>

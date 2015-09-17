@@ -30,8 +30,7 @@ namespace ZappChat_v3.Windows
         {
             if(string.IsNullOrEmpty(NameFriend)) return;
             if(string.IsNullOrEmpty(LastFriend)) return;
-            var max = _friends.Max(f => f.ChatMemberId);
-            var id = max != null ? long.Parse(max) + 1 : 0; 
+            var id = _friends.Count;
             var friend = new Friend
             {
                 ChatMemberId = id.ToString(),

@@ -46,6 +46,10 @@
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
     </Reference>
@@ -72,6 +76,10 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WebSocket4Net, Version=0.12.0.0, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocket4Net.0.13.1\lib\net45\WebSocket4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -95,6 +103,11 @@
     <Compile Include="Controls\ValueConverters\MessageWidthConverter.cs" />
     <Compile Include="Controls\ValueConverters\StatusConverter.cs" />
     <Compile Include="Core\ChatElements\Enums\StatusEnum.cs" />
+    <Compile Include="Core\Managers\WebSocket\RequestFactory.cs" />
+    <Compile Include="Core\Managers\WebSocket\WebScoketManagerInterface.cs" />
+    <Compile Include="Core\Managers\WebSocket\WebSocketManager.cs" />
+    <Compile Include="Core\Managers\WebSocket\WebSocketSenderAndGetter.cs" />
+    <Compile Include="Core\Managers\WebSocket\WebSocketStatus.cs" />
     <Compile Include="Core\Messaging\MessageClassEnum.cs" />
     <Compile Include="Core\Messaging\MessageTypeEnum.cs" />
     <Compile Include="Core\Messaging\Message.cs" />
@@ -155,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MainContentControls\SettingsContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ScrollBarTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

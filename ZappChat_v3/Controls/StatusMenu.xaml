@@ -40,7 +40,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Border x:Name="innerBorder" Background="{StaticResource ZappChat.LightSky}" CornerRadius="10" Margin="5,15" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Border x:Name="innerBorder" Background="{StaticResource ZappChat.VeryLightSky}" CornerRadius="10" Margin="5,15" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Border>
                         </Border>
@@ -149,7 +149,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Grid.Column="0" Background="White" BorderThickness="1" BorderBrush="{StaticResource ZappChat.LightSky}">
+        <Border Grid.Row="0" Grid.Column="0" Background="White" BorderThickness="1" BorderBrush="{StaticResource ZappChat.VeryLightSky}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -188,14 +188,14 @@
                 </Button>
             </Grid>
         </Border>
-        <Button x:Name="OpenGroupCreate" Grid.Column="1" Grid.Row="0" BorderBrush="{StaticResource ZappChat.LightSky}" Background="White" 
+        <Button x:Name="OpenGroupCreate" Grid.Column="1" Grid.Row="0" BorderBrush="{StaticResource ZappChat.VeryLightSky}" Background="White" 
 			Command="{Binding Name, Converter={StaticResource CommandConverter}, ElementName=OpenGroupCreate}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/GroupBig.png" Width="72" Stretch="Fill"/>
                 <TextBlock Text="Создать группу" FontFamily="HelveticaNeueCyr" FontSize="17.333" TextAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>
             </StackPanel>
         </Button>
-        <Button x:Name="AddFriend" Grid.Column="2" Grid.Row="0" BorderBrush="{StaticResource ZappChat.LightSky}" Background="White"
+        <Button x:Name="AddFriend" Grid.Column="2" Grid.Row="0" BorderBrush="{StaticResource ZappChat.VeryLightSky}" Background="White"
 			Command="{Binding Name, Converter={StaticResource CommandConverter}, ElementName=AddFriend}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/AddUser.png" Width="72" Stretch="Fill"/>

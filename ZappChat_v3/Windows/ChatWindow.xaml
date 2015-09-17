@@ -8,9 +8,51 @@
         Title="ChatWindow" WindowStyle="None" Background="{x:Null}" ResizeMode="CanResizeWithGrip" AllowsTransparency="True"
         MinHeight="600" MinWidth="900" d:DesignHeight="600" d:DesignWidth="850" MouseDown="Window_MouseDown">
     <Window.Resources>
+
+        <SolidColorBrush x:Key="ListBox.Static.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ListBox.Static.Border" Color="#FFABADB3"/>
+        <SolidColorBrush x:Key="ListBox.Disabled.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="#FFD9D9D9"/>
+        <Style x:Key="ListBoxStyle1" TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="{StaticResource ListBox.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ListBox.Static.Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}">
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </ScrollViewer>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ListBox.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource ListBox.Disabled.Border}"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsGrouping" Value="true"/>
+                                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
     <Border CornerRadius="5,5,0,5" Background="White" BorderThickness="1" BorderBrush="#FFCFCFCF">
-        <Grid x:Name="Left">
+        <Grid x:Name="LeftGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300" MinWidth="270" MaxWidth="400"/>
                 <ColumnDefinition Width="Auto"/>
@@ -21,6 +63,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+            <ScrollViewer></ScrollViewer>
             <!-- Spliters -->
             <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Background="{StaticResource ZappChat.Grey}" ResizeBehavior="PreviousAndNext" Width="1"/>
             <Rectangle Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Fill="{StaticResource ZappChat.Grey}" Height="1" HorizontalAlignment="Stretch"/>
@@ -41,7 +84,7 @@
                     <ListBox x:Name="friendList" ScrollViewer.CanContentScroll="False"
                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" 
                              Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" 
-                             ItemsSource="{Binding FriendCollection}" Margin="0" SelectionChanged="friendList_SelectionChanged" Padding="0,15,0,0" PreviewMouseRightButtonDown="friendList_PreviewMouseRightButtonDown">
+                             ItemsSource="{Binding FriendCollection}" Margin="0" SelectionChanged="friendList_SelectionChanged" Padding="0,15,0,0" PreviewMouseRightButtonDown="friendList_PreviewMouseRightButtonDown" Style="{DynamicResource ListBoxStyle1}">
                     </ListBox>
                     <TabItem.Resources>
                         <ResourceDictionary>
@@ -75,7 +118,6 @@
                         </TreeView.Resources>
                     </TreeView>
                 </TabItem>
-
             </TabControl>
             <ContentControl x:Name="ContentControl" Grid.Row="2" Grid.Column="2" Content="{Binding MainContent}"/>
             <!-- Blockators -->
@@ -88,7 +130,7 @@
                     <ResourceDictionary Source="../Controls/SettingButtonTemplate.xaml"/>
                 </ToggleButton.Resources>
             </ToggleButton>
-            <Button Grid.Row="0" x:Name="ExitButton" Grid.Column="2" HorizontalAlignment="Right" Width="10" Click="AppShutdown" VerticalAlignment="Center" Margin="0,0,32,0" Height="10" Background="{DynamicResource ZappChat.LightSky}" BorderBrush="{DynamicResource ZappChat.LightSky}" Cursor="Hand">
+            <Button Grid.Row="0" x:Name="ExitButton" Grid.Column="2" HorizontalAlignment="Right" Width="10" Click="AppShutdown" VerticalAlignment="Center" Margin="0,0,32,0" Height="10" Background="{DynamicResource ZappChat.VeryLightSky}" BorderBrush="{DynamicResource ZappChat.VeryLightSky}" Cursor="Hand">
                 <Button.Resources>
                     <ResourceDictionary Source="../Controls/CircleButton.xaml"/>
                 </Button.Resources>
