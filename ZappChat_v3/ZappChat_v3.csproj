@@ -104,8 +104,11 @@
     <Compile Include="Controls\ValueConverters\StatusConverter.cs" />
     <Compile Include="Core\ChatElements\Enums\StatusEnum.cs" />
     <Compile Include="Core\Managers\WebSocket\RequestFactory.cs" />
+    <Compile Include="Core\Managers\WebSocket\SendObjectResult.cs" />
     <Compile Include="Core\Managers\WebSocket\WebScoketManagerInterface.cs" />
+    <Compile Include="Core\Managers\WebSocket\WebSocketGetDataCallback.cs" />
     <Compile Include="Core\Managers\WebSocket\WebSocketManager.cs" />
+    <Compile Include="Core\Managers\WebSocket\WebSocketManagerEventArgs.cs" />
     <Compile Include="Core\Managers\WebSocket\WebSocketSenderAndGetter.cs" />
     <Compile Include="Core\Managers\WebSocket\WebSocketStatus.cs" />
     <Compile Include="Core\Messaging\MessageClassEnum.cs" />
@@ -118,6 +121,9 @@
     </Compile>
     <Compile Include="Windows\TEST_addFriendInGroup.xaml.cs">
       <DependentUpon>TEST_addFriendInGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\TEST_authorize.xaml.cs">
+      <DependentUpon>TEST_authorize.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\ChatMamberTabControlTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -254,6 +260,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\TEST_authorize.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -287,6 +297,10 @@
     <Resource Include="Images\Message.png" />
     <Resource Include="Images\Phone.png" />
     <Resource Include="Images\Smile.png" />
+    <Resource Include="Images\ArrowButtonMouseOver.png" />
+    <Resource Include="Images\ArrowButtonStatic.png" />
+    <Resource Include="Images\SmileButtonMouseOver.png" />
+    <Resource Include="Images\SmileButtonStatic.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

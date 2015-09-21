@@ -11,7 +11,7 @@ namespace ZappChat_v3.Core.Managers.WebSocket
 {
     public static partial class WebSocketManager
     {
-        private static readonly object ThreadBlocker = new object();
+        private static readonly object ChangeConnectionStatusBlocker = new object();
 
         public const string ZappChatWebSocketUri = "ws://zappchat.ru:8888";
 
@@ -49,9 +49,9 @@ namespace ZappChat_v3.Core.Managers.WebSocket
 
         private static void WebSocketConnected(object sender, EventArgs eventArgs)
         {
-            lock (ThreadBlocker)
+            lock (ChangeConnectionStatusBlocker)
             {
-                _tryConnected = false;
+                //_tryConnected = false;
                 Status = WebSocketStatus.Connected;
                 EventInvoker(Connected);
                 Support.Logger.Info("Successfull connection to server");
@@ -60,7 +60,7 @@ namespace ZappChat_v3.Core.Managers.WebSocket
 
         private static void WebSocketDisconnected(object sender, EventArgs eventArgs)
         {
-            lock (ThreadBlocker)
+            lock (ChangeConnectionStatusBlocker)
             {
                 Status = WebSocketStatus.Disconnected;
                 EventInvoker(Disconnected);
@@ -72,7 +72,7 @@ namespace ZappChat_v3.Core.Managers.WebSocket
 
         private static void WebSocketOnError(object sender, ErrorEventArgs errorEventArgs)
         {
-            lock (ThreadBlocker)
+            lock (ChangeConnectionStatusBlocker)
             {
                 EventInvoker(Disconnecting);
                 Support.Logger.Error(errorEventArgs.Exception,"Error in WebSocket");

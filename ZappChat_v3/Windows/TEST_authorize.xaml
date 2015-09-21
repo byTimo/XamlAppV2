@@ -1,0 +1,16 @@
+﻿<Window x:Class="ZappChat_v3.Windows.TEST_authorize"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZappChat_v3.Windows"
+        mc:Ignorable="d"
+        Title="TEST_authorize" Height="300" Width="300" Closed="Window_Closed">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+        <TextBlock Text="Login"/>
+        <TextBox x:Name="LoginTextBox"/>
+        <TextBlock Text="Password"/>
+        <TextBox x:Name="PasswordTextBox"/>
+        <Button Content="Connect" Click="Button_Click"/>
+    </StackPanel>
+</Window>

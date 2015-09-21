@@ -29,11 +29,46 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            <Style x:Key="FocusVisual">
-                <Setter Property="Control.Template">
+            <ImageBrush x:Key="SmileStatic" ImageSource="/Images/SmileButtonStatic.png"/>
+            <ImageBrush x:Key="SmileMouseOver" ImageSource="/Images/SmileButtonMouseOver.png"/>
+            <ImageBrush x:Key="ArrowStatic" ImageSource="/Images/ArrowButtonStatic.png"/>
+            <ImageBrush x:Key="ArrowMouseOver" ImageSource="/Images/ArrowButtonMouseOver.png"/>
+            <Style x:Key="ArrowButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate>
-                            <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                <Rectangle x:Name="Rectangle" Fill="{StaticResource ArrowStatic}" VerticalAlignment="Center" Width="20" Height="20"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Rectangle" Property="Fill" Value="{StaticResource ArrowMouseOver}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="SmileButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                <Rectangle x:Name="Rectangle" Fill="{StaticResource SmileStatic}" VerticalAlignment="Center" Width="20" Height="20"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Rectangle" Property="Fill" Value="{StaticResource SmileMouseOver}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -98,8 +133,8 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox x:Name="UserInput" Grid.Column="0" BorderThickness="0" MaxLength="1000" TextWrapping="Wrap" MaxHeight="100" FontSize="14.667" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="HelveticaNeueCyr" FontWeight="Medium" VerticalContentAlignment="Center" Padding="25,0,10,0"/>
-            <Button Grid.Column="1" Background="Red" BorderBrush="{x:Null}" BorderThickness="0" Width="20" Click="Button_Click_1"/>
-            <Button Grid.Column="2" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <Button Grid.Column="1" Background="Transparent" BorderBrush="{x:Null}" Style="{DynamicResource SmileButtonStyle}" Margin="10,0,0,0"/>
+            <Button Grid.Column="2" Background="Transparent" BorderBrush="{x:Null}" Style="{DynamicResource ArrowButtonStyle}" Margin="10,0"/>
             <Button Grid.Column="3" Background="{DynamicResource ZappChat.Sky}" Padding="19,18" BorderBrush="{DynamicResource ZappChat.Grey}" BorderThickness="1,0,0,0" Cursor="Hand" Click="Button_Click">
                 <Image Source="/Images/Mail.png" Width="27" Stretch="Fill" Height="20"/>
             </Button>

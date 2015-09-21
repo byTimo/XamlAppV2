@@ -188,8 +188,8 @@
                 </Button>
             </Grid>
         </Border>
-        <Button x:Name="OpenGroupCreate" Grid.Column="1" Grid.Row="0" BorderBrush="{StaticResource ZappChat.VeryLightSky}" Background="White" 
-			Command="{Binding Name, Converter={StaticResource CommandConverter}, ElementName=OpenGroupCreate}">
+        <Button x:Name="GroupCreateOpen" Grid.Column="1" Grid.Row="0" BorderBrush="{StaticResource ZappChat.VeryLightSky}" Background="White" 
+			Command="{Binding Name, Converter={StaticResource CommandConverter}, ElementName=GroupCreateOpen}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/GroupBig.png" Width="72" Stretch="Fill"/>
                 <TextBlock Text="Создать группу" FontFamily="HelveticaNeueCyr" FontSize="17.333" TextAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>

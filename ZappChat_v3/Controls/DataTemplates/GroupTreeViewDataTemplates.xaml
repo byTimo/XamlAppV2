@@ -9,8 +9,8 @@
             </Grid.ColumnDefinitions>
             <Ellipse Grid.Column="0" Fill="{Binding Converter={StaticResource ColorRandomizer}}" Width="50" Height="50" Margin="15,0"/>
             <TextBlock Grid.Column="1" Text="{Binding Name}" FontFamily="HelveticaNeueCyr" FontSize="16" VerticalAlignment="Center" Margin="0,2,0,0" FontWeight="Medium"/>
-            <Button Grid.Column="1" x:Name="OpenGroupSetting" 
-                    Command="{Binding ElementName=OpenGroupSetting, Path=Name,Converter={StaticResource CommandConverter}}" 
+            <Button Grid.Column="1" x:Name="GroupSettingOpen" 
+                    Command="{Binding ElementName=GroupSettingOpen, Path=Name,Converter={StaticResource CommandConverter}}" 
                     CommandParameter="{Binding ChatMemberId}"  
                     Cursor="Hand" Background="Transparent" Visibility="Collapsed" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="16" Margin="15,0">
                 <Image Source="/Images/Group.png"/>
@@ -18,7 +18,7 @@
         </Grid>
         <HierarchicalDataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=TreeViewItem}}" Value="True">
-                <Setter TargetName="OpenGroupSetting" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="GroupSettingOpen" Property="Visibility" Value="Visible"/>
             </DataTrigger>
         </HierarchicalDataTemplate.Triggers>
     </HierarchicalDataTemplate>

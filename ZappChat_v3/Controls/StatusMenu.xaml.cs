@@ -110,14 +110,14 @@ namespace ZappChat_v3.Controls
         private void BlockUserInput()
         {
             BlockedGrid.Visibility = Visibility.Visible;
-            OpenGroupCreate.Visibility = Visibility.Collapsed;
+            GroupCreateOpen.Visibility = Visibility.Collapsed;
             AddFriend.Visibility = Visibility.Collapsed;
         }
 
         private void UnblockUserInput()
         {
             BlockedGrid.Visibility = Visibility.Collapsed;
-            OpenGroupCreate.Visibility = Visibility.Visible;
+            GroupCreateOpen.Visibility = Visibility.Visible;
             AddFriend.Visibility = Visibility.Visible;
         }
     }

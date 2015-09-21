@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Input;
 
 namespace ZappChat_v3.Core.Managers
@@ -37,30 +39,11 @@ namespace ZappChat_v3.Core.Managers
         /// <returns>Команда с заданным имененем</returns>
         public static Command GetCommand(string commandName)
         {
-            switch (commandName)
-            {
-                case "OpenGroupSetting":
-                    return GroupSettingOpenCommand;
-                case "OpenGroupCreate":
-                    return GroupCreateOpenCommand;
-                case "OpenFriendChat":
-                    return FriendChatOpenCommand;
-                case "OpenSettings":
-                    return SettingOpenCommand;
-                case "GroupCreate":
-                    return GroupCreateCommand;
-                case "GroupDelete":
-                    return GroupDeleteCommand;
-                case "AddFriendInGroup":
-                    return AddFriendInGroupCommand;
-                case "AddFriend":
-                    return AddFriendCommand;
-                case "DeleteFriend":
-                    return DeleteFriendCommand;
-                default:
-                    throw new ArgumentException("Неизвестное имя команды");
-            }
-
+            var proprtyName = string.Concat(commandName, "Command");
+            var type = typeof (CommandManager);
+            var typeProperties = type.GetProperties();
+            var currentProperty = typeProperties.First(m => m.Name.Equals(proprtyName));
+            return currentProperty.GetValue(null) as Command;
         }
     }
 }

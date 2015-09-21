@@ -14,6 +14,8 @@ namespace ZappChat_v3.Windows
         private readonly ChatWindow _chatWindow;
         private ObservableCollection<Friend> _friends;
         private ObservableCollection<Group> _groups;
+        private string _userName;
+        private string _lastUserName;
         private UserControl _currentContent;
 
         public ChatWindowModel(ChatWindow window)
@@ -58,6 +60,25 @@ namespace ZappChat_v3.Windows
             }
         }
 
+        public string UserName
+        {
+            get { return _userName; }
+            set
+            {
+                _userName = value;
+                OnPropertyChanged(nameof(UserName));
+            }
+        }
+
+        public string LastUserName
+        {
+            get { return _lastUserName; }
+            set
+            {
+                _lastUserName = value;
+                OnPropertyChanged(nameof(LastUserName));
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

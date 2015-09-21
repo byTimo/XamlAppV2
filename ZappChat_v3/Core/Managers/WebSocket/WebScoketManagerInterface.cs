@@ -7,7 +7,6 @@ namespace ZappChat_v3.Core.Managers.WebSocket
 {
     public static partial class WebSocketManager
     {
-        private static bool _tryConnected;
         /// <summary>
         /// Метод начинает подключение к серверу Запчата
         /// </summary>
@@ -17,12 +16,6 @@ namespace ZappChat_v3.Core.Managers.WebSocket
             EventInvoker(Connecting);
             //-- таймер ---
             WebSocket.Open();
-            _tryConnected = true;
-            while (_tryConnected)
-            {
-                Thread.Sleep(1000);
-            }
-            return;
         }
         /// <summary>
         /// Метод отключает приложение от сервера
@@ -39,7 +32,7 @@ namespace ZappChat_v3.Core.Managers.WebSocket
             if (OutgoingObjectQueue.Count >= 3) return;
             var jObject = JObject.FromObject(sendingObject);
             OutgoingObjectQueue.Enqueue(jObject);
-            lock (ThreadBlocker)
+            lock (TimerControlBlocker)
             {
                 if (!SendOutgoingObjectTimer.IsEnabled)
                     ManuallySendObject();

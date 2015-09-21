@@ -4,6 +4,7 @@ namespace ZappChat_v3.Core.Managers.WebSocket
 {
     public static partial class WebSocketManager
     {
+        private static readonly object TimerControlBlocker = new object();
         private static void ManuallySendObject()
         {
             if (OutgoingObjectQueue.Count == 0)
@@ -42,7 +43,7 @@ namespace ZappChat_v3.Core.Managers.WebSocket
                 OutgoingObjectQueue.Dequeue();
                 if (Status != WebSocketStatus.Connected) return;
             }
-            lock (ThreadBlocker)
+            lock (TimerControlBlocker)
             {
                 if (OutgoingObjectQueue.Count == 0)
                     SendOutgoingObjectTimer.Stop();
@@ -56,8 +57,7 @@ namespace ZappChat_v3.Core.Managers.WebSocket
                 Support.Logger.Trace("Invoke manually parse first queue element, when queue's count equals 0");
                 return;
             }
-            var gettingObject = IncomingObjectQueue.Dequeue();
-            //@TODO callback
+            ReceivedJObject(IncomingObjectQueue.Dequeue());
             if(IncomingObjectQueue.Count != 0 && !ParseIncomingObjectQueue.IsEnabled)
                 ParseIncomingObjectQueue.Start();
         }
@@ -71,11 +71,9 @@ namespace ZappChat_v3.Core.Managers.WebSocket
             }
             while (IncomingObjectQueue.Count != 0)
             {
-                var gettingObject = IncomingObjectQueue.Dequeue();
-                //@TODO callback
-
+                ReceivedJObject(IncomingObjectQueue.Dequeue());
             }
-            lock (ThreadBlocker)
+            lock (TimerControlBlocker)
             {
                 if(IncomingObjectQueue.Count == 0 && !ParseIncomingObjectQueue.IsEnabled)
                     ParseIncomingObjectQueue.Stop();

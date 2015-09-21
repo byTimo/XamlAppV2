@@ -14,6 +14,18 @@ namespace ZappChat_v3.Windows
     public partial class ChatWindow: Window, INotifyPropertyChanged
     {
         private readonly ChatWindowModel _model;
+
+        public string UserName
+        {
+            get { return _model.UserName; }
+            set { _model.UserName = value; }
+        }
+        public string LastUserName
+        {
+            get { return _model.LastUserName; }
+            set { _model.LastUserName = value; }
+        }
+
         public ChatWindow()
         {
             InitializeComponent();
