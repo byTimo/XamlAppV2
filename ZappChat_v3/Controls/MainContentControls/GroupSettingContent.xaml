@@ -47,7 +47,7 @@
         </Style>
         <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#fffff9e7"/>
         <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#fffff9e7"/>
-        <Style TargetType="{x:Type ListBoxItem}">
+        <Style TargetType="{x:Type ListViewItem}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Padding" Value="4,1"/>
             <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
@@ -57,7 +57,7 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
                         <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
                             <Grid>
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -113,6 +113,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -122,20 +123,22 @@
             <TextBlock HorizontalAlignment="Left" Text="Группа" FontFamily="HelveticaNeueCyr" Margin="0,0,5,0" FontSize="21.333" VerticalAlignment="Center" FontWeight="Medium"/>
             <TextBox x:Name="GroupName" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="HelveticaNeueCyr" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{x:Null}" IsReadOnly="True" Foreground="{StaticResource ZappChat.Puple}" FontSize="21.333" KeyDown="GroupName_KeyDown" LostKeyboardFocus="GroupName_LostKeyboardFocus" VerticalAlignment="Center" FontWeight="Medium" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Margin="30,25">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Margin="0,25,30,25">
             <Button Content="Переименовать" Foreground="{StaticResource ZappChat.Blue}" BorderBrush="{StaticResource ZappChat.VeryLightSky}" FontFamily="HelveticaNeueCyr" Margin="0,0,20,0" Padding="10" Background="Transparent" Click="Button_Click" Cursor="Hand" BorderThickness="1" FontSize="14.667" />
             <Button x:Name="AddFriendInGroup" Content="Добавить контакт" Foreground="{StaticResource ZappChat.Blue}" BorderBrush="{StaticResource ZappChat.VeryLightSky}" FontFamily="HelveticaNeueCyr" Margin="20,0,0,0" Padding="10" Background="Transparent" Cursor="Hand"
                     Command="{Binding Name, ElementName=AddFriendInGroup, Converter={StaticResource CommandConverter}}"
                     CommandParameter="{Binding ChatMemberId}" FontSize="14.667"/>
         </StackPanel>
         <!-- Middle -->
-        <ListBox ScrollViewer.CanContentScroll="False" Grid.Row="1" ItemsSource="{Binding Path=FriendList}" Background="{x:Null}" BorderBrush="{StaticResource ZappChat.Grey}" BorderThickness="0,1,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,10,0,5">
+        <TextBox x:Name="FindTextBoxLable" Grid.Row="1" Text="Участники" BorderThickness="0,1,0,0" Background="Transparent" FontFamily="HelveticaNeueCyr" FontSize="16" Padding="25,25,15,5" BorderBrush="{x:Null}" Foreground="{DynamicResource ZappChat.Grey}" GotKeyboardFocus="FriendTextBoxLable_GotKeyboardFocus" FontWeight="Medium"/>
+        <TextBox x:Name="FindTextBox" Grid.Row="1" Background="Transparent" BorderThickness="0,1,0,0" TextChanged="FindTextBox_TextChanged" FontFamily="HelveticaNeueCyr" FontSize="16" Padding="25,25,15,5" GotKeyboardFocus="FindTextBox_GotKeyboardFocus" LostKeyboardFocus="FindTextBox_LostKeyboardFocus" FontWeight="Medium"/>
+        <ListView x:Name="FriendListView" ScrollViewer.CanContentScroll="False" Grid.Row="2" Background="{x:Null}" BorderBrush="{StaticResource ZappChat.Grey}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,10,0,5" Grid.RowSpan="2" BorderThickness="0">
             <ListBox.Resources>
                 <ResourceDictionary Source="/Controls/DataTemplates/UserControlsFriendDataTemplate.xaml"/>
             </ListBox.Resources>
-        </ListBox>
+        </ListView>
         <!-- Bottom -->
-        <Button x:Name="GroupDelete" Grid.Row="2" HorizontalAlignment="Left" Background="{StaticResource ZappChat.VeryLightSky}" Margin="15" Cursor="Hand" 
+        <Button x:Name="GroupDelete" Grid.Row="3" HorizontalAlignment="Left" Background="{StaticResource ZappChat.VeryLightSky}" Margin="15,15,0,15" Cursor="Hand" 
                 Command="{Binding Name, ElementName=GroupDelete, Converter={StaticResource CommandConverter}}"
                 CommandParameter="{Binding ChatMemberId}" BorderBrush="{x:Null}" Padding="5">
             <Grid Margin="10,7">

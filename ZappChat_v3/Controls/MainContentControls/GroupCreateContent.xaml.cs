@@ -72,7 +72,7 @@ namespace ZappChat_v3.Controls.MainContentControls
             {
                 newGroup.FriendList.Add(source.Key);
             }
-            CommandManager.GroupCreateCommand.DoExecute(newGroup);
+            CommandManager.GetCommand("GroupCreate").DoExecute(newGroup);
         }
     }
 }

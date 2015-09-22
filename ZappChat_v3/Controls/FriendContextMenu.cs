@@ -53,7 +53,7 @@ namespace ZappChat_v3.Controls
         {
             var friend = DataContext as Friend;
             if (friend == null) throw new NullReferenceException("Невозможно открыть чат с пользователем.");
-            CommandManager.FriendChatOpenCommand.DoExecute(friend);
+            CommandManager.GetOpenCommand("OpenFriendChat").DoExecute(friend);
             IsOpen = false;
         }
 
@@ -65,7 +65,7 @@ namespace ZappChat_v3.Controls
         private void YesButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
         {
             var friend = DataContext as Friend;
-            CommandManager.DeleteFriendCommand.DoExecute(friend);
+            CommandManager.GetCommand("DeleteFriend").DoExecute(friend);
             IsOpen = false;
             _deleteStateGrid.Visibility = Visibility.Collapsed;
         }

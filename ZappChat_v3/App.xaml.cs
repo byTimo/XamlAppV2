@@ -43,9 +43,9 @@ namespace ZappChat_v3
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             WebSocketManager.LoginAuthorizationRequest +=WebSocketManagerOnLoginAuthorizationRequest;
-            Authorize.Show();
-            //CurrentUserLogin = "andreykaka@mail.ru";
-            //WebSocketManagerOnLoginAuthorizationRequest(new WebSocketManagerEventArgs(SendObjectResult.Successfull), "");
+            //Authorize.Show();
+            CurrentUserLogin = "andreykaka@mail.ru";
+            WebSocketManagerOnLoginAuthorizationRequest(new WebSocketManagerEventArgs(SendObjectResult.Successfull), "");
         }
 
         private void WebSocketManagerOnLoginAuthorizationRequest(WebSocketManagerEventArgs args, object o)

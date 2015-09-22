@@ -40,14 +40,14 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Border x:Name="innerBorder" Background="{StaticResource ZappChat.VeryLightSky}" CornerRadius="10" Margin="5,15" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Border x:Name="innerBorder" Background="{StaticResource ZappChat.ContextMenu.Static.Content}" CornerRadius="10" Margin="5,15" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Border>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="innerBorder" Property="Background" Value="{StaticResource ZappChat.Blue}"/>
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource ZappChat.Blue}"/>
+                                <Setter TargetName="innerBorder" Property="Background" Value="{StaticResource ZappChat.ContextMenu.Static.Checked}"/>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ZappChat.ContextMenu.Static.Checked}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -90,7 +90,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Ellipse Fill="{StaticResource ZappChat.Status.Green}" Width="7" Height="7" Grid.Column="0" Margin="5,0,5,0"/>
+                            <Ellipse Fill="{StaticResource ZappChat.Green}" Width="7" Height="7" Grid.Column="0" Margin="5,0,5,0"/>
                             <TextBlock Text="Доступен" FontFamily="HelveticaNeueCyr" FontSize="10.667" Grid.Column="1" />
                         </Grid>
                     </ComboBoxItem>
@@ -100,7 +100,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Ellipse Fill="{StaticResource ZappChat.Status.Yellow}" Width="7" Height="7" Grid.Column="0" Margin="5,0,5,0"/>
+                            <Ellipse Fill="{StaticResource ZappChat.Yellow}" Width="7" Height="7" Grid.Column="0" Margin="5,0,5,0"/>
                             <TextBlock Text="Отошел" FontFamily="HelveticaNeueCyr" FontSize="10.667" Grid.Column="1" />
                         </Grid>
                     </ComboBoxItem>
@@ -110,7 +110,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Ellipse Fill="{StaticResource ZappChat.Status.Red}" Width="7" Height="7" Grid.Column="0" Margin="5,0,5,0"/>
+                            <Ellipse Fill="{StaticResource ZappChat.Red}" Width="7" Height="7" Grid.Column="0" Margin="5,0,5,0"/>
                             <TextBlock x:Name="text" Text="Недоступен" FontFamily="HelveticaNeueCyr" FontSize="10.667" Grid.Column="1" />
                         </Grid>
                     </ComboBoxItem>
@@ -162,7 +162,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Ellipse Fill="{StaticResource ZappChat.Status.Green}" Width="7" Height="7" Grid.Column="0" Margin="25,0,30,0"/>
+                        <Ellipse Fill="{StaticResource ZappChat.Green}" Width="7" Height="7" Grid.Column="0" Margin="25,0,30,0"/>
                         <TextBlock Text="Доступен" FontFamily="HelveticaNeueCyr" FontSize="17.333" Margin="5,0,0,0" Grid.Column="1" />
                     </Grid>
                 </Button>
@@ -172,7 +172,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Ellipse Fill="{StaticResource ZappChat.Status.Yellow}" Width="7" Height="7" Grid.Column="0" Margin="25,0,30,0"/>
+                        <Ellipse Fill="{StaticResource ZappChat.Yellow}" Width="7" Height="7" Grid.Column="0" Margin="25,0,30,0"/>
                         <TextBlock Text="Отошел" FontFamily="HelveticaNeueCyr" FontSize="17.333" Margin="5,0,0,0" Grid.Column="1" />
                     </Grid>
                 </Button>
@@ -182,14 +182,14 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Ellipse Fill="{StaticResource ZappChat.Status.Red}" Width="7" Height="7" Grid.Column="0" Margin="25,0,30,0"/>
+                        <Ellipse Fill="{StaticResource ZappChat.Red}" Width="7" Height="7" Grid.Column="0" Margin="25,0,30,0"/>
                         <TextBlock Text="Недоступен" FontFamily="HelveticaNeueCyr" FontSize="17.333" Margin="5,0,0,0" Grid.Column="1" />
                     </Grid>
                 </Button>
             </Grid>
         </Border>
-        <Button x:Name="GroupCreateOpen" Grid.Column="1" Grid.Row="0" BorderBrush="{StaticResource ZappChat.VeryLightSky}" Background="White" 
-			Command="{Binding Name, Converter={StaticResource CommandConverter}, ElementName=GroupCreateOpen}">
+        <Button x:Name="OpenGroupCreate" Grid.Column="1" Grid.Row="0" BorderBrush="{StaticResource ZappChat.VeryLightSky}" Background="White" 
+			Command="{Binding Name, Converter={StaticResource CommandConverter}, ElementName=OpenGroupCreate}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/GroupBig.png" Width="72" Stretch="Fill"/>
                 <TextBlock Text="Создать группу" FontFamily="HelveticaNeueCyr" FontSize="17.333" TextAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>
@@ -208,7 +208,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ToggleButton x:Name="GroupTuggleButton" Style="{StaticResource GroupToggleButton}" Background="{StaticResource ZappChat.ContextMenu}" BorderBrush="Transparent" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked">
+            <ToggleButton x:Name="GroupTuggleButton" Style="{StaticResource GroupToggleButton}" Background="{StaticResource ZappChat.ContextMenu.Static.Background}" BorderBrush="Transparent" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked">
                 <TextBlock Text="Настроить статусы для групп" FontFamily="HelveticaNeueCyr" FontSize="14.667" Margin="13,10,13,10"/>
             </ToggleButton>
             <Grid x:Name="GroupGrid" Grid.Column="0" Grid.Row="1" Background="White" Visibility="Collapsed">
@@ -225,9 +225,9 @@
         <Grid x:Name="BlockedGrid" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="White" Visibility="Collapsed">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image Source="/Images/Smile.png" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="Сохранено" Foreground="{DynamicResource ZappChat.Status.Yellow}" FontFamily="HelveticaNeueCyr" FontSize="21.333" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="Сохранено" Foreground="{DynamicResource ZappChat.Yellow}" FontFamily="HelveticaNeueCyr" FontSize="21.333" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </StackPanel>
-            <Rectangle Fill="{DynamicResource ZappChat.Status.Yellow}" VerticalAlignment="Bottom" Height="73" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,27" >
+            <Rectangle Fill="{DynamicResource ZappChat.Yellow}" VerticalAlignment="Bottom" Height="73" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,27" >
                 <Rectangle.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -237,7 +237,7 @@
                     </TransformGroup>
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Rectangle Fill="{DynamicResource ZappChat.Status.Yellow}" VerticalAlignment="Bottom" Height="73"/>
+            <Rectangle Fill="{DynamicResource ZappChat.Yellow}" VerticalAlignment="Bottom" Height="73"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using ZappChat_v3.Annotations;
 using ZappChat_v3.Core;
@@ -25,6 +27,9 @@ namespace ZappChat_v3.Controls.MainContentControls
         public GroupSettingContent(Group group) : this()
         {
             Group = group;
+            FriendListView.ItemsSource = Group.FriendList;
+            var views = (CollectionView)CollectionViewSource.GetDefaultView(FriendListView.ItemsSource);
+            views.Filter = UserFilter;
         }
 
         public Group Group
@@ -78,6 +83,36 @@ namespace ZappChat_v3.Controls.MainContentControls
             Group.FriendList.Remove(friend);
             friend.MembershipGroups.Remove(Group);
             DbContentManager.Instance.SaveChanges();
+        }
+
+        private bool UserFilter(object item)
+        {
+            if (string.IsNullOrEmpty(FindTextBox.Text))
+                return true;
+            var friend = item as Friend;
+            return friend.Name.IndexOf(FindTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                   friend.LastName.IndexOf(FindTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+
+        private void FindTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(FriendListView.ItemsSource).Refresh();
+        }
+
+        private void FriendTextBoxLable_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            Keyboard.Focus(FindTextBox);
+        }
+
+        private void FindTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            FindTextBoxLable.Visibility = Visibility.Collapsed;
+        }
+
+        private void FindTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if(FindTextBox.Text == "") FindTextBoxLable.Visibility = Visibility.Visible;
         }
     }
 }

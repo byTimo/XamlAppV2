@@ -13,20 +13,22 @@ namespace ZappChat_v3.Windows
 
         private void BindCommandCallbacks()
         {
-            CommandManager.GroupCreateCommand.Do += GroupCreateCommandCallback;
-            CommandManager.GroupDeleteCommand.Do += GroupDeleteCommandCallback;
-            CommandManager.AddFriendInGroupCommand.Do += AddFriendInGroupCommandCallback;
-            CommandManager.AddFriendCommand.Do += AddFriendCommandCallback;
-            CommandManager.DeleteFriendCommand.Do +=DeleteFriendCommandCallback;
+            CommandManager.GetCommand("GroupCreate").Do += GroupCreateCommandCallback;
+            CommandManager.GetCommand("GroupDelete").Do += GroupDeleteCommandCallback;
+            CommandManager.GetCommand("AddFriendInGroup").Do += AddFriendInGroupCommandCallback;
+            CommandManager.GetCommand("AddFriend").Do += AddFriendCommandCallback;
+            CommandManager.GetCommand("DeleteFriend").Do += DeleteFriendCommandCallback;
 
-            CommandManager.FriendChatOpenCommand.Do += FriendChatOpenCommandCallback;
-            CommandManager.FriendChatOpenCommand.DoWhenClose += DefaultCloseCallback;
-            CommandManager.GroupCreateOpenCommand.Do += GroupCreateOpenCommandCallback;
-            CommandManager.GroupCreateOpenCommand.DoWhenClose += DefaultCloseCallback;
-            CommandManager.GroupSettingOpenCommand.Do += GroupSettingOpenCommandCallback;
-            CommandManager.GroupSettingOpenCommand.DoWhenClose += DefaultCloseCallback;
-            CommandManager.SettingOpenCommand.Do += SettingOpenCommandCallback;
-            CommandManager.SettingOpenCommand.DoWhenClose += SettingOpenCommandCloseCallback;
+            CommandManager.GetOpenCommand("OpenFriendChat").Do += FriendChatOpenCommandCallback;
+            CommandManager.GetOpenCommand("OpenFriendChat").DoWhenClose += DefaultCloseCallback;
+            CommandManager.GetOpenCommand("OpenGroupCreate").Do += GroupCreateOpenCommandCallback;
+            CommandManager.GetOpenCommand("OpenGroupCreate").DoWhenClose += DefaultCloseCallback;
+            CommandManager.GetOpenCommand("OpenGroupSetting").Do += GroupSettingOpenCommandCallback;
+            CommandManager.GetOpenCommand("OpenGroupSetting").DoWhenClose += DefaultCloseCallback;
+            CommandManager.GetOpenCommand("OpenSettings").Do += SettingOpenCommandCallback;
+            CommandManager.GetOpenCommand("OpenSettings").DoWhenClose += SettingOpenCommandCloseCallback;
+
+
         }
 
         private void CloseCommand(OpenCommand currentOpenCommand)
@@ -89,7 +91,7 @@ namespace ZappChat_v3.Windows
 
         private void FriendChatOpenCommandCallback(object friendParam)
         {
-            CloseCommand(CommandManager.FriendChatOpenCommand);
+            CloseCommand(CommandManager.GetOpenCommand("OpenFriendChat"));
             var friend = friendParam as Friend;
             if(friend == null) throw new NullReferenceException("Не возможно открыть чат! Ссылка ссылается на null");
             MainContent = new FriendChatContent(friend.ChatMemberId);
@@ -98,13 +100,13 @@ namespace ZappChat_v3.Windows
 
         private void GroupCreateOpenCommandCallback(object param)
         {
-            CloseCommand(CommandManager.GroupCreateOpenCommand);
+            CloseCommand(CommandManager.GetOpenCommand("OpenGroupCreate"));
             MainContent = new GroupCreate();
         }
 
         private void GroupSettingOpenCommandCallback(object groupId)
         {
-            CloseCommand(CommandManager.GroupSettingOpenCommand);
+            CloseCommand(CommandManager.GetOpenCommand("OpenGroupSetting"));
             if (groupId == null) throw new NullReferenceException();
             var group = GroupCollection.First(g => g.ChatMemberId.Equals(groupId as string));
             MainContent = new GroupSettingContent(@group);
@@ -113,7 +115,7 @@ namespace ZappChat_v3.Windows
         private void SettingOpenCommandCallback(object param)
         {
             var settingContent = new SettingsContent(MainContent);
-            CloseCommand(CommandManager.SettingOpenCommand);
+            CloseCommand(CommandManager.GetOpenCommand("OpenSettings"));
             MainContent = settingContent;
         }
 

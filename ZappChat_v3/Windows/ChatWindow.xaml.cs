@@ -35,7 +35,7 @@ namespace ZappChat_v3.Windows
 
         public void GuiReactionOnExecuteCommand(string s)
         {
-            if (!s.Equals(CommandManager.SettingOpenCommand.Name))
+            if (!s.Equals(CommandManager.GetOpenCommand("OpenSettings").Name))
             {
                 StatusButton.IsChecked = false;
                 SettingButton.IsChecked = false;
@@ -82,7 +82,7 @@ namespace ZappChat_v3.Windows
         {
             if(friendList.SelectedIndex == -1) return;
             var friend = friendList.Items[friendList.SelectedIndex];
-            CommandManager.FriendChatOpenCommand.DoExecute(friend);
+            CommandManager.GetOpenCommand("OpenFriendChat").DoExecute(friend);
             friendList.SelectedIndex = -1;
         }
 
@@ -104,12 +104,12 @@ namespace ZappChat_v3.Windows
 
         private void SettingButton_Checked(object sender, RoutedEventArgs e)
         {
-            CommandManager.SettingOpenCommand.DoExecute(null);
+            CommandManager.GetOpenCommand("OpenSettings").DoExecute(null);
         }
 
         private void SettingButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            CommandManager.SettingOpenCommand.DoExecute(_model.MainContent, true);
+            CommandManager.GetOpenCommand("OpenSettings").DoExecute(_model.MainContent, true);
         }
     }
 }

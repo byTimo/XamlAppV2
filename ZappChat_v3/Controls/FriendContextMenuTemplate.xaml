@@ -19,7 +19,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="CallButton" Grid.Column="1" Background="{StaticResource ZappChat.Status.Yellow}">
+                            <Button x:Name="CallButton" Grid.Column="1" Background="{StaticResource ZappChat.Yellow}">
                                 <StackPanel Margin="17,20,17,15" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <Image Source="/Images/Phone.png" Stretch="Fill" Width="25"/>
                                     <TextBlock Margin="7,0,0,0" FontWeight="Medium" FontFamily="HelveticaNeueCyr" FontSize="14.667" Foreground="Black" Text="Позвонить" VerticalAlignment="Center"/>
@@ -44,7 +44,7 @@
                                 <TextBlock Margin="10,0,0,0" FontWeight="Medium" FontFamily="HelveticaNeueCyr" FontSize="14.667" Foreground="Black" Text="Удалить пользователя"/>
                             </StackPanel>
                         </Button>
-                        <Grid x:Name="DeleteStateGrid" Background="{StaticResource ZappChat.ContextMenu}" Grid.Row="0" Grid.RowSpan="3" Visibility="Collapsed" >
+                        <Grid x:Name="DeleteStateGrid" Background="{StaticResource ZappChat.ContextMenu.Static.Background}" Grid.Row="0" Grid.RowSpan="3" Visibility="Collapsed" >
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>

@@ -2,15 +2,18 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Color x:Key="LightSky" A="255" R="206" G="235" B="246"/>
     <SolidColorBrush x:Key="ZappChat.Sky" Color="#5dbde1"/>
+    <SolidColorBrush x:Key="ZappChat.MouseOver.Sky" Color="#60c7ee"/>
     <SolidColorBrush x:Key="ZappChat.Grey" Color="#b2b2b2"/>
     <SolidColorBrush x:Key="ZappChat.Blue" Color="#4d80bf"/>
     <SolidColorBrush x:Key="ZappChat.Puple" Color="#ad5aa6"/>
     <SolidColorBrush x:Key="ZappChat.Dirt" Color="#fff3d7"/>
     <SolidColorBrush x:Key="ZappChat.VeryLightSky" Color="{StaticResource LightSky}"/>
-    <SolidColorBrush x:Key="ZappChat.Status.Green" Color="#68b62f"/>
-    <SolidColorBrush x:Key="ZappChat.Status.Yellow" Color="#ffcc24"/>
-    <SolidColorBrush x:Key="ZappChat.Status.Red" Color="#de5151"/>
+    <SolidColorBrush x:Key="ZappChat.Green" Color="#68b62f"/>
+    <SolidColorBrush x:Key="ZappChat.Yellow" Color="#ffcc24"/>
+    <SolidColorBrush x:Key="ZappChat.Red" Color="#de5151"/>
     <SolidColorBrush x:Key="ZappChat.DarkGrey" Color="#939393"/>
-    <SolidColorBrush x:Key="ZappChat.ContextMenu" Color="#f7fafb"/>
+    <SolidColorBrush x:Key="ZappChat.ContextMenu.Static.Background" Color="#f7fafb"/>
+    <SolidColorBrush x:Key="ZappChat.ContextMenu.Static.Content" Color="#edf5f9"/>
+    <SolidColorBrush x:Key="ZappChat.ContextMenu.Static.Checked" Color="#b5c3d4"/>
     <SolidColorBrush x:Key="ZappChat.LightSky" Color="#eaf1f3"/>
 </ResourceDictionary>
