@@ -125,9 +125,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Margin="0,25,30,25">
             <Button Content="Переименовать" Foreground="{StaticResource ZappChat.Blue}" BorderBrush="{StaticResource ZappChat.VeryLightSky}" FontFamily="HelveticaNeueCyr" Margin="0,0,20,0" Padding="10" Background="Transparent" Click="Button_Click" Cursor="Hand" BorderThickness="1" FontSize="14.667" />
-            <Button x:Name="AddFriendInGroup" Content="Добавить контакт" Foreground="{StaticResource ZappChat.Blue}" BorderBrush="{StaticResource ZappChat.VeryLightSky}" FontFamily="HelveticaNeueCyr" Margin="20,0,0,0" Padding="10" Background="Transparent" Cursor="Hand"
-                    Command="{Binding Name, ElementName=AddFriendInGroup, Converter={StaticResource CommandConverter}}"
-                    CommandParameter="{Binding ChatMemberId}" FontSize="14.667"/>
+            <Button x:Name="AddFriendInGroup" Content="Добавить контакт" Foreground="{StaticResource ZappChat.Blue}" BorderBrush="{StaticResource ZappChat.VeryLightSky}" FontFamily="HelveticaNeueCyr" Margin="20,0,0,0" Padding="10" Background="Transparent" Cursor="Hand" FontSize="14.667" Click="AddFriendInGroup_Click"/>
         </StackPanel>
         <!-- Middle -->
         <TextBox x:Name="FindTextBoxLable" Grid.Row="1" Text="Участники" BorderThickness="0,1,0,0" Background="Transparent" FontFamily="HelveticaNeueCyr" FontSize="16" Padding="25,25,15,5" BorderBrush="{x:Null}" Foreground="{DynamicResource ZappChat.Grey}" GotKeyboardFocus="FriendTextBoxLable_GotKeyboardFocus" FontWeight="Medium"/>

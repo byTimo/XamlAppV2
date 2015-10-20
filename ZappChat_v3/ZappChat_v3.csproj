@@ -96,6 +96,12 @@
     <Compile Include="Controls\MainContentControls\SettingsContent.xaml.cs">
       <DependentUpon>SettingsContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NotificationControl.xaml.cs">
+      <DependentUpon>NotificationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NotificationButton.xaml.cs">
+      <DependentUpon>NotificationButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TemplateSelector\MessageDataTemplateSelector.cs" />
     <Compile Include="Controls\ValueConverters\ColorRandomizer.cs" />
     <Compile Include="Controls\ValueConverters\FriendMultibindingConverter.cs" />
@@ -103,6 +109,9 @@
     <Compile Include="Controls\ValueConverters\MessageWidthConverter.cs" />
     <Compile Include="Controls\ValueConverters\StatusConverter.cs" />
     <Compile Include="Core\ChatElements\Enums\StatusEnum.cs" />
+    <Compile Include="Core\Managers\Notifications\NotificationType.cs" />
+    <Compile Include="Core\Managers\Notifications\Notification.cs" />
+    <Compile Include="Core\Managers\Notifications\NotificationManager.cs" />
     <Compile Include="Core\Managers\WebSocket\RequestFactory.cs" />
     <Compile Include="Core\Managers\WebSocket\SendObjectResult.cs" />
     <Compile Include="Core\Managers\WebSocket\WebScoketManagerInterface.cs" />
@@ -174,6 +183,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MainContentControls\SettingsContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NotificationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NotificationButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -301,6 +318,11 @@
     <Resource Include="Images\ArrowButtonStatic.png" />
     <Resource Include="Images\SmileButtonMouseOver.png" />
     <Resource Include="Images\SmileButtonStatic.png" />
+    <Resource Include="Images\NotificationActive.png" />
+    <Resource Include="Images\NotificationStatic.png" />
+    <Resource Include="Images\NotificationAlways.png" />
+    <Resource Include="Images\NotificationError.png" />
+    <Resource Include="Images\NotificationFile.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

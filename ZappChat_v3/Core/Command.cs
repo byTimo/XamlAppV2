@@ -16,7 +16,7 @@ namespace ZappChat_v3.Core
         ///<summary>
         /// Параметризованное действие которое вызывается при активации команды.
         /// </summary>
-        public event Action<object> Do;
+        public event Action<object[]> Do;
 
         /// <summary>
         /// Будевое значение, отвечающие за возможность выполнения команды.
@@ -82,8 +82,16 @@ namespace ZappChat_v3.Core
         /// <summary>
         /// Выполнение команды
         /// </summary>
-        /// <param name="param">The param.</param>
+        /// <param name="param">Один параметр</param>
         public virtual void DoExecute(object param)
+        {
+            DoExecute(new[] {param});
+        }
+        /// <summary>
+        /// Выполнение команды
+        /// </summary>
+        /// <param name="param">Множество параметров</param>
+        public void DoExecute(params object[] param)
         {
             Do?.Invoke(param);
         }

@@ -195,8 +195,8 @@
                 <TextBlock Text="Создать группу" FontFamily="HelveticaNeueCyr" FontSize="17.333" TextAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>
             </StackPanel>
         </Button>
-        <Button x:Name="AddFriend" Grid.Column="2" Grid.Row="0" BorderBrush="{StaticResource ZappChat.VeryLightSky}" Background="White"
-			Command="{Binding Name, Converter={StaticResource CommandConverter}, ElementName=AddFriend}">
+        <Button x:Name="OpenAddFriend" Grid.Column="2" Grid.Row="0" BorderBrush="{StaticResource ZappChat.VeryLightSky}" Background="White"
+                Command="{Binding Path=Name, ElementName=OpenAddFriend, Converter={StaticResource CommandConverter}}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/AddUser.png" Width="72" Stretch="Fill"/>
                 <TextBlock Text="Пригласить пользователя" FontFamily="HelveticaNeueCyr" FontSize="17.333" Margin="15,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="149"/>

@@ -16,7 +16,6 @@ namespace ZappChat_v3.Windows
             CommandManager.GetCommand("GroupCreate").Do += GroupCreateCommandCallback;
             CommandManager.GetCommand("GroupDelete").Do += GroupDeleteCommandCallback;
             CommandManager.GetCommand("AddFriendInGroup").Do += AddFriendInGroupCommandCallback;
-            CommandManager.GetCommand("AddFriend").Do += AddFriendCommandCallback;
             CommandManager.GetCommand("DeleteFriend").Do += DeleteFriendCommandCallback;
 
             CommandManager.GetOpenCommand("OpenFriendChat").Do += FriendChatOpenCommandCallback;
@@ -27,53 +26,49 @@ namespace ZappChat_v3.Windows
             CommandManager.GetOpenCommand("OpenGroupSetting").DoWhenClose += DefaultCloseCallback;
             CommandManager.GetOpenCommand("OpenSettings").Do += SettingOpenCommandCallback;
             CommandManager.GetOpenCommand("OpenSettings").DoWhenClose += SettingOpenCommandCloseCallback;
+            CommandManager.GetOpenCommand("OpenAddFriend").Do += AddFriendOpenCommandCallback;
+            CommandManager.GetOpenCommand("OpenAddFriend").DoWhenClose += DefaultCloseCallback;
 
 
         }
 
         private void CloseCommand(OpenCommand currentOpenCommand)
         {
-            _lastOpenCommand?.DoExecute(null, true);
+            _lastOpenCommand?.DoWhenCloseExecute(null);
             _lastOpenCommand = currentOpenCommand;
             _chatWindow.GuiReactionOnExecuteCommand(currentOpenCommand.Name);
         }
 
-        private void GroupCreateCommandCallback(object groupParam)
+        private void GroupCreateCommandCallback(object[] param)
         {
-            var group = groupParam as Group;
+            var group = param[0] as Group;
             DbContentManager.Instance.Groups.Add(@group);
             DbContentManager.Instance.SaveChanges();
             GroupCollection.Add(@group);
             MainContent = null;
         }
 
-        private void GroupDeleteCommandCallback(object groupId)
+        private void GroupDeleteCommandCallback(object[] param)
         {
-            var group = GroupCollection.First(g => g.ChatMemberId.Equals(groupId as string));
+            var group = GroupCollection.First(g => g.ChatMemberId.Equals(param[0] as string));
             DbContentManager.Instance.Groups.Remove(@group);
             DbContentManager.Instance.SaveChanges();
             GroupCollection.Remove(@group);
             MainContent = null;
         }
 
-        private void AddFriendInGroupCommandCallback(object groupId)
+        private void AddFriendInGroupCommandCallback(object[] param)
         {
-            var group = GroupCollection.First(g => g.ChatMemberId.Equals(groupId as string));
-            var add = new TEST_addFriendInGroup(@group);
-            add.ShowDialog();
-            add.Close();
+            var group = GroupCollection.First(g => g.ChatMemberId.Equals(param[0] as string));
+            var friend = FriendCollection.First(f => f.ChatMemberId.Equals(param[1] as string));
+            group.FriendList.Add(friend);
+            friend.MembershipGroups.Add(group);
+            DbContentManager.Instance.SaveChanges();
         }
 
-        private void AddFriendCommandCallback(object param)
+        private void DeleteFriendCommandCallback(object[] friendParam)
         {
-            var add = new TEST_addFriend(FriendCollection);
-            add.ShowDialog();
-            add.Close();
-        }
-
-        private void DeleteFriendCommandCallback(object friendParam)
-        {
-            var friend = friendParam as Friend;
+            var friend = friendParam[0] as Friend;
             var content = MainContent as FriendChatContent;
             if (content != null)
             {
@@ -89,44 +84,51 @@ namespace ZappChat_v3.Windows
 
         //--- OpenCommand callbacks ---
 
-        private void FriendChatOpenCommandCallback(object friendParam)
+        private void FriendChatOpenCommandCallback(object[] friendParam)
         {
             CloseCommand(CommandManager.GetOpenCommand("OpenFriendChat"));
-            var friend = friendParam as Friend;
+            var friend = friendParam[0] as Friend;
             if(friend == null) throw new NullReferenceException("Не возможно открыть чат! Ссылка ссылается на null");
             MainContent = new FriendChatContent(friend.ChatMemberId);
 
         }
 
-        private void GroupCreateOpenCommandCallback(object param)
+        private void GroupCreateOpenCommandCallback(object[] param)
         {
             CloseCommand(CommandManager.GetOpenCommand("OpenGroupCreate"));
             MainContent = new GroupCreate();
         }
 
-        private void GroupSettingOpenCommandCallback(object groupId)
+        private void GroupSettingOpenCommandCallback(object[] groupId)
         {
             CloseCommand(CommandManager.GetOpenCommand("OpenGroupSetting"));
             if (groupId == null) throw new NullReferenceException();
-            var group = GroupCollection.First(g => g.ChatMemberId.Equals(groupId as string));
+            var group = GroupCollection.First(g => g.ChatMemberId.Equals(groupId[0] as string));
             MainContent = new GroupSettingContent(@group);
         }
 
-        private void SettingOpenCommandCallback(object param)
+        private void SettingOpenCommandCallback(object[] param)
         {
             var settingContent = new SettingsContent(MainContent);
             CloseCommand(CommandManager.GetOpenCommand("OpenSettings"));
             MainContent = settingContent;
         }
 
-        private void DefaultCloseCallback(object param)
+        private void AddFriendOpenCommandCallback(object[] objects)
+        {
+            var test = new TEST_addFriend(FriendCollection);
+            test.ShowDialog();
+            test.Close();
+        }
+
+        private void DefaultCloseCallback(object[] param)
         {
             MainContent = null;
         }
 
-        private void SettingOpenCommandCloseCallback(object o)
+        private void SettingOpenCommandCloseCallback(object[] o)
         {  
-            var lastContent = (o as SettingsContent)?.LastControl;
+            var lastContent = (MainContent as SettingsContent)?.LastControl;
             MainContent = lastContent;
         }
     }

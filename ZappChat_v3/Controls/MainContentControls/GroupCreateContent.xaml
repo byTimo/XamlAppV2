@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="468" d:DesignWidth="515">
     <UserControl.Resources>
-        <Style TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type ToggleButton}">
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -14,7 +14,7 @@
             <Setter Property="Padding" Value="1"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true" CornerRadius="5">
                             <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
@@ -52,7 +52,7 @@
                         <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
                             <Grid>
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                <Button x:Name="Bn" Visibility="Collapsed" HorizontalAlignment="Right" Margin="0,0,40,0" Content="Добавить" Padding="30,7,28,7" Background="{DynamicResource ZappChat.Sky}" BorderBrush="Transparent" Click="Bn_OnClick" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Width="125" />
+                                <ToggleButton x:Name="Bn" Visibility="Collapsed" HorizontalAlignment="Right" Margin="0,0,40,0" Content="Добавить" Padding="30,7,28,7" Background="{DynamicResource ZappChat.Sky}" BorderBrush="Transparent" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Width="125" Checked="Bn_Checked" Unchecked="Bn_Unchecked" />
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -63,6 +63,10 @@
                                 <Setter TargetName="Bn" Property="Visibility" Value="Visible"/>
                                 <Setter Property="Background" Value="{StaticResource ZappChat.VeryLightSky}"/>
                             </MultiTrigger>
+                            <Trigger SourceName="Bn" Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="{StaticResource ZappChat.VeryLightSky}"/>
+                                <Setter Property="Content" TargetName="Bn" Value="Удалить"/>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -72,7 +76,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="173*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal" Margin="30,35">
@@ -81,7 +86,9 @@
             </StackPanel>
             <Button Content="Создать" HorizontalAlignment="Right" VerticalAlignment="Center" Background="{StaticResource ZappChat.Sky}" Cursor="Hand" Margin="0,0,40,0" Padding="40,10" FontFamily="HelveticaNeueCyr" FontSize="16" Click="Button_Click" BorderBrush="{DynamicResource ZappChat.Sky}" Foreground="White"/>
         </Grid>
-        <ListBox Grid.Row="1" ScrollViewer.CanContentScroll="False" ItemsSource="{Binding Friends,RelativeSource={RelativeSource AncestorType=UserControl}}" Background="{x:Null}" BorderThickness="0,1,0,0">
+        <!--<TextBox x:Name="FindTextBoxLable" Grid.Row="1" Text="Участники" BorderThickness="0,1,0,0" Background="Transparent" FontFamily="HelveticaNeueCyr" FontSize="16" Padding="25,25,15,5" BorderBrush="{x:Null}" Foreground="{DynamicResource ZappChat.Grey}" GotKeyboardFocus="FriendTextBoxLable_GotKeyboardFocus" FontWeight="Medium"/>-->
+        <!--<TextBox x:Name="FindTextBox" Grid.Row="1" Background="Transparent" BorderThickness="0,1,0,0" TextChanged="FindTextBox_TextChanged" FontFamily="HelveticaNeueCyr" FontSize="16" Padding="25,25,15,5" GotKeyboardFocus="FindTextBox_GotKeyboardFocus" LostKeyboardFocus="FindTextBox_LostKeyboardFocus" FontWeight="Medium"/>-->
+        <ListBox x:Name="FriendListBox" Grid.Row="2" ScrollViewer.CanContentScroll="False" Background="{x:Null}" BorderThickness="0,1,0,0">
             <ListBox.Resources>
                 <ResourceDictionary Source="/Controls/DataTemplates/UserControlsFriendDataTemplate.xaml"/>
             </ListBox.Resources>

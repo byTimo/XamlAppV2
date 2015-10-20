@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +11,7 @@ using ZappChat_v3.Annotations;
 using ZappChat_v3.Core;
 using ZappChat_v3.Core.ChatElements;
 using ZappChat_v3.Core.Managers;
+using ZappChat_v3.Windows;
 
 namespace ZappChat_v3.Controls.MainContentControls
 {
@@ -18,16 +21,26 @@ namespace ZappChat_v3.Controls.MainContentControls
     public partial class GroupSettingContent : UserControl, INotifyPropertyChanged
     {
         private Group _group;
+        private ObservableCollection<Friend> _friends; 
 
         public GroupSettingContent()
         {
             InitializeComponent();
+            ZappChat_v3.Core.Managers.CommandManager.GetCommand("AddFriendInGroup").Do += o =>
+            {
+                var group = o[0] as string;
+                if(group == null) throw new NullReferenceException("Не передана группа");
+                if(!group.Equals(_group.ChatMemberId)) return;
+                var friend = Group.FriendList.First(f => f.ChatMemberId == (string)o[1]);
+                _friends.Add(friend);
+            };
         }
 
         public GroupSettingContent(Group group) : this()
         {
             Group = group;
-            FriendListView.ItemsSource = Group.FriendList;
+            _friends = new ObservableCollection<Friend>(Group.FriendList);
+            FriendListView.ItemsSource = _friends;
             var views = (CollectionView)CollectionViewSource.GetDefaultView(FriendListView.ItemsSource);
             views.Filter = UserFilter;
         }
@@ -79,6 +92,7 @@ namespace ZappChat_v3.Controls.MainContentControls
         {
             var listBoxItem = Support.FindAnchestor<ListBoxItem>((DependencyObject) e.OriginalSource);
             var friend = listBoxItem.DataContext as Friend;
+            _friends.Remove(friend);
 
             Group.FriendList.Remove(friend);
             friend.MembershipGroups.Remove(Group);
@@ -113,6 +127,13 @@ namespace ZappChat_v3.Controls.MainContentControls
         private void FindTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if(FindTextBox.Text == "") FindTextBoxLable.Visibility = Visibility.Visible;
+        }
+
+        private void AddFriendInGroup_Click(object sender, RoutedEventArgs e)
+        {
+            var addfriend = new TEST_addFriendInGroup(Group);
+            addfriend.ShowDialog();
+            addfriend.Close();
         }
     }
 }

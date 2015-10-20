@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ZappChat_v3.Annotations;
 using ZappChat_v3.Core;
 using ZappChat_v3.Core.ChatElements;
@@ -81,9 +70,7 @@ namespace ZappChat_v3.Windows
             var listBoxItem = Support.FindAnchestor<ListBoxItem>((DependencyObject) e.OriginalSource);
             var friend = listBoxItem.DataContext as Friend;
 
-            Group.FriendList.Add(friend);
-            friend.MembershipGroups.Add(Group);
-            DbContentManager.Instance.SaveChanges();
+            CommandManager.GetCommand("AddFriendInGroup").DoExecute(Group.ChatMemberId, friend.ChatMemberId);
             Friends.Remove(friend);
         }
     }

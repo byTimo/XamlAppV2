@@ -109,7 +109,7 @@ namespace ZappChat_v3.Windows
 
         private void SettingButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            CommandManager.GetOpenCommand("OpenSettings").DoExecute(_model.MainContent, true);
+            CommandManager.GetOpenCommand("OpenSettings").DoWhenCloseExecute(null);
         }
     }
 }

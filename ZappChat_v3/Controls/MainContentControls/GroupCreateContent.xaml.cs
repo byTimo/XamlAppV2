@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using ZappChat_v3.Core;
 using ZappChat_v3.Core.ChatElements;
 using ZappChat_v3.Core.Managers;
+using CommandManager = ZappChat_v3.Core.Managers.CommandManager;
 
 namespace ZappChat_v3.Controls.MainContentControls
 {
@@ -15,45 +19,27 @@ namespace ZappChat_v3.Controls.MainContentControls
     /// </summary>
     public partial class GroupCreate : UserControl
     {
-        private Dictionary<Friend, bool> _friendDictionary; 
+        private readonly List<Friend> _addedFriends = new List<Friend>(); 
         public GroupCreate()
         {
             InitializeComponent();
-            _friendDictionary = new Dictionary<Friend, bool>();
             Friends = new List<Friend>(DbContentManager.Instance.Friends);
-            foreach (var friend in Friends)
-            {
-                _friendDictionary.Add(friend, false);
-            }
+            FriendListBox.ItemsSource = Friends;
+            //var views = (CollectionView)CollectionViewSource.GetDefaultView(FriendListBox.ItemsSource);
+            //views.Filter = UserFilter;
         }
 
         public string GroupName { get; set; }
         public IEnumerable<Friend> Friends { get; }
 
-        private void Bn_OnClick(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            if(button == null) throw  new NullReferenceException();
-            var listBoxItem = Support.FindAnchestor<ListBoxItem>((DependencyObject) e.OriginalSource);
-            var friend = listBoxItem.DataContext as Friend;
-            if(friend == null) throw new NullReferenceException();
-
-            var isChecked = button.Content as string != "Добавить";
-            if (isChecked)
-            {
-                _friendDictionary[friend] = false;
-                button.Content = "Добавить";
-                listBoxItem.Background = Brushes.Transparent;
-            }
-            else
-            {
-                _friendDictionary[friend] = true;
-                button.Content = "Удалить";
-                listBoxItem.Background = new SolidColorBrush(Color.FromRgb(206,235,246));
-            }
-
-        }
-
+        //private bool UserFilter(object item)
+        //{
+        //    if (string.IsNullOrEmpty(FindTextBox.Text))
+        //        return true;
+        //    var friend = item as Friend;
+        //    return friend.Name.IndexOf(FindTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0 ||
+        //           friend.LastName.IndexOf(FindTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+        //}
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(GroupName.Trim()))
@@ -68,11 +54,60 @@ namespace ZappChat_v3.Controls.MainContentControls
                 Name = GroupName.Trim(),
                 Type = ChatElementType.Group,
             };
-            foreach (var source in _friendDictionary.Where(x => x.Value))
+            foreach (var source in _addedFriends)
             {
-                newGroup.FriendList.Add(source.Key);
+                newGroup.FriendList.Add(source);
             }
             CommandManager.GetCommand("GroupCreate").DoExecute(newGroup);
+        }
+
+        //private void FriendTextBoxLable_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        //{
+        //    Keyboard.Focus(FindTextBox);
+        //}
+
+        //private void FindTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        //{
+        //    FindTextBoxLable.Visibility = Visibility.Collapsed;
+        //}
+
+        //private void FindTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        //{
+        //    if(FindTextBox.Text.Equals(""))
+        //        FindTextBoxLable.Visibility = Visibility.Visible;
+        //}
+
+        //private void FindTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    CollectionViewSource.GetDefaultView(FriendListBox.ItemsSource).Refresh();
+        //    CollectionViewSource.GetDefaultView(FriendListBox.ItemsSource).
+        //    //var currentActiveItems = new List<object>
+        //    foreach (var addedFriend in _addedFriends)
+        //    {
+        //        var index = FriendListBox.Items.IndexOf(addedFriend);
+        //        var listviewitem = FriendListBox.ItemContainerGenerator.ContainerFromItem(addedFriend) as ListBoxItem;
+        //        var test = listviewitem.DataContext as Friend;
+        //    }
+
+
+        //}
+
+        private void Bn_Checked(object sender, RoutedEventArgs e)
+        {
+            var listBoxItem = Support.FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+            var friend = listBoxItem.DataContext as Friend;
+            if (friend == null) throw new NullReferenceException();
+            if(!_addedFriends.Contains(friend))
+                _addedFriends.Add(friend);
+        }
+
+        private void Bn_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var listBoxItem = Support.FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+            var friend = listBoxItem.DataContext as Friend;
+            if (friend == null) throw new NullReferenceException();
+            if(_addedFriends.Contains(friend))
+                _addedFriends.Remove(friend);
         }
     }
 }

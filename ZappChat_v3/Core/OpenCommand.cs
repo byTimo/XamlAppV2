@@ -4,15 +4,12 @@ namespace ZappChat_v3.Core
 {
     public class OpenCommand : Command
     {
-        public event Action<object> DoWhenClose;
+        public event Action<object[]> DoWhenClose;
         public OpenCommand(string name) : base(name) { }
 
-        public void DoExecute(object param, bool isOpened)
+        public void DoWhenCloseExecute(params object[] param)
         {
-            if (isOpened)
-                DoWhenClose?.Invoke(param);
-            else
-                base.DoExecute(param);
+            DoWhenClose?.Invoke(param);
         }
     }
 }

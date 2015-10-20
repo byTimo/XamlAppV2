@@ -16,6 +16,7 @@ namespace ZappChat_v3.Core.Managers
             RegisterNewOpenCommand("OpenGroupCreate", new OpenCommand("OpenGroupCreate"));
             RegisterNewOpenCommand("OpenFriendChat", new OpenCommand("OpenFriendChat"));
             RegisterNewOpenCommand("OpenSettings", new OpenCommand("OpenSettings"));
+            RegisterNewOpenCommand("OpenAddFriend", new OpenCommand("OpenAddFriend"));
 
             RegisterNewCommand("GroupCreate", new Command("GroupCreate"));
             RegisterNewCommand("GroupDelete", new Command("GroupDelete"));

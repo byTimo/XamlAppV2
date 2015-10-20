@@ -22,6 +22,7 @@ using ZappChat_v3.Core;
 using ZappChat_v3.Core.ChatElements;
 using ZappChat_v3.Core.ChatElements.Enums;
 using ZappChat_v3.Core.Managers;
+using ZappChat_v3.Windows;
 
 namespace ZappChat_v3.Controls
 {
@@ -111,14 +112,14 @@ namespace ZappChat_v3.Controls
         {
             BlockedGrid.Visibility = Visibility.Visible;
             OpenGroupCreate.Visibility = Visibility.Collapsed;
-            AddFriend.Visibility = Visibility.Collapsed;
+            OpenAddFriend.Visibility = Visibility.Collapsed;
         }
 
         private void UnblockUserInput()
         {
             BlockedGrid.Visibility = Visibility.Collapsed;
             OpenGroupCreate.Visibility = Visibility.Visible;
-            AddFriend.Visibility = Visibility.Visible;
+            OpenAddFriend.Visibility = Visibility.Visible;
         }
     }
 }

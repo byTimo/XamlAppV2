@@ -133,26 +133,36 @@
                 </controls:StatusButton.Content>
             </controls:StatusButton>
             <controls:StatusMenu x:Name="StatusMenu" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed" HorizontalAlignment="Left"/>
-            <ToggleButton x:Name="SettingButton" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25" Margin="15,0,0,0" BorderBrush="{x:Null}" Foreground="{x:Null}" Cursor="Hand" Checked="SettingButton_Checked" Unchecked="SettingButton_Unchecked">
-                <ToggleButton.Resources>
-                    <ResourceDictionary Source="../Controls/SettingButtonTemplate.xaml"/>
-                </ToggleButton.Resources>
-            </ToggleButton>
-            <Button Grid.Row="0" x:Name="ExitButton" Grid.Column="2" HorizontalAlignment="Right" Width="10" Click="AppShutdown" VerticalAlignment="Center" Margin="0,0,32,0" Height="10" Background="{DynamicResource ZappChat.VeryLightSky}" BorderBrush="{DynamicResource ZappChat.VeryLightSky}" Cursor="Hand">
-                <Button.Resources>
-                    <ResourceDictionary Source="../Controls/CircleButton.xaml"/>
-                </Button.Resources>
-            </Button>
-            <Button Grid.Row="0" x:Name="ResizeModeButton" Grid.Column="2" HorizontalAlignment="Right" Width="10" Click="WindowStateChange" VerticalAlignment="Center" Margin="0,0,48,0" Height="10" Background="{DynamicResource ZappChat.Sky}" BorderBrush="{DynamicResource ZappChat.Sky}" Cursor="Hand">
-                <Button.Resources>
-                    <ResourceDictionary Source="../Controls/CircleButton.xaml"/>
-                </Button.Resources>
-            </Button>
-            <Button Grid.Row="0" x:Name="MinimazeModeButton" Grid.Column="2" HorizontalAlignment="Right" Width="10" Click="HideWindow" VerticalAlignment="Center" Margin="0,0,64,0" Height="10" Background="{DynamicResource ZappChat.Blue}" BorderBrush="{DynamicResource ZappChat.Blue}" Cursor="Hand">
-                <Button.Resources>
-                    <ResourceDictionary Source="../Controls/CircleButton.xaml"/>
-                </Button.Resources>
-            </Button>
+            <Grid x:Name="ButtonsGrid" Grid.Row="0" Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ToggleButton x:Name="SettingButton"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25" Margin="18,0,0,0" BorderBrush="{x:Null}" Foreground="{x:Null}" Cursor="Hand" Checked="SettingButton_Checked" Unchecked="SettingButton_Unchecked">
+                    <ToggleButton.Resources>
+                        <ResourceDictionary Source="../Controls/SettingButtonTemplate.xaml"/>
+                    </ToggleButton.Resources>
+                </ToggleButton>
+                <controls:NotificationButton Grid.Column="1" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" FlowDirection="RightToLeft">
+                    <Button x:Name="ExitButton" HorizontalAlignment="Right" Width="10" Click="AppShutdown" VerticalAlignment="Center" Height="10" Background="{DynamicResource ZappChat.VeryLightSky}" BorderBrush="{DynamicResource ZappChat.VeryLightSky}" Cursor="Hand" Margin="40,0,0,0">
+                        <Button.Resources>
+                            <ResourceDictionary Source="../Controls/CircleButton.xaml"/>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="ResizeModeButton" HorizontalAlignment="Right" Width="10" Click="WindowStateChange" VerticalAlignment="Center" Height="10" Background="{DynamicResource ZappChat.Sky}" BorderBrush="{DynamicResource ZappChat.Sky}" Cursor="Hand" Margin="5,0,0,0">
+                        <Button.Resources>
+                            <ResourceDictionary Source="../Controls/CircleButton.xaml"/>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="MinimazeModeButton" HorizontalAlignment="Right" Width="10" Click="HideWindow" VerticalAlignment="Center" Height="10" Background="{DynamicResource ZappChat.Blue}" BorderBrush="{DynamicResource ZappChat.Blue}" Cursor="Hand" Margin="5,0,0,0">
+                        <Button.Resources>
+                            <ResourceDictionary Source="../Controls/CircleButton.xaml"/>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Border>
 </Window>
